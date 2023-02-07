@@ -26,6 +26,7 @@
     <ClCompile Include="libs\imgui\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="libs\imgui\imgui\imgui_tables.cpp" />
     <ClCompile Include="libs\imgui\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\glErrors.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,9 +39,7 @@
     <ClInclude Include="libs\imgui\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\shader.glsl" />
+    <ClInclude Include="src\glErrors.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
