@@ -26,7 +26,10 @@
     <ClCompile Include="libs\imgui\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="libs\imgui\imgui\imgui_tables.cpp" />
     <ClCompile Include="libs\imgui\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\glErrors.cpp" />
+    <ClCompile Include="src\core\ByteBuffer.cpp" />
+    <ClCompile Include="src\core\bufferDefs.cpp" />
+    <ClCompile Include="src\core\VertexArray.cpp" />
+    <ClCompile Include="src\core\glErrors.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +42,12 @@
     <ClInclude Include="libs\imgui\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h" />
-    <ClInclude Include="src\glErrors.h" />
+    <ClInclude Include="src\core\ByteBuffer.h" />
+    <ClInclude Include="src\core\bufferDefs.h" />
+    <ClInclude Include="src\core\VertexArray.h" />
+    <ClInclude Include="src\core\VertexBufferLayout.h" />
+    <ClInclude Include="src\core\glErrors.h" />
+    <ClInclude Include="src\core\TypedBuffer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
