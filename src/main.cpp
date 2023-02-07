@@ -41,10 +41,11 @@ int main(void)
     
     if (glewInit() != GLEW_OK)
     {
-        spdlog::error("Failed to init GLEW");
+        spdlog::critical("Failed to init GLEW");
         return -1;
     }
 
+    spdlog::info("Beryl Engine started");
     spdlog::info("OpenGL version: {}", (char*)glGetString(GL_VERSION));
 
     glViewport(0, 0, settings.screen_width, settings.screen_height);
