@@ -28,6 +28,8 @@
     <ClCompile Include="libs\imgui\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\core\ByteBuffer.cpp" />
     <ClCompile Include="src\core\bufferDefs.cpp" />
+    <ClCompile Include="src\core\StaticMesh.cpp" />
+    <ClCompile Include="src\core\Texture.cpp" />
     <ClCompile Include="src\core\VertexArray.cpp" />
     <ClCompile Include="src\core\glErrors.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -44,6 +46,8 @@
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h" />
     <ClInclude Include="src\core\ByteBuffer.h" />
     <ClInclude Include="src\core\bufferDefs.h" />
+    <ClInclude Include="src\core\StaticMesh.h" />
+    <ClInclude Include="src\core\Texture.h" />
     <ClInclude Include="src\core\VertexArray.h" />
     <ClInclude Include="src\core\VertexBufferLayout.h" />
     <ClInclude Include="src\core\glErrors.h" />
@@ -124,6 +128,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)libs\glew-2.1.0\include;$(ProjectDir)libs\glfw-3.3.8\include;$(ProjectDir)libs\glm-0.9.9.8;$(ProjectDir)libs\imgui;$(ProjectDir)libs\stb\include;$(ProjectDir)libs\spdlog-1.11.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +145,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)libs\glew-2.1.0\include;$(ProjectDir)libs\glfw-3.3.8\include;$(ProjectDir)libs\glm-0.9.9.8;$(ProjectDir)libs\imgui;$(ProjectDir)libs\stb\include;$(ProjectDir)libs\spdlog-1.11.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +162,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)libs\glew-2.1.0\include;$(ProjectDir)libs\glfw-3.3.8\include;$(ProjectDir)libs\glm-0.9.9.8;$(ProjectDir)libs\imgui;$(ProjectDir)libs\stb\include;$(ProjectDir)libs\spdlog-1.11.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,6 +180,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)libs\glew-2.1.0\include;$(ProjectDir)libs\glfw-3.3.8\include;$(ProjectDir)libs\glm-0.9.9.8;$(ProjectDir)libs\imgui;$(ProjectDir)libs\stb\include;$(ProjectDir)libs\spdlog-1.11.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
