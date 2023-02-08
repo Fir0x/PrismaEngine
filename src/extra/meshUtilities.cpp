@@ -7,7 +7,7 @@ namespace BerylEngine::MeshUtilities
 	std::shared_ptr<StaticMesh> staticPlane(unsigned int subdivision)
 	{
 		std::vector<StaticMesh::Vertex> vertices;
-		float start = subdivision % 2 == 0 ? -0.75f : -0.5f;
+		float start = (subdivision != 0 && subdivision % 2 == 0) ? -0.75f : -0.5f;
 		float offset = subdivision == 0 ? 1.0f : 1 / float(subdivision);
 		for (unsigned int i = 0; i < subdivision + 2; i++)
 		{
@@ -30,13 +30,13 @@ namespace BerylEngine::MeshUtilities
 			{
 				unsigned int idx = i * verticesPerLine + j;
 				// Right triangle
-				indices.push_back(idx);
 				indices.push_back(idx + 1);
+				indices.push_back(idx);
 				indices.push_back(idx + verticesPerLine + 1);
 
 				// Left triangle
-				indices.push_back(idx);
 				indices.push_back(idx + verticesPerLine + 1);
+				indices.push_back(idx);
 				indices.push_back(idx + verticesPerLine);
 			}
 		}
