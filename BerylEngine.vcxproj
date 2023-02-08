@@ -28,6 +28,7 @@
     <ClCompile Include="libs\imgui\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\core\ByteBuffer.cpp" />
     <ClCompile Include="src\core\bufferDefs.cpp" />
+    <ClCompile Include="src\core\Program.cpp" />
     <ClCompile Include="src\core\StaticMesh.cpp" />
     <ClCompile Include="src\core\Texture.cpp" />
     <ClCompile Include="src\core\VertexArray.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h" />
     <ClInclude Include="src\core\ByteBuffer.h" />
     <ClInclude Include="src\core\bufferDefs.h" />
+    <ClInclude Include="src\core\Program.h" />
     <ClInclude Include="src\core\StaticMesh.h" />
     <ClInclude Include="src\core\Texture.h" />
     <ClInclude Include="src\core\VertexArray.h" />
