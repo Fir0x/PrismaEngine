@@ -1,11 +1,13 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <optional>
+#include <memory>
 #include <string>
 #include <vector>
 
-#include "Texture.h"
+#include "TypedBuffer.h"
+#include "StaticMesh.h"
+#include "VertexArray.h"
 
 namespace BerylEngine
 {
@@ -20,17 +22,14 @@ namespace BerylEngine
 		};
 
 	private:
-		std::vector<Vertex> m_vertices;
-		std::vector<unsigned int> m_indices;
+		TypedBuffer<StaticMesh::Vertex> m_vbo;
+		std::unique_ptr<VertexArray> m_vao;
+		std::unique_ptr<TypedBuffer<unsigned int>> m_ibo;
 
 	public:
 		StaticMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
+		static std::shared_ptr<StaticMesh> fromOBJFile(const std::string& path);
 
-		const std::vector<Vertex>& getData() const;
-
-		size_t triangleCount() const;
-		const std::vector<unsigned int>& getIndices() const;
-
-		static std::optional<StaticMesh> loadOBJFile(const std::string& path);
+		void draw() const;
 	};
 }

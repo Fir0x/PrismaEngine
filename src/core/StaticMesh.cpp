@@ -5,42 +5,27 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
+#include "glErrors.h"
+#include "utils.h"
+
 namespace BerylEngine
 {
 	StaticMesh::StaticMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
+		: m_vbo(vertices.data(), vertices.size())
 	{
-		m_vertices = vertices;
-		m_indices = indices;
+		VertexBufferLayout layout;
+		layout.Add<float>(3);
+		layout.Add<float>(3);
+		layout.Add<float>(2);
+
+		m_vao = std::make_unique<VertexArray>(m_vbo, layout);
+		m_ibo = std::make_unique<TypedBuffer<unsigned int>>(indices.data(), indices.size());
+
+		spdlog::trace("Static mesh created with {} vertices for {} triangles.",
+						vertices.size(), indices.size() / 3);
 	}
 
-	const std::vector<StaticMesh::Vertex>& StaticMesh::getData() const
-	{
-		return m_vertices;
-	}
-
-	size_t StaticMesh::triangleCount() const
-	{
-		return m_indices.size() / 3;
-	}
-
-	const std::vector<unsigned int>& StaticMesh::getIndices() const
-	{
-		return m_indices;
-	}
-
-	static std::vector<std::string> splitstr(const std::string& str, char delim)
-	{
-		std::vector<std::string> splitted;
-
-		std::istringstream stream(str);
-		std::string word;
-		while (std::getline(stream, word, delim))
-			splitted.push_back(word);
-
-		return splitted;
-	}
-
-	std::optional<StaticMesh> StaticMesh::loadOBJFile(const std::string& path)
+	std::shared_ptr<StaticMesh> StaticMesh::fromOBJFile(const std::string& path)
 	{
 		std::ifstream stream;
 		stream.open(path);
@@ -139,15 +124,21 @@ namespace BerylEngine
 				}
 			}
 
-			spdlog::trace("Mesh loaded from {} contains {} vertices for {} triangles.",
-						  path, mesh_vertices.size(), mesh_indices.size() / 3);
+			spdlog::trace("Mesh loaded from {}.", path);
 
-			return StaticMesh(mesh_vertices, mesh_indices);
+			return std::make_shared<StaticMesh>(mesh_vertices, mesh_indices);
 		}
 		else
 		{
 			spdlog::error("Failed to open OBJ file from {}", path);
-			return std::optional<StaticMesh>();
+			return nullptr;
 		}
+	}
+
+	void StaticMesh::draw() const
+	{
+		m_vao->bind();
+		m_ibo->bind(BufferUsageType::IndexBuffer);
+		GL_CALL(glDrawElements(GL_TRIANGLES, m_ibo->getCount(), GL_UNSIGNED_INT, nullptr));
 	}
 }

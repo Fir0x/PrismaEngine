@@ -4,6 +4,8 @@
 
 #include "glErrors.h"
 
+#include <spdlog/spdlog.h>
+
 namespace BerylEngine
 {
 	VertexArray::VertexArray(const ByteBuffer& vb, const VertexBufferLayout& layout)
@@ -23,10 +25,13 @@ namespace BerylEngine
 
 			offset += elm.count * VertexBufferElement::get_type_size(elm.type);
 		}
+
+		spdlog::trace("Vertex array {} created", m_id);
 	}
 
 	VertexArray::~VertexArray()
 	{
+		spdlog::trace("Vertex array {} destroyed", m_id);
 		GL_CALL(glDeleteVertexArrays(1, &m_id));
 	}
 

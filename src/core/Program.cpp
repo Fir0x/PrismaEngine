@@ -99,6 +99,8 @@ namespace BerylEngine
 		{
 			GL_CALL(glDeleteProgram(m_id));
 		}
+
+		fetchUniformLocations();
 	}
 
 	Program::Program(const std::string& vertex_src, const std::string& fragment_src)
@@ -120,6 +122,8 @@ namespace BerylEngine
 		{
 			GL_CALL(glDeleteProgram(m_id));
 		}
+
+		fetchUniformLocations();
 	}
 
 	Program::Program(const std::string& vertex_src, const std::string& geometry_src, const std::string& fragment_src)
@@ -144,6 +148,8 @@ namespace BerylEngine
 		{
 			GL_CALL(glDeleteProgram(m_id));
 		}
+
+		fetchUniformLocations();
 	}
 
 	Program::~Program()
@@ -199,55 +205,69 @@ namespace BerylEngine
 		GL_CALL(glUseProgram(m_id));
 	}
 
-	int Program::getUniformLocation(const char* name)
+	void Program::fetchUniformLocations()
 	{
-		if (locations.find(name) == locations.end())
-		{
-			int l = glGetUniformLocation(m_id, name); GL_AFTER_CHECK();
-			locations.insert({ name, l });
+		int uniform_count = 0;
+		glGetProgramiv(m_id, GL_ACTIVE_UNIFORMS, &uniform_count);
+
+		for (int i = 0; i != uniform_count; ++i) {
+			char name[1024] = {};
+			int len = 0;
+			int discard = 0;
+			GLenum type = GL_NONE;
+
+			glGetActiveUniform(m_id, i, sizeof(name), &len, &discard, &type, name);
+
+			m_uniformLocations.emplace(name, glGetUniformLocation(m_id, name));
 		}
-
-		return locations.at(name);
 	}
 
-	void Program::setUniform(const char* name, int v0)
+	int Program::getUniformLocation(const char* name) const
+	{
+		if (m_uniformLocations.find(name) == m_uniformLocations.end())
+			return -1;
+
+		return m_uniformLocations.at(name);
+	}
+
+	void Program::setUniform(const char* name, int v0) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glUniform1i(location, v0));
+		GL_CALL(glProgramUniform1i(m_id, location, v0));
 	}
 
-	void Program::setUniform(const char* name, float v0)
+	void Program::setUniform(const char* name, float v0) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glUniform1f(location, v0));
+		GL_CALL(glProgramUniform1f(m_id, location, v0));
 	}
 
-	void Program::setUniform(const char* name, float v0, float v1, float v2)
+	void Program::setUniform(const char* name, float v0, float v1, float v2) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glUniform3f(location, v0, v1, v2));
+		GL_CALL(glProgramUniform3f(m_id, location, v0, v1, v2));
 	}
 
-	void Program::setUniform(const char* name, const glm::vec3& v)
+	void Program::setUniform(const char* name, const glm::vec3& v) const
 	{
 		setUniform(name, v.x, v.y, v.z);
 	}
 
-	void Program::setUniform(const char* name, float v0, float v1, float v2, float v3)
+	void Program::setUniform(const char* name, float v0, float v1, float v2, float v3) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glUniform4f(location, v0, v1, v2, v3));
+		GL_CALL(glProgramUniform4f(m_id, location, v0, v1, v2, v3));
 	}
 
-	void Program::setUniform(const char* name, glm::mat3 matrix, bool transpose)
+	void Program::setUniform(const char* name, const glm::mat3& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glUniformMatrix3fv(location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix)));
+		GL_CALL(glProgramUniformMatrix3fv(m_id, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix)));
 	}
 
-	void Program::setUniform(const char* name, glm::mat4 matrix, bool transpose)
+	void Program::setUniform(const char* name, const glm::mat4& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glUniformMatrix4fv(location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix)));
+		GL_CALL(glProgramUniformMatrix4fv(m_id, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix)));
 	}
 }

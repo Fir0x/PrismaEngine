@@ -8,6 +8,8 @@ namespace BerylEngine
 	class TypedBuffer : public ByteBuffer
 	{
 	public:
+		TypedBuffer() = default;
+
 		TypedBuffer(size_t count) : ByteBuffer(count * sizeof(T))
 		{
 		}

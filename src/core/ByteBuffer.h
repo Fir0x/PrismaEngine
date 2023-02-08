@@ -2,9 +2,11 @@
 
 #include "bufferDefs.h"
 
+#include "utils.h"
+
 namespace BerylEngine
 {
-	class ByteBuffer
+	class ByteBuffer : NonCopyable
 	{
 	private:
 		unsigned int m_id;
@@ -13,8 +15,11 @@ namespace BerylEngine
 		size_t m_size;
 
 	public:
+		ByteBuffer() = default;
 		ByteBuffer(size_t size);
 		ByteBuffer(const void* data, size_t size);
+		ByteBuffer(ByteBuffer&&) = default;
+		ByteBuffer& operator=(ByteBuffer&&) = default;
 		~ByteBuffer();
 
 		void bind(BufferUsageType usageType) const;

@@ -26,6 +26,10 @@
     <ClCompile Include="libs\imgui\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="libs\imgui\imgui\imgui_tables.cpp" />
     <ClCompile Include="libs\imgui\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\core\Material.cpp" />
+    <ClCompile Include="src\core\utils.cpp" />
+    <ClCompile Include="src\extra\meshUtilities.cpp" />
+    <ClCompile Include="src\inputManager.cpp" />
     <ClCompile Include="src\scene\Camera.cpp" />
     <ClCompile Include="src\core\ByteBuffer.cpp" />
     <ClCompile Include="src\core\bufferDefs.cpp" />
@@ -35,6 +39,9 @@
     <ClCompile Include="src\core\VertexArray.cpp" />
     <ClCompile Include="src\core\glErrors.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\scene\components\MeshRenderer.cpp" />
+    <ClCompile Include="src\scene\components\Transform.cpp" />
+    <ClCompile Include="src\scene\Object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\imgui\imgui\imconfig.h" />
@@ -46,6 +53,10 @@
     <ClInclude Include="libs\imgui\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\core\Material.h" />
+    <ClInclude Include="src\core\utils.h" />
+    <ClInclude Include="src\extra\meshUtilities.h" />
+    <ClInclude Include="src\inputManager.h" />
     <ClInclude Include="src\scene\Camera.h" />
     <ClInclude Include="src\core\ByteBuffer.h" />
     <ClInclude Include="src\core\bufferDefs.h" />
@@ -56,6 +67,13 @@
     <ClInclude Include="src\core\VertexBufferLayout.h" />
     <ClInclude Include="src\core\glErrors.h" />
     <ClInclude Include="src\core\TypedBuffer.h" />
+    <ClInclude Include="src\scene\components\MeshRenderer.h" />
+    <ClInclude Include="src\scene\components\Transform.h" />
+    <ClInclude Include="src\scene\Object.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\basic.frag" />
+    <None Include="shaders\basic.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -18,9 +18,10 @@ namespace BerylEngine
 	{
 	private:
 		unsigned int m_id;
-		std::unordered_map<std::string, int> locations;
+		std::unordered_map<std::string, int> m_uniformLocations;
 
-		int getUniformLocation(const char* name);
+		void fetchUniformLocations();
+		int getUniformLocation(const char* name) const;
 
 	public:
 		Program(const std::string& compute_src);
@@ -30,16 +31,17 @@ namespace BerylEngine
 
 		static std::shared_ptr<Program> fromFiles(const std::string& compute_path);
 		static std::shared_ptr<Program> fromFiles(const std::string& vertex_path, const std::string& fragment_path);
-		static std::shared_ptr<Program> fromFiles(const std::string& vertex_path, const std::string& geometry_path, const std::string& fragment_path);
+		static std::shared_ptr<Program> fromFiles(const std::string& vertex_path, const std::string& geometry_path,
+													const std::string& fragment_path);
 
 		void use();
 
-		void setUniform(const char* name, int v0);
-		void setUniform(const char* name, float v0);
-		void setUniform(const char* name, float v0, float v1, float v2);
-		void setUniform(const char* name, const glm::vec3& v);
-		void setUniform(const char* name, float v0, float v1, float v2, float v3);
-		void setUniform(const char* name, glm::mat3 matrix, bool transpose = false);
-		void setUniform(const char* name, glm::mat4 matrix, bool transpose = false);
+		void setUniform(const char* name, int v0) const;
+		void setUniform(const char* name, float v0) const;
+		void setUniform(const char* name, float v0, float v1, float v2) const;
+		void setUniform(const char* name, const glm::vec3& v) const;
+		void setUniform(const char* name, float v0, float v1, float v2, float v3) const;
+		void setUniform(const char* name, const glm::mat3& matrix, bool transpose = false) const;
+		void setUniform(const char* name, const glm::mat4& matrix, bool transpose = false) const;
 	};
 }

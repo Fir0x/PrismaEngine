@@ -2,17 +2,20 @@
 
 #include "ByteBuffer.h"
 #include "VertexBufferLayout.h"
+#include "utils.h"
 
 namespace BerylEngine
 {
-	class VertexArray
+	class VertexArray : NonCopyable
 	{
 	private:
 		unsigned int m_id;
 
 	public:
+		VertexArray() = default;
 		VertexArray(const ByteBuffer& vb, const VertexBufferLayout& layout);
-		VertexArray(const VertexArray&) = delete;
+		VertexArray(VertexArray&&) = default;
+		VertexArray& operator=(VertexArray&&) = default;
 		~VertexArray();
 
 		void bind() const;
