@@ -61,40 +61,42 @@ int main(void)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 
-    auto plane = MeshUtilities::staticPlane();
-    float aspectRatio = (float)settings.screen_width / settings.screen_height;
-    Camera camera(glm::perspective(45.0f, aspectRatio, 0.1f, 100.0f), glm::vec3(0.0f, 0.0f, 5.0f));
-    linkCamera(&camera);
-    glfwSetCursorPosCallback(window, mouse_callback);
-    glfwSetFramebufferSizeCallback(window, screen_size_callback);
-
-    auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag");
-    Material material(program);
-    MeshRenderer renderer(plane, material);
-    Object planeObject(renderer);
-
-    struct FrameContext
     {
-        glm::mat4 viewMatrix;
-        glm::mat4 projectionMatrix;
-    };
+        auto plane = MeshUtilities::staticPlane();
+        float aspectRatio = (float)settings.screen_width / settings.screen_height;
+        Camera camera(glm::perspective(45.0f, aspectRatio, 0.1f, 100.0f), glm::vec3(0.0f, 0.0f, 5.0f));
+        linkCamera(&camera);
+        glfwSetCursorPosCallback(window, mouse_callback);
+        glfwSetFramebufferSizeCallback(window, screen_size_callback);
 
-    spdlog::info("Main loop start now");
-    while (!glfwWindowShouldClose(window))
-    {
-        processInput(window);
+        auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag");
+        Material material(program);
+        MeshRenderer renderer(plane, material);
+        Object planeObject(renderer);
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        FrameContext context = { camera.getViewMatrix(), camera.getProjectionMatrix() };
-        TypedBuffer<FrameContext> contextBuffer(&context, 1);
-        contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
+        struct FrameContext
+        {
+            glm::mat4 viewMatrix;
+            glm::mat4 projectionMatrix;
+        };
 
-        planeObject.draw();
+        spdlog::info("Main loop start now");
+        while (!glfwWindowShouldClose(window))
+        {
+            processInput(window);
 
-        glfwSwapBuffers(window);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glfwPollEvents();
+            FrameContext context = { camera.getViewMatrix(), camera.getProjectionMatrix() };
+            TypedBuffer<FrameContext> contextBuffer(&context, 1);
+            contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
+
+            planeObject.draw();
+
+            glfwSwapBuffers(window);
+
+            glfwPollEvents();
+        }
     }
 
     glfwTerminate();
