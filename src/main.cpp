@@ -51,7 +51,7 @@ int main(void)
         return -1;
     }
 
-    spdlog::set_level(spdlog::level::trace);
+    spdlog::set_level(spdlog::level::debug);
     spdlog::info("Beryl Engine started");
     spdlog::info("OpenGL version: {}", (char*)glGetString(GL_VERSION));
 

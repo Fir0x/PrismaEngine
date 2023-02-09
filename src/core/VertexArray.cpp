@@ -31,8 +31,9 @@ namespace BerylEngine
 
 	VertexArray::~VertexArray()
 	{
-		spdlog::trace("Vertex array {} destroyed", m_id);
 		GL_CALL(glDeleteVertexArrays(1, &m_id));
+
+		spdlog::trace("Vertex array {} deleted", m_id);
 	}
 
 	void VertexArray::bind() const

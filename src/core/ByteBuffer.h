@@ -16,8 +16,10 @@ namespace BerylEngine
 
 	public:
 		ByteBuffer() = default;
-		ByteBuffer(size_t size);
+
 		ByteBuffer(const void* data, size_t size);
+		ByteBuffer(size_t size);
+
 		ByteBuffer(ByteBuffer&&) = default;
 		ByteBuffer& operator=(ByteBuffer&&) = default;
 		~ByteBuffer();

@@ -22,21 +22,13 @@ namespace BerylEngine
 		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
 		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+
+		spdlog::trace("Texture {} created. Width = {} | Height = {}.", m_id, width, height);
 	}
 
 	Texture::Texture(int width, int height, unsigned char* data)
+		: Texture(width, height)
 	{
-		m_width = width;
-		m_height = height;
-
-		GL_CALL(glGenTextures(1, &m_id));
-		GL_CALL(glBindTexture(GL_TEXTURE_2D, m_id));
-
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
@@ -50,7 +42,7 @@ namespace BerylEngine
 		unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		if (data == nullptr)
 		{
-			spdlog::error("Failed to load texture from {}", path);
+			spdlog::error("Failed to load texture from {}.", path);
 			return 0;
 		}
 
@@ -58,7 +50,7 @@ namespace BerylEngine
 
 		stbi_image_free(data);
 
-		spdlog::trace("Loaded texture from {}", path);
+		spdlog::trace("Loaded texture from {}.", path);
 
 		return texture;
 	}
@@ -66,6 +58,8 @@ namespace BerylEngine
 	Texture::~Texture()
 	{
 		GL_CALL(glDeleteTextures(1, &m_id));
+
+		spdlog::trace("Texture {} deleted.", m_id);
 	}
 
 	unsigned int Texture::getId() const
