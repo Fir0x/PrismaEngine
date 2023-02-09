@@ -1,11 +1,10 @@
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <spdlog/spdlog.h>
 
+#include "inputManager.h"
 #include "scene/Camera.h"
 #include "scene/Object.h"
 #include "extra/meshUtilities.h"
-#include "inputManager.h"
 
 static struct Settings
 {
