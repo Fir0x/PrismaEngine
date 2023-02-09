@@ -57,12 +57,8 @@ int main(void)
 
     glViewport(0, 0, settings.screen_width, settings.screen_height);
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
     glDepthRange(0.0, 1.0);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glEnable(GL_CULL_FACE);
-    glFrontFace(GL_CCW);
     glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 
     auto plane = MeshUtilities::staticPlane();
@@ -101,9 +97,9 @@ int main(void)
         glfwPollEvents();
     }
 
-    spdlog::info("Closing application");
-
     glfwTerminate();
+
+    spdlog::info("Exiting application now");
 
     return 0;
 }
