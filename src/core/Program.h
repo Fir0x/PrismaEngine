@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include <span>
 
 #include <glm/glm.hpp>
 
@@ -28,6 +29,12 @@ namespace BerylEngine
 		Program(const std::string& vertex_src, const std::string& fragment_src);
 		Program(const std::string& vertex_src, const std::string& geometry_src, const std::string& fragment_src);
 		~Program();
+
+		static std::shared_ptr<Program> fromFiles(const std::string& compute_path, std::span<std::string> defines);
+		static std::shared_ptr<Program> fromFiles(const std::string& vertex_path, const std::string& fragment_path,
+													std::span<std::string> defines);
+		static std::shared_ptr<Program> fromFiles(const std::string& vertex_path, const std::string& geometry_path,
+													const std::string& fragment_path, std::span<std::string> defines);
 
 		static std::shared_ptr<Program> fromFiles(const std::string& compute_path);
 		static std::shared_ptr<Program> fromFiles(const std::string& vertex_path, const std::string& fragment_path);

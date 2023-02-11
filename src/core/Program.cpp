@@ -157,47 +157,79 @@ namespace BerylEngine
 		GL_CALL(glDeleteProgram(m_id));
 	}
 
-	static std::string loadShaderFile(const std::string& path)
+	static std::string loadShaderFile(const std::string& path, std::span<std::string> defines)
 	{
 		std::ifstream stream(path);
 		std::stringstream shader;
 		if (stream.is_open())
-			shader << stream.rdbuf();
+		{
+			std::string line;
+			bool allowAdditions = false;
+			while (std::getline(stream, line))
+			{
+				if (line.starts_with("#version"))
+				{
+					allowAdditions = true;
+					shader << line << "\n";
+					for (const auto& def : defines)
+						shader << "#define " << def << " 1\n";
+				}
+				else
+					shader << line << "\n";
+			}
+		}
 
 		return shader.str();
 	}
 
-	std::shared_ptr<Program> Program::fromFiles(const std::string& compute_path)
+	std::shared_ptr<Program> Program::fromFiles(const std::string& compute_path, std::span<std::string> defines)
 	{
-		auto compute_src = loadShaderFile(compute_path);
+		auto compute_src = loadShaderFile(compute_path, defines);
 
 		spdlog::debug("Generating program from:\n- Compute: {}", compute_path);
 
 		return std::make_shared<Program>(compute_src);
 	}
 
-	std::shared_ptr<Program> Program::fromFiles(const std::string& vertex_path, const std::string& fragment_path)
+	std::shared_ptr<Program> Program::fromFiles(const std::string& vertex_path, const std::string& fragment_path,
+												std::span<std::string> defines)
 	{
-		auto vertex_src = loadShaderFile(vertex_path);
-		auto fragment_src = loadShaderFile(fragment_path);
+		auto vertex_src = loadShaderFile(vertex_path, defines);
+		auto fragment_src = loadShaderFile(fragment_path, defines);
 
 		spdlog::debug("Generating program from:\n- Vertex: {}\n- Fragment: {}", vertex_path, fragment_path);
 
 		return std::make_shared<Program>(vertex_src, fragment_src);
 	}
 
+	std::shared_ptr<Program> Program::fromFiles(const std::string& vertex_path, const std::string& geometry_path,
+												const std::string& fragment_path, std::span<std::string> defines)
+	{
+		auto vertex_src = loadShaderFile(vertex_path, defines);
+		auto geometry_src = loadShaderFile(geometry_path, defines);
+		auto fragment_src = loadShaderFile(fragment_path, defines);
+
+		spdlog::debug("Generating program from:\n- Vertex: {}\n- Geometry: {}\n- Fragment: {}", vertex_path,
+			geometry_path, fragment_path);
+
+		return std::make_shared<Program>(vertex_src, geometry_src, fragment_src);
+	}
+
+	std::shared_ptr<Program> Program::fromFiles(const std::string& compute_path)
+	{
+		return fromFiles(compute_path, std::span<std::string>());
+	}
+
+	std::shared_ptr<Program> Program::fromFiles(const std::string& vertex_path, const std::string& fragment_path)
+	{
+		return fromFiles(vertex_path, fragment_path, std::span<std::string>());
+	}
+
 	std::shared_ptr<Program> Program::fromFiles(const std::string& vertex_path,
 												const std::string& geometry_path,
 												const std::string& fragment_path)
 	{
-		auto vertex_src = loadShaderFile(vertex_path);
-		auto geometry_src = loadShaderFile(geometry_path);
-		auto fragment_src = loadShaderFile(fragment_path);
-
-		spdlog::debug("Generating program from:\n- Vertex: {}\n- Geometry: {}\n- Fragment: {}", vertex_path,
-						geometry_path, fragment_path);
-
-		return std::make_shared<Program>(vertex_src, geometry_src, fragment_src);
+		return fromFiles(vertex_path, geometry_path, fragment_path, std::span<std::string>());
 	}
 
 	void Program::use()

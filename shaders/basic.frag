@@ -8,5 +8,9 @@ in vec2 fragUV;
 
 void main()
 {
+#ifdef SHOW_UV
 	output_color = vec4(fragUV, 0.0, 1.0);
+#else
+	output_color = vec4(1.0, 0.0, 0.0, 1.0);
+#endif
 }
