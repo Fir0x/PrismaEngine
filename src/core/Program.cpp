@@ -157,22 +157,77 @@ namespace BerylEngine
 		GL_CALL(glDeleteProgram(m_id));
 	}
 
+	static std::string retrieveInclude(const std::string& includeLine, const std::string& startPath)
+	{
+		char startGuard = '\"';
+		size_t startGuardPos = includeLine.find(startGuard);
+		if (startGuardPos == std::string::npos)
+		{
+			startGuard = '<';
+			startGuardPos = includeLine.find(startGuard);
+			if (startGuardPos == std::string::npos)
+			{
+				spdlog::warn("Include first guard not found. Nothing will be included.");
+				return "";
+			}
+		}
+
+		size_t endGuardPos = includeLine.find(startGuard == '\"' ? '\"' : '>', startGuardPos + 1);
+		if (endGuardPos == std::string::npos)
+		{
+			spdlog::warn("Include second guard not found. Nothing will be included.");
+			return "";
+		}
+
+		const std::string includePath = includeLine.substr(startGuardPos + 1, endGuardPos - startGuardPos - 1);
+		std::ifstream stream(startPath + includePath);
+		std::stringstream includeContent;
+		if (stream.is_open())
+			includeContent << stream.rdbuf();
+		else
+			spdlog::warn("Include {} not found. Nothing will be included.\nInclude path was evaluated at {}.",
+				includePath, startPath + includePath);
+
+		return includeContent.str();
+	}
+
 	static std::string loadShaderFile(const std::string& path, std::span<std::string> defines)
 	{
 		std::ifstream stream(path);
 		std::stringstream shader;
 		if (stream.is_open())
 		{
+			size_t folderPathEnd = path.find_last_of("\\/");
+			const std::string folderPath = folderPathEnd == std::string::npos ? "./"
+				: path.substr(0, folderPathEnd + 1);
+
 			std::string line;
-			bool allowAdditions = false;
+			bool isFirstLine = true;
 			while (std::getline(stream, line))
 			{
-				if (line.starts_with("#version"))
+				if (isFirstLine)
 				{
-					allowAdditions = true;
-					shader << line << "\n";
-					for (const auto& def : defines)
-						shader << "#define " << def << " 1\n";
+					if (line.starts_with("#version"))
+					{
+						shader << line << "\n";
+						for (const auto& def : defines)
+							shader << "#define " << def << " 1\n";
+					}
+					else
+					{
+						spdlog::warn("Loading of {} was cancelled as it does not specify GLSL version on first line.",
+							path);
+						return "";
+					}
+
+					isFirstLine = false;
+					continue;
+				}
+
+				if (line[0] == '#')
+				{
+					if (line.starts_with("#include"))
+						shader << retrieveInclude(line, folderPath) << "\n";
 				}
 				else
 					shader << line << "\n";

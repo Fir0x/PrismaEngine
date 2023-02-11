@@ -69,7 +69,7 @@ int main(void)
         glfwSetFramebufferSizeCallback(window, screen_size_callback);
 
         std::string defines[] = { "SHOW_UV" };
-        auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag", std::span(defines));
+        auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag");
         Material material(program);
         MeshRenderer renderer(plane, material);
         Object planeObject(renderer);
