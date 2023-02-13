@@ -1,4 +1,4 @@
-#include "Object.h"
+#include "SceneObject.h"
 
 #include <GL/glew.h>
 #include <glm/ext.hpp>

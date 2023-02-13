@@ -3,7 +3,7 @@
 
 #include "inputManager.h"
 #include "scene/Camera.h"
-#include "scene/Object.h"
+#include "scene/SceneObject.h"
 #include "extra/meshUtilities.h"
 
 static struct Settings
