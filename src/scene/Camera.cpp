@@ -4,46 +4,49 @@
 
 namespace BerylEngine
 {
-	Camera::Camera(glm::mat4 frustum, glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp, float speed)
+	Camera::Camera(glm::mat4 frustum, glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp)
 	{
-		initialize(frustum, pos, yaw, pitch, worldUp, speed);
+		initialize(frustum, pos, yaw, pitch, worldUp);
 	}
 
-	Camera::Camera(glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp, float speed)
+	Camera::Camera(glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp)
 	{
-		initialize(glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f), pos, yaw, pitch, worldUp, speed);
+		initialize(glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f), pos, yaw, pitch, worldUp);
 	}
 
 
-	void Camera::initialize(glm::mat4 frustum, glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp, float speed)
+	void Camera::initialize(glm::mat4 frustum, glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp)
 	{
-		m_pos = pos;
-
 		m_yaw = yaw;
 		m_pitch = pitch;
 		m_worldUp = worldUp;
-
-		updateVectors();
-
 		m_projMat = frustum;
+
+		glm::vec3 forward;
+		forward.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+		forward.y = sin(glm::radians(m_pitch));
+		forward.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+		forward = glm::normalize(forward);
+
+		m_viewMat = glm::lookAt(pos, pos + forward, m_worldUp);
 	}
 
-	void Camera::updateVectors()
+	void Camera::updateView()
 	{
 		glm::vec3 forward;
 		forward.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
 		forward.y = sin(glm::radians(m_pitch));
 		forward.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-		m_forward = glm::normalize(forward);
+		forward = glm::normalize(forward);
 
-		m_right = glm::normalize(glm::cross(m_forward, m_worldUp));
-		m_up = glm::normalize(glm::cross(m_right, m_forward));
+		glm::vec3 position = getPosition();
+		m_viewMat = glm::lookAt(position, position + forward, m_worldUp);
 	}
 
-	void Camera::translate(const glm::vec3& trans)
+	void Camera::translate(const glm::vec3& translation)
 	{
-		m_pos += trans;
-		m_processView = true;
+		glm::vec3 position = getPosition() + translation;
+		m_viewMat = glm::lookAt(position, position + forward(), m_worldUp);
 	}
 
 	void Camera::translate(float x, float y, float z)
@@ -55,22 +58,14 @@ namespace BerylEngine
 	{
 		m_pitch += angle;
 		if (m_pitch > 89.0f)
-		{
 			m_pitch = 89.0f;
-		}
 		else if (m_pitch < -89.0f)
-		{
 			m_pitch = -89.0f;
-		}
-
-		m_processView = true;
 	}
 
 	void Camera::yaw(float angle)
 	{
 		m_yaw += angle;
-
-		m_processView = true;
 	}
 
 	void Camera::rotate(float pitchAngle, float yawAngle)
@@ -78,32 +73,26 @@ namespace BerylEngine
 		pitch(pitchAngle);
 		yaw(yawAngle);
 
-		updateVectors();
+		updateView();
 	}
 
 	glm::vec3 Camera::right() const
 	{
-		return m_right;
+		return glm::row(m_viewMat, 0);
 	}
 
 	glm::vec3 Camera::up() const
 	{
-		return m_up;
+		return glm::row(m_viewMat, 1);
 	}
 
 	glm::vec3 Camera::forward() const
 	{
-		return m_forward;
+		return -glm::row(m_viewMat, 2);
 	}
 
 	glm::mat4 Camera::getViewMatrix()
 	{
-		if (m_processView)
-		{
-			m_viewMat = glm::lookAt(m_pos, m_pos + m_forward, m_worldUp);
-			m_processView = false;
-		}
-
 		return m_viewMat;
 	}
 
@@ -114,7 +103,11 @@ namespace BerylEngine
 
 	glm::vec3 Camera::getPosition() const
 	{
-		return m_pos;
+		glm::vec3 pos(0.0f);
+		for (int i = 0; i < 3; i++)
+			pos -= glm::vec3(m_viewMat[0][i], m_viewMat[1][i], m_viewMat[2][i]) * m_viewMat[3][i];
+
+		return pos;
 	}
 
 	void Camera::onScreenSizeChange(int w, int h)

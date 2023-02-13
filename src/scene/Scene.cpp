@@ -24,6 +24,7 @@ namespace BerylEngine
 		};
 
 		FrameContext context = { camera.getViewMatrix(), camera.getProjectionMatrix() };
+
 		TypedBuffer<FrameContext> contextBuffer(&context, 1);
 		contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
 
