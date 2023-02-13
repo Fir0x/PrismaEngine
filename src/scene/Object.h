@@ -8,7 +8,7 @@
 
 namespace BerylEngine
 {
-	class Object
+	class SceneObject
 	{
 	private:
 		Transform m_transform;
@@ -17,8 +17,8 @@ namespace BerylEngine
 		glm::mat3 processNormalMatrix(const glm::mat4& model, const glm::mat4& view) const;
 
 	public:
-		Object(const MeshRenderer& renderer);
-		Object(const glm::vec3& pos, const MeshRenderer& renderer);
+		SceneObject(const MeshRenderer& renderer);
+		SceneObject(const glm::vec3& pos, const MeshRenderer& renderer);
 
 		Transform& transform();
 		void draw() const;

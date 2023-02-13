@@ -72,7 +72,7 @@ int main(void)
         auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag");
         Material material(program);
         MeshRenderer renderer(plane, material);
-        Object planeObject(renderer);
+        SceneObject planeObject(renderer);
 
         struct FrameContext
         {
