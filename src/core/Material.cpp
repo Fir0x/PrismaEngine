@@ -149,6 +149,6 @@ namespace BerylEngine
 
 		glDepthMask(m_writeDepth ? GL_TRUE : GL_FALSE);
 
-		m_program->use();
+		m_program->bind();
 	}
 }

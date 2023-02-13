@@ -41,7 +41,7 @@ namespace BerylEngine
 		static std::shared_ptr<Program> fromFiles(const std::string& vertex_path, const std::string& geometry_path,
 													const std::string& fragment_path);
 
-		void use();
+		void bind();
 
 		void setUniform(const char* name, int v0) const;
 		void setUniform(const char* name, float v0) const;

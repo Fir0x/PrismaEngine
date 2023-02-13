@@ -287,7 +287,7 @@ namespace BerylEngine
 		return fromFiles(vertex_path, geometry_path, fragment_path, std::span<std::string>());
 	}
 
-	void Program::use()
+	void Program::bind()
 	{
 		GL_CALL(glUseProgram(m_id));
 	}
