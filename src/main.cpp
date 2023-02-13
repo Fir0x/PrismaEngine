@@ -3,7 +3,7 @@
 
 #include "inputManager.h"
 #include "scene/Camera.h"
-#include "scene/SceneObject.h"
+#include "scene/Scene.h"
 #include "extra/meshUtilities.h"
 
 static struct Settings
@@ -74,11 +74,8 @@ int main(void)
         MeshRenderer renderer(plane, material);
         SceneObject planeObject(renderer);
 
-        struct FrameContext
-        {
-            glm::mat4 viewMatrix;
-            glm::mat4 projectionMatrix;
-        };
+        Scene scene;
+        scene.addObject(planeObject);
 
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
@@ -87,11 +84,7 @@ int main(void)
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            FrameContext context = { camera.getViewMatrix(), camera.getProjectionMatrix() };
-            TypedBuffer<FrameContext> contextBuffer(&context, 1);
-            contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
-
-            planeObject.draw();
+            scene.render(camera);
 
             glfwSwapBuffers(window);
 

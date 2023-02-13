@@ -41,6 +41,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scene\components\MeshRenderer.cpp" />
     <ClCompile Include="src\scene\components\Transform.cpp" />
+    <ClCompile Include="src\scene\Scene.cpp" />
     <ClCompile Include="src\scene\SceneObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +70,7 @@
     <ClInclude Include="src\core\TypedBuffer.h" />
     <ClInclude Include="src\scene\components\MeshRenderer.h" />
     <ClInclude Include="src\scene\components\Transform.h" />
+    <ClInclude Include="src\scene\Scene.h" />
     <ClInclude Include="src\scene\SceneObject.h" />
   </ItemGroup>
   <ItemGroup>
