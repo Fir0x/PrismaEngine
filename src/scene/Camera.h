@@ -43,7 +43,7 @@ namespace BerylEngine
 		glm::vec3 forward() const;
 		glm::vec3 position() const;
 
-		glm::mat4 viewMatrix();
+		glm::mat4 viewMatrix() const;
 		glm::mat4 projectionMatrix() const;
 
 		void translate(const glm::vec3& translation);

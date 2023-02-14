@@ -13,7 +13,7 @@ namespace BerylEngine
 		size_t addObject(const SceneObject& object);
 		void removeObject(size_t index);
 
-		void render(Camera& camera);
+		void render(const Camera& camera) const;
 
 	private:
 		std::vector<SceneObject> m_objects;

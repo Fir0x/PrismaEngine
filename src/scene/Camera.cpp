@@ -46,7 +46,7 @@ namespace BerylEngine
 		return -glm::row(m_viewMatrix, 2);
 	}
 
-	glm::mat4 Camera::viewMatrix()
+	glm::mat4 Camera::viewMatrix() const
 	{
 		return m_viewMatrix;
 	}

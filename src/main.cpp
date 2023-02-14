@@ -2,8 +2,7 @@
 #include <spdlog/spdlog.h>
 
 #include "inputManager.h"
-#include "scene/Camera.h"
-#include "scene/Scene.h"
+#include "scene/SceneView.h"
 #include "extra/meshUtilities.h"
 
 static struct Settings
@@ -63,8 +62,9 @@ int main(void)
     {
         auto plane = MeshUtilities::staticPlane();
         float aspectRatio = (float)settings.screen_width / settings.screen_height;
-        Camera camera(glm::perspective(45.0f, aspectRatio, 0.1f, 100.0f), glm::vec3(0.0f, 0.0f, 5.0f));
-        linkCamera(&camera);
+        Scene scene;
+        SceneView sceneView(scene, glm::perspective(45.0f, aspectRatio, 0.1f, 100.0f), glm::vec3(0.0f, 0.0f, 5.0f));
+        linkCamera(&sceneView.camera());
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, screen_size_callback);
 
@@ -74,7 +74,6 @@ int main(void)
         MeshRenderer renderer(plane, material);
         SceneObject planeObject(renderer);
 
-        Scene scene;
         scene.addObject(planeObject);
 
         spdlog::info("Main loop start now");
@@ -84,7 +83,7 @@ int main(void)
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            scene.render(camera);
+            sceneView.render();
 
             glfwSwapBuffers(window);
 

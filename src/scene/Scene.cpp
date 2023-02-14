@@ -15,7 +15,7 @@ namespace BerylEngine
 		m_objects.erase(m_objects.begin() + index);
 	}
 
-	void Scene::render(Camera& camera)
+	void Scene::render(const Camera& camera) const
 	{
 		struct FrameContext
 		{
