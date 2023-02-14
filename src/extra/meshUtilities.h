@@ -5,4 +5,5 @@
 namespace BerylEngine::MeshUtilities
 {
 	std::shared_ptr<StaticMesh> staticPlane(unsigned int subdivision = 0);
+	std::shared_ptr<StaticMesh> staticCube();
 }

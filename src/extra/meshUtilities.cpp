@@ -43,4 +43,143 @@ namespace BerylEngine::MeshUtilities
 
 		return std::make_shared<StaticMesh>(vertices, indices);
 	}
+
+	std::shared_ptr<StaticMesh> staticCube()
+	{
+		std::vector<StaticMesh::Vertex> vertices;
+		std::vector<unsigned int> indices;
+
+		{
+			// Front face
+			glm::vec3 normal(0.0f, 0.0f, 1.0f);
+			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, 0.5f }, normal, { 0.0f, 0.33333f } };
+			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
+			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.0f, 0.0f } };
+			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.0f, 0.33333f } };
+
+			vertices.push_back(bottomLeft);
+			vertices.push_back(topRight);
+			vertices.push_back(topLeft);
+			vertices.push_back(bottomRight);
+
+			indices.push_back(0);
+			indices.push_back(1);
+			indices.push_back(2);
+			indices.push_back(0);
+			indices.push_back(3);
+			indices.push_back(1);
+		}
+
+		{
+			// Left face
+			glm::vec3 normal(-1.0f, 0.0f, 0.0f);
+			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
+			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
+			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.33333f } };
+			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
+
+			unsigned int offset = vertices.size();
+			vertices.push_back(bottomLeft);
+			vertices.push_back(topRight);
+			vertices.push_back(topLeft);
+			vertices.push_back(bottomRight);
+
+			indices.push_back(offset);
+			indices.push_back(offset + 1);
+			indices.push_back(offset + 2);
+			indices.push_back(offset);
+			indices.push_back(offset + 3);
+			indices.push_back(offset + 1);
+		}
+
+		{
+			// Back face
+			glm::vec3 normal(0.0f, 0.0f, -1.0f);
+			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.0f, 1.0f } };
+			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, -0.5f }, normal, { 0.33333f, 1.0f } };
+			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
+			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.66666f } };
+
+			unsigned int offset = vertices.size();
+			vertices.push_back(bottomLeft);
+			vertices.push_back(topRight);
+			vertices.push_back(topLeft);
+			vertices.push_back(bottomRight);
+
+			indices.push_back(offset);
+			indices.push_back(offset + 1);
+			indices.push_back(offset + 2);
+			indices.push_back(offset);
+			indices.push_back(offset + 3);
+			indices.push_back(offset + 1);
+		}
+
+		{
+			// Right face
+			glm::vec3 normal(1.0f, 0.0f, 0.0f);
+			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
+			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.66666f } };
+			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
+			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.33333f } };
+
+			unsigned int offset = vertices.size();
+			vertices.push_back(bottomLeft);
+			vertices.push_back(topRight);
+			vertices.push_back(topLeft);
+			vertices.push_back(bottomRight);
+
+			indices.push_back(offset);
+			indices.push_back(offset + 1);
+			indices.push_back(offset + 2);
+			indices.push_back(offset);
+			indices.push_back(offset + 3);
+			indices.push_back(offset + 1);
+		}
+
+		{
+			// Bottom face
+			glm::vec3 normal(0.0f, -1.0f, 0.0f);
+			StaticMesh::Vertex topLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
+			StaticMesh::Vertex topRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
+			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.0f } };
+			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
+
+			unsigned int offset = vertices.size();
+			vertices.push_back(bottomLeft);
+			vertices.push_back(topRight);
+			vertices.push_back(topLeft);
+			vertices.push_back(bottomRight);
+
+			indices.push_back(offset);
+			indices.push_back(offset + 1);
+			indices.push_back(offset + 2);
+			indices.push_back(offset);
+			indices.push_back(offset + 3);
+			indices.push_back(offset + 1);
+		}
+
+		{
+			// Top face
+			glm::vec3 normal(0.0f, 1.0f, 0.0f);
+			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.33333f } };
+			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, -0.5f }, normal, { 1.0f, 0.33333f } };
+			StaticMesh::Vertex bottomLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.66666f, 0.0f } };
+			StaticMesh::Vertex bottomRight = { { -0.5f, 0.5f, 0.5f }, normal, { 1.0f, 0.0f } };
+
+			unsigned int offset = vertices.size();
+			vertices.push_back(bottomLeft);
+			vertices.push_back(topRight);
+			vertices.push_back(topLeft);
+			vertices.push_back(bottomRight);
+
+			indices.push_back(offset);
+			indices.push_back(offset + 2);
+			indices.push_back(offset + 1);
+			indices.push_back(offset);
+			indices.push_back(offset + 1);
+			indices.push_back(offset + 3);
+		}
+
+		return std::make_shared<StaticMesh>(vertices, indices);
+	}
 }
