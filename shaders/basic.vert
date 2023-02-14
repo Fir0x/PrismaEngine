@@ -1,14 +1,10 @@
 #version 450
 
+#include "defines/structs.glsl"
+
 layout(location=0) in vec3 position;
 layout(location=1) in vec3 normal;
 layout(location=2) in vec2 uv;
-
-struct FrameContext
-{
-	mat4 viewMatrix;
-	mat4 projectionMatrix;
-};
 
 layout(binding = 0) uniform Data {
 	FrameContext frame;
@@ -22,10 +18,10 @@ out vec2 fragUV;
 
 void main()
 {
-	fragPos = vec3(frame.viewMatrix * modelMatrix * vec4(position, 1.0));
-	mat3 normalMatrix = mat3(transpose(inverse(frame.viewMatrix * modelMatrix)));
+	fragPos = vec3(frame.camera.viewMatrix * modelMatrix * vec4(position, 1.0));
+	mat3 normalMatrix = mat3(transpose(inverse(frame.camera.viewMatrix * modelMatrix)));
 	fragNormal = normalMatrix * normal;
 	fragUV = uv;
 
-	gl_Position = frame.projectionMatrix * vec4(fragPos, 1.0);
+	gl_Position = frame.camera.projectionMatrix * vec4(fragPos, 1.0);
 }

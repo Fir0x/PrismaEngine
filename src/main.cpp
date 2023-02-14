@@ -60,7 +60,6 @@ int main(void)
     glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 
     {
-        auto plane = MeshUtilities::staticPlane();
         float aspectRatio = (float)settings.screen_width / settings.screen_height;
         Scene scene;
         SceneView sceneView(scene, glm::perspective(45.0f, aspectRatio, 0.1f, 100.0f), glm::vec3(0.0f, 0.0f, 5.0f));
@@ -71,10 +70,12 @@ int main(void)
         std::string defines[] = { "SHOW_UV" };
         auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag");
         Material material(program);
-        MeshRenderer renderer(plane, material);
+        auto mesh = MeshUtilities::staticCube();
+        MeshRenderer renderer(mesh, material);
         SceneObject planeObject(renderer);
 
         scene.addObject(planeObject);
+        scene.addLight({ glm::vec3(0.0f, 1.3f, 0.0f), 1.0f, glm::vec3(1.0f) });
 
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
