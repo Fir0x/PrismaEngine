@@ -15,11 +15,11 @@ namespace BerylEngine
 		float m_pitch = 0;
 		float m_yaw = 0;
 
-		glm::mat4 m_viewMat;
-		glm::mat4 m_projMat;
+		glm::mat4 m_viewMatrix;
+		glm::mat4 m_projMatrix;
 
-		void pitch(float angle);
-		void yaw(float angle);
+		void addPitch(float angle);
+		void addYaw(float angle);
 
 		void initialize(glm::mat4 frustum, glm::vec3 position, float yaw,
 						float pitch, glm::vec3 worldUp);
@@ -38,18 +38,18 @@ namespace BerylEngine
 				float pitch = 0.0f,
 				glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
 
+		glm::vec3 right() const;
+		glm::vec3 up() const;
+		glm::vec3 forward() const;
+		glm::vec3 position() const;
+
+		glm::mat4 viewMatrix();
+		glm::mat4 projectionMatrix() const;
+
 		void translate(const glm::vec3& translation);
 		void translate(float x, float y, float z);
 
 		void rotate(float pitchAngle, float yawAngle);
-
-		glm::vec3 right() const;
-		glm::vec3 up() const;
-		glm::vec3 forward() const;
-
-		glm::mat4 getViewMatrix();
-		glm::mat4 getProjectionMatrix() const;
-		glm::vec3 getPosition() const;
 
 		void onScreenSizeChange(int w, int h);
 	};
