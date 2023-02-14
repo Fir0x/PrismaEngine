@@ -23,7 +23,7 @@ namespace BerylEngine
 			glm::mat4 projectionMatrix;
 		};
 
-		FrameContext context = { camera.getViewMatrix(), camera.getProjectionMatrix() };
+		FrameContext context = { camera.viewMatrix(), camera.projectionMatrix() };
 
 		TypedBuffer<FrameContext> contextBuffer(&context, 1);
 		contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
