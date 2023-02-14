@@ -228,6 +228,8 @@ namespace BerylEngine
 				{
 					if (line.starts_with("#include"))
 						shader << retrieveInclude(line, folderPath) << "\n";
+					else
+						shader << line << "\n";
 				}
 				else
 					shader << line << "\n";
