@@ -5,7 +5,6 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
-#include "glErrors.h"
 #include "utils.h"
 
 namespace BerylEngine
@@ -139,6 +138,6 @@ namespace BerylEngine
 	{
 		m_vao->bind();
 		m_ibo->bind(BufferUsageType::IndexBuffer);
-		GL_CALL(glDrawElements(GL_TRIANGLES, m_ibo->getCount(), GL_UNSIGNED_INT, nullptr));
+		glDrawElements(GL_TRIANGLES, m_ibo->getCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }

@@ -6,8 +6,6 @@
 #include <filesystem>
 #include <spdlog/spdlog.h>
 
-#include "glErrors.h"
-
 namespace BerylEngine
 {
 	Texture::Texture(int width, int height)
@@ -15,13 +13,13 @@ namespace BerylEngine
 		m_width = width;
 		m_height = height;
 
-		GL_CALL(glGenTextures(1, &m_id));
-		GL_CALL(glBindTexture(GL_TEXTURE_2D, m_id));
+		glGenTextures(1, &m_id);
+		glBindTexture(GL_TEXTURE_2D, m_id);
 
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-		GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		spdlog::trace("Texture {} created. Width = {} | Height = {}.", m_id, width, height);
 	}
@@ -57,7 +55,7 @@ namespace BerylEngine
 
 	Texture::~Texture()
 	{
-		GL_CALL(glDeleteTextures(1, &m_id));
+		glDeleteTextures(1, &m_id);
 
 		spdlog::trace("Texture {} deleted.", m_id);
 	}
@@ -69,17 +67,17 @@ namespace BerylEngine
 
 	void Texture::bind() const
 	{
-		GL_CALL(glBindTexture(GL_TEXTURE_2D, m_id));
+		glBindTexture(GL_TEXTURE_2D, m_id);
 	}
 
 	void Texture::unbind() const
 	{
-		GL_CALL(glBindTexture(GL_TEXTURE_2D, 0));
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	void Texture::bindToUnit(const int unit) const
 	{
-		GL_CALL(glActiveTexture(GL_TEXTURE0 + unit));
+		glActiveTexture(GL_TEXTURE0 + unit);
 		bind();
 	}
 }

@@ -12,7 +12,7 @@ namespace BerylEngine
 		ShaderStorage,
 	};
 
-	enum BufferAccessType
+	enum AccessType
 	{
 		Read,
 		Write,
@@ -20,5 +20,5 @@ namespace BerylEngine
 	};
 
 	GLenum usageType2GL(BufferUsageType usageType);
-	GLenum accessType2GL(BufferAccessType accessType);
+	GLenum accessType2GL(AccessType accessType);
 }

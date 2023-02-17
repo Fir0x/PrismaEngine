@@ -7,6 +7,9 @@
 
 namespace BerylEngine
 {
+    bool isDebuggerPresent();
+    void debugBreak();
+
     class NonCopyable {
     public:
         constexpr NonCopyable() = default;

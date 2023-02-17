@@ -1,4 +1,4 @@
-#include "BufferDefs.h"
+#include "graphicsDefs.h"
 
 namespace BerylEngine
 {
@@ -19,11 +19,11 @@ namespace BerylEngine
 		}
 	}
 
-	GLenum accessType2GL(BufferAccessType accessType)
+	GLenum accessType2GL(AccessType accessType)
 	{
-		if (accessType == BufferAccessType::Read)
+		if (accessType == AccessType::Read)
 			return GL_READ_ONLY;
-		else if (accessType == BufferAccessType::Write)
+		else if (accessType == AccessType::Write)
 			return GL_WRITE_ONLY;
 		else
 			return GL_READ_WRITE;

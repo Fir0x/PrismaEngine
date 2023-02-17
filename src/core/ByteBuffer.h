@@ -1,6 +1,6 @@
 #pragma once
 
-#include "bufferDefs.h"
+#include "graphicsDefs.h"
 
 #include "utils.h"
 
@@ -32,6 +32,6 @@ namespace BerylEngine
 			glBindBufferBase(usageType2GL(U), bindingPoint, m_id);
 		}
 
-		void setAccess(BufferAccessType accessType) const;
+		void setAccess(AccessType accessType) const;
 	};
 }

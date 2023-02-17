@@ -2,16 +2,14 @@
 
 #include <GL/glew.h>
 
-#include "glErrors.h"
-
 #include <spdlog/spdlog.h>
 
 namespace BerylEngine
 {
 	VertexArray::VertexArray(const ByteBuffer& vb, const VertexBufferLayout& layout)
 	{
-		GL_CALL(glGenVertexArrays(1, &m_id));
-		GL_CALL(glBindVertexArray(m_id));
+		glGenVertexArrays(1, &m_id);
+		glBindVertexArray(m_id);
 
 		vb.bind(BufferUsageType::VertexBuffer);
 		const auto& elements = layout.get_elements();
@@ -19,9 +17,9 @@ namespace BerylEngine
 		for (unsigned int i = 0; i < elements.size(); i++)
 		{
 			const auto elm = elements[i];
-			GL_CALL(glVertexAttribPointer(i, elm.count, elm.type,
-				elm.normalized, layout.get_stride(), (const void*)offset));
-			GL_CALL(glEnableVertexAttribArray(i));
+			glVertexAttribPointer(i, elm.count, elm.type,
+				elm.normalized, layout.get_stride(), (const void*)offset);
+			glEnableVertexAttribArray(i);
 
 			offset += elm.count * VertexBufferElement::get_type_size(elm.type);
 		}
@@ -31,18 +29,18 @@ namespace BerylEngine
 
 	VertexArray::~VertexArray()
 	{
-		GL_CALL(glDeleteVertexArrays(1, &m_id));
+		glDeleteVertexArrays(1, &m_id);
 
 		spdlog::trace("Vertex array {} deleted", m_id);
 	}
 
 	void VertexArray::bind() const
 	{
-		GL_CALL(glBindVertexArray(m_id));
+		glBindVertexArray(m_id);
 	}
 
 	void VertexArray::unbind() const
 	{
-		GL_CALL(glBindVertexArray(0));
+		glBindVertexArray(0);
 	}
 }

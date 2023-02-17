@@ -3,8 +3,6 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
 
-#include "../core/glErrors.h"
-
 namespace BerylEngine
 {
 	SceneObject::SceneObject(const MeshRenderer& renderer)

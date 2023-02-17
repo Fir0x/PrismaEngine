@@ -6,8 +6,6 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
-#include "glErrors.h"
-
 namespace BerylEngine
 {
 	static std::string glShader2Str(GLenum shaderType)
@@ -29,27 +27,27 @@ namespace BerylEngine
 
 	static unsigned int compileShader(const std::string& source, unsigned int type)
 	{
-		unsigned int id = glCreateShader(type); GL_AFTER_CHECK();
+		unsigned int id = glCreateShader(type);
 
 		const GLchar* src = source.c_str();
-		GL_CALL(glShaderSource(id, 1, &src, 0));
-		GL_CALL(glCompileShader(id));
+		glShaderSource(id, 1, &src, 0);
+		glCompileShader(id);
 
 		GLint compile_status = GL_TRUE;
-		GL_CALL(glGetShaderiv(id, GL_COMPILE_STATUS, &compile_status));
+		glGetShaderiv(id, GL_COMPILE_STATUS, &compile_status);
 
 		if (compile_status != GL_TRUE) {
 			GLint log_size;
-			GL_CALL(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &log_size));
+			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &log_size);
 			char* log = (char*)std::malloc(log_size * sizeof(char));
 			if (log != nullptr) {
-				GL_CALL(glGetShaderInfoLog(id, log_size, &log_size, log));
+				glGetShaderInfoLog(id, log_size, &log_size, log);
 
 				spdlog::error("Failed to compile {} shader:\n{}", glShader2Str(type), log);
 				std::free(log);
 			}
 
-			GL_CALL(glDeleteShader(id));
+			glDeleteShader(id);
 
 			return 0;
 		}
@@ -60,19 +58,19 @@ namespace BerylEngine
 
 	static bool linkProgram(unsigned int programId)
 	{
-		GL_CALL(glLinkProgram(programId));
+		glLinkProgram(programId);
 
 		GLint link_status = GL_TRUE;
-		GL_CALL(glGetProgramiv(programId, GL_LINK_STATUS, &link_status));
+		glGetProgramiv(programId, GL_LINK_STATUS, &link_status);
 
 		if (link_status != GL_TRUE) {
 			GLint log_size;
 			char* log;
-			GL_CALL(glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &log_size));
+			glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &log_size);
 
 			log = (char*)std::malloc((size_t)log_size + 1);
 			if (log != nullptr) {
-				GL_CALL(glGetProgramInfoLog(programId, log_size, &log_size, log));
+				glGetProgramInfoLog(programId, log_size, &log_size, log);
 				spdlog::error("Failed to link program:\n{}", log);
 				std::free(log);
 			}
@@ -85,19 +83,19 @@ namespace BerylEngine
 
 	Program::Program(const std::string& compute_src)
 	{
-		m_id = glCreateProgram(); GL_AFTER_CHECK();
+		m_id = glCreateProgram();
 
 		auto compute = compileShader(compute_src, GL_COMPUTE_SHADER);
 
-		GL_CALL(glAttachShader(m_id, compute));
+		glAttachShader(m_id, compute);
 
 		bool linkSuccess = linkProgram(m_id);
 
-		GL_CALL(glDeleteShader(compute));
+		glDeleteShader(compute);
 
 		if (!linkSuccess)
 		{
-			GL_CALL(glDeleteProgram(m_id));
+			glDeleteProgram(m_id);
 		}
 
 		fetchUniformLocations();
@@ -105,22 +103,22 @@ namespace BerylEngine
 
 	Program::Program(const std::string& vertex_src, const std::string& fragment_src)
 	{
-		m_id = glCreateProgram(); GL_AFTER_CHECK();
+		m_id = glCreateProgram();
 
 		auto vertex = compileShader(vertex_src, GL_VERTEX_SHADER);
 		auto fragment = compileShader(fragment_src, GL_FRAGMENT_SHADER);
 
-		GL_CALL(glAttachShader(m_id, vertex));
-		GL_CALL(glAttachShader(m_id, fragment));
+		glAttachShader(m_id, vertex);
+		glAttachShader(m_id, fragment);
 
 		bool linkSuccess = linkProgram(m_id);
 
-		GL_CALL(glDeleteShader(vertex));
-		GL_CALL(glDeleteShader(fragment));
+		glDeleteShader(vertex);
+		glDeleteShader(fragment);
 
 		if (!linkSuccess)
 		{
-			GL_CALL(glDeleteProgram(m_id));
+			glDeleteProgram(m_id);
 		}
 
 		fetchUniformLocations();
@@ -128,25 +126,25 @@ namespace BerylEngine
 
 	Program::Program(const std::string& vertex_src, const std::string& geometry_src, const std::string& fragment_src)
 	{
-		m_id = glCreateProgram(); GL_AFTER_CHECK();
+		m_id = glCreateProgram();
 
 		auto vertex = compileShader(vertex_src, GL_VERTEX_SHADER);
 		auto geometry = compileShader(geometry_src, GL_GEOMETRY_SHADER);
 		auto fragment = compileShader(fragment_src, GL_FRAGMENT_SHADER);
 
-		GL_CALL(glAttachShader(m_id, vertex));
-		GL_CALL(glAttachShader(m_id, geometry));
-		GL_CALL(glAttachShader(m_id, fragment));
+		glAttachShader(m_id, vertex);
+		glAttachShader(m_id, geometry);
+		glAttachShader(m_id, fragment);
 
 		bool linkSuccess = linkProgram(m_id);
 
-		GL_CALL(glDeleteShader(vertex));
-		GL_CALL(glDeleteShader(geometry));
-		GL_CALL(glDeleteShader(fragment));
+		glDeleteShader(vertex);
+		glDeleteShader(geometry);
+		glDeleteShader(fragment);
 
 		if (!linkSuccess)
 		{
-			GL_CALL(glDeleteProgram(m_id));
+			glDeleteProgram(m_id);
 		}
 
 		fetchUniformLocations();
@@ -154,7 +152,7 @@ namespace BerylEngine
 
 	Program::~Program()
 	{
-		GL_CALL(glDeleteProgram(m_id));
+		glDeleteProgram(m_id);
 	}
 
 	static std::string retrieveInclude(const std::string& includeLine, const std::string& startPath)
@@ -291,7 +289,7 @@ namespace BerylEngine
 
 	void Program::bind()
 	{
-		GL_CALL(glUseProgram(m_id));
+		glUseProgram(m_id);
 	}
 
 	void Program::fetchUniformLocations()
@@ -322,19 +320,19 @@ namespace BerylEngine
 	void Program::setUniform(const char* name, int v0) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glProgramUniform1i(m_id, location, v0));
+		glProgramUniform1i(m_id, location, v0);
 	}
 
 	void Program::setUniform(const char* name, float v0) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glProgramUniform1f(m_id, location, v0));
+		glProgramUniform1f(m_id, location, v0);
 	}
 
 	void Program::setUniform(const char* name, float v0, float v1, float v2) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glProgramUniform3f(m_id, location, v0, v1, v2));
+		glProgramUniform3f(m_id, location, v0, v1, v2);
 	}
 
 	void Program::setUniform(const char* name, const glm::vec3& v) const
@@ -345,18 +343,18 @@ namespace BerylEngine
 	void Program::setUniform(const char* name, float v0, float v1, float v2, float v3) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glProgramUniform4f(m_id, location, v0, v1, v2, v3));
+		glProgramUniform4f(m_id, location, v0, v1, v2, v3);
 	}
 
 	void Program::setUniform(const char* name, const glm::mat3& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glProgramUniformMatrix3fv(m_id, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix)));
+		glProgramUniformMatrix3fv(m_id, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void Program::setUniform(const char* name, const glm::mat4& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		GL_CALL(glProgramUniformMatrix4fv(m_id, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix)));
+		glProgramUniformMatrix4fv(m_id, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
 	}
 }

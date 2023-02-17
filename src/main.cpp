@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
 
+#include "core/graphics.h"
 #include "inputManager.h"
 #include "scene/SceneView.h"
 #include "extra/meshUtilities.h"
@@ -22,6 +23,8 @@ using namespace BerylEngine;
 
 int main(void)
 {
+    spdlog::set_level(spdlog::level::debug);
+
     GLFWwindow* window;
 
     // Initialize the library
@@ -42,22 +45,14 @@ int main(void)
 
     // Make the window's context current
     glfwMakeContextCurrent(window);
-    
-    if (glewInit() != GLEW_OK)
-    {
-        spdlog::critical("Failed to init GLEW");
-        return -1;
-    }
 
-    spdlog::set_level(spdlog::level::debug);
-    spdlog::info("Beryl Engine started");
-    spdlog::info("OpenGL version: {}", (char*)glGetString(GL_VERSION));
+    spdlog::info("Window initialized.");
+
+    initGraphicsAPI();
 
     glViewport(0, 0, settings.screen_width, settings.screen_height);
 
-    glDepthRange(0.0, 1.0);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+    spdlog::info("Beryl Engine started");
 
     {
         float aspectRatio = (float)settings.screen_width / settings.screen_height;

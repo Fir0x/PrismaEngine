@@ -1,7 +1,5 @@
 #include "MeshRenderer.h"
 
-#include "../../core/glErrors.h"
-
 namespace BerylEngine
 {
 	MeshRenderer::MeshRenderer(std::shared_ptr<const StaticMesh> mesh, const Material& material)
