@@ -39,13 +39,10 @@
     <ClCompile Include="libs\imgui\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\glErrors.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\ByteBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\bufferDefs.cpp">
+    <ClCompile Include="src\core\graphicsDefs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\VertexArray.cpp">
@@ -93,6 +90,9 @@
     <ClCompile Include="src\scene\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\imgui\imgui\imconfig.h">
@@ -122,13 +122,10 @@
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\glErrors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\ByteBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\bufferDefs.h">
+    <ClInclude Include="src\core\graphicsDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\core\TypedBuffer.h">
@@ -183,6 +180,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\scene\PointLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

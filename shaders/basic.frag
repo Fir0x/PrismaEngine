@@ -11,6 +11,8 @@ layout(binding = 1) buffer Lights {
 	PointLight pointLights[];
 };
 
+layout(binding = 0) uniform sampler2D albedoTexture;
+
 out vec4 output_color;
 
 in vec3 fragPos;
@@ -53,8 +55,14 @@ void main()
 	for (unsigned int i = 0; i < frame.lightCount; i++)
 		acc += lightContribution(pointLights[i]);
 
-	vec3 color = DEFAULT_COLOR * acc;
+#ifdef ALBEDO_TEX
+	vec3 albedo = vec3(texture2D(albedoTexture, fragUV));
+#else
+	vec3 albedo = DEFAULT_COLOR;
+#endif
 
-	output_color = vec4(color, 1.0);
+	vec3 color = albedo * acc;
+
+	output_color = vec4(albedo, 1.0);
 #endif
 }

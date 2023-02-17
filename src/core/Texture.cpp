@@ -6,29 +6,51 @@
 #include <filesystem>
 #include <spdlog/spdlog.h>
 
+#include "utils.h"
+
 namespace BerylEngine
 {
-	Texture::Texture(int width, int height)
+	struct TextureFormatGL
 	{
-		m_width = width;
-		m_height = height;
+		unsigned int format;
+		unsigned int internalFormat;
+		unsigned int componentType;
+	};
 
-		glGenTextures(1, &m_id);
-		glBindTexture(GL_TEXTURE_2D, m_id);
+	static TextureFormatGL textureFormat2GL(Texture::TextureFormat format)
+	{
+		switch (format)
+		{
+		case Texture::TextureFormat::RGB8_UNORM:
+			return { GL_RGB, GL_RGB8, GL_UNSIGNED_BYTE };
+		case Texture::TextureFormat::RGBA8_UNORM:
+			return { GL_RGBA, GL_RGBA8, GL_UNSIGNED_BYTE };
+		default:
+			FATAL("Unknown texture fomat");
+			break;
+		}
+	}
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	Texture::Texture(int width, int height, TextureFormat format)
+		: m_width(width), m_height(height)
+	{
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_id);
+
+		TextureFormatGL formatGL = textureFormat2GL(format);
+		glTextureStorage2D(m_id, 1, formatGL.internalFormat, width, height);
 
 		spdlog::trace("Texture {} created. Width = {} | Height = {}.", m_id, width, height);
 	}
 
-	Texture::Texture(int width, int height, unsigned char* data)
-		: Texture(width, height)
+	Texture::Texture(int width, int height, TextureFormat format, unsigned char* data)
+		: m_width(width), m_height(height)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_id);
+
+		TextureFormatGL formatGL = textureFormat2GL(format);
+		glTextureStorage2D(m_id, getMipLevel(width, height), formatGL.internalFormat, width, height);
+		glTextureSubImage2D(m_id, 0, 0, 0, width, height, formatGL.format, formatGL.componentType, data);
+		glGenerateTextureMipmap(m_id);
 	}
 
 	std::shared_ptr<Texture> Texture::fromFile(const std::string& path)
@@ -41,10 +63,10 @@ namespace BerylEngine
 		if (data == nullptr)
 		{
 			spdlog::error("Failed to load texture from {}.", path);
-			return 0;
+			return nullptr;
 		}
 
-		auto texture = std::make_shared<Texture>(width, height, data);
+		auto texture = std::make_shared<Texture>(width, height, TextureFormat::RGBA8_UNORM, data);
 
 		stbi_image_free(data);
 
@@ -79,5 +101,11 @@ namespace BerylEngine
 	{
 		glActiveTexture(GL_TEXTURE0 + unit);
 		bind();
+	}
+
+	int Texture::getMipLevel(int width, int height) const
+	{
+		unsigned int maxSize = std::max(width, height);
+		return 1 + int(std::floor(std::log2(maxSize)));
 	}
 }

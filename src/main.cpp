@@ -62,9 +62,11 @@ int main(void)
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, screen_size_callback);
 
-        std::string defines[] = { "SHOW_UV" };
-        auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag");
+        std::string defines[] = { "ALBEDO_TEX"};
+        auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag", defines);
+        auto texture = Texture::fromFile("uvTestTexture.png");
         Material material(program);
+        material.setTexture(0, texture);
         auto mesh = MeshUtilities::staticCube();
         MeshRenderer renderer(mesh, material);
         SceneObject planeObject(renderer);

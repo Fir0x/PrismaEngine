@@ -2,19 +2,25 @@
 
 #include <string>
 #include <memory>
+#include <glm/glm.hpp>
+
+#include "utils.h"
 
 namespace BerylEngine
 {
-	class Texture
+	class Texture : public NonCopyable
 	{
-	private:
-		unsigned int m_id;
-		int m_width;
-		int m_height;
-
 	public:
-		Texture(int width, int height);
-		Texture(int width, int height, unsigned char* data);
+		enum class TextureFormat
+		{
+			RGBA8_UNORM,
+			RGB8_UNORM,
+
+			Depth32_FLOAT
+		};
+
+		Texture(int width, int height, TextureFormat format);
+		Texture(int width, int height, TextureFormat format, unsigned char* data);
 		~Texture();
 
 		static std::shared_ptr<Texture> fromFile(const std::string& path);
@@ -25,5 +31,12 @@ namespace BerylEngine
 		void unbind() const;
 
 		void bindToUnit(const int unit) const;
+
+	private:
+		unsigned int m_id;
+		int m_width;
+		int m_height;
+
+		int getMipLevel(int width, int height) const;
 	};
 }

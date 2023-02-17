@@ -1,9 +1,6 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <map>
-#include <optional>
-#include <string>
 
 #include "Program.h"
 #include "Texture.h"
@@ -65,10 +62,13 @@ namespace BerylEngine
 			m_program->setUniform(FWD(args)...);
 		}
 
+		void setTexture(int unit, std::shared_ptr<Texture> texture);
+
 		void bind() const;
 
 	private:
 		std::shared_ptr<Program> m_program;
+		std::vector<std::pair<int, std::shared_ptr<Texture>>> m_textures;
 		BlendMode m_blendMode;
 		DepthMode m_depthMode;
 		bool m_writeDepth;

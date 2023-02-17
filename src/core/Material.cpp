@@ -91,6 +91,16 @@ namespace BerylEngine
 	{
 	}
 
+	void Material::setTexture(int unit, std::shared_ptr<Texture> texture)
+	{
+		auto existIt = std::find_if(m_textures.begin(), m_textures.end(),
+			[&](const auto& p) { return p.second == texture; });
+		if (existIt != m_textures.end())
+			existIt->first = unit;
+		else
+			m_textures.emplace_back(unit, texture);
+	}
+
 	void Material::bind() const
 	{
 		switch (m_blendMode) {
@@ -148,6 +158,9 @@ namespace BerylEngine
 		}
 
 		glDepthMask(m_writeDepth ? GL_TRUE : GL_FALSE);
+
+		for (const auto& texture : m_textures)
+			texture.second->bindToUnit(texture.first);
 
 		m_program->bind();
 	}
