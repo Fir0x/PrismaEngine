@@ -1,5 +1,6 @@
 #include "utils.h"
 
+#include <spdlog/spdlog.h>
 #include <sstream>
 #include <Windows.h>
 
@@ -14,6 +15,14 @@ namespace BerylEngine
 	{
 		if (isDebuggerPresent())
 			DebugBreak();
+	}
+
+	void fatal(const char* msg, const char* file, int line)
+	{
+		spdlog::critical("{}({}): {}", file, line, msg);
+
+		debugBreak();
+		std::terminate();
 	}
 
 	std::vector<std::string> splitstr(const std::string& str, char delim)

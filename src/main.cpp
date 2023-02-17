@@ -40,7 +40,7 @@ int main(void)
     if (!window)
     {
         glfwTerminate();
-        return -1;
+        FATAL("Failed to create window.");
     }
 
     // Make the window's context current

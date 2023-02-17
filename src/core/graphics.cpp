@@ -27,10 +27,7 @@ namespace BerylEngine
     void initGraphicsAPI()
     {
         if (glewInit() != GLEW_OK)
-        {
-            spdlog::critical("Failed to init GLEW");
-            std::terminate();
-        }
+            FATAL("Failed to init GLEW");
 
         spdlog::info("OpenGL version: {}", (char*)glGetString(GL_VERSION));
 

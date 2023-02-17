@@ -4,11 +4,13 @@
 #include <vector>
 
 #define FWD(var) std::forward<decltype(var)>(var)
+#define FATAL(msg) BerylEngine::fatal(msg, __FILE__, __LINE__)
 
 namespace BerylEngine
 {
     bool isDebuggerPresent();
     void debugBreak();
+    [[noreturn]] void fatal(const char* msg, const char* file, int line);
 
     class NonCopyable {
     public:
