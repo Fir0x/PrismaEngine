@@ -55,7 +55,7 @@ namespace BerylEngine::MeshUtilities
 			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, 0.5f }, normal, { 0.0f, 0.33333f } };
 			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.0f, 0.0f } };
-			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.0f, 0.33333f } };
+			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.0f } };
 
 			vertices.push_back(bottomLeft);
 			vertices.push_back(topRight);
@@ -161,10 +161,10 @@ namespace BerylEngine::MeshUtilities
 		{
 			// Top face
 			glm::vec3 normal(0.0f, 1.0f, 0.0f);
-			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.33333f } };
-			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, -0.5f }, normal, { 1.0f, 0.33333f } };
-			StaticMesh::Vertex bottomLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.66666f, 0.0f } };
-			StaticMesh::Vertex bottomRight = { { -0.5f, 0.5f, 0.5f }, normal, { 1.0f, 0.0f } };
+			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
+			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 1.0f, 0.33333f } };
+			StaticMesh::Vertex bottomLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
+			StaticMesh::Vertex bottomRight = { { -0.5f, 0.5f, -0.5f }, normal, { 1.0f, 0.0f } };
 
 			unsigned int offset = vertices.size();
 			vertices.push_back(bottomLeft);
@@ -173,11 +173,11 @@ namespace BerylEngine::MeshUtilities
 			vertices.push_back(bottomRight);
 
 			indices.push_back(offset);
+			indices.push_back(offset + 1);
 			indices.push_back(offset + 2);
-			indices.push_back(offset + 1);
 			indices.push_back(offset);
-			indices.push_back(offset + 1);
 			indices.push_back(offset + 3);
+			indices.push_back(offset + 1);
 		}
 
 		return std::make_shared<StaticMesh>(vertices, indices);
