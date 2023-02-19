@@ -19,6 +19,7 @@ namespace BerylEngine
 			glm::vec3 coords;
 			glm::vec3 normals;
 			glm::vec2 uvs;
+			glm::vec4 tangentData; // Tangent vector + bitangent sign
 		};
 
 	private:

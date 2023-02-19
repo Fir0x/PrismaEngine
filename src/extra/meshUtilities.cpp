@@ -7,6 +7,33 @@
 
 namespace BerylEngine::MeshUtilities
 {
+	static glm::vec4 processTangentData(const StaticMesh::Vertex& v1, const StaticMesh::Vertex& v2,
+										const StaticMesh::Vertex& v3)
+	{
+		glm::vec3 edge1 = v2.coords - v1.coords;
+		glm::vec3 edge2 = v3.coords - v1.coords;
+		glm::vec2 deltaUV1 = v2.uvs - v1.uvs;
+		glm::vec2 deltaUV2 = v3.uvs - v1.uvs;
+		
+		float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+		glm::vec3 tangent;
+		tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+		tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+		tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+		tangent = glm::normalize(tangent);
+
+		glm::vec3 bitangent;
+		bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
+		bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
+		bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
+		bitangent = glm::normalize(bitangent);
+
+		float bitangentSign = glm::dot(glm::cross(tangent, bitangent), v1.normals);
+
+		return glm::vec4(tangent, bitangentSign);
+	}
+
 	std::shared_ptr<StaticMesh> staticPlane(unsigned int subdivision)
 	{
 		std::vector<StaticMesh::Vertex> vertices;
