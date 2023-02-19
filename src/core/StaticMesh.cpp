@@ -25,6 +25,6 @@ namespace BerylEngine
 	{
 		m_vao->bind();
 		m_ibo->bind(BufferUsageType::IndexBuffer);
-		glDrawElements(GL_TRIANGLES, m_ibo->getCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, (unsigned int)m_ibo->getCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }

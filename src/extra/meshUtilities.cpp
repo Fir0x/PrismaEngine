@@ -81,7 +81,7 @@ namespace BerylEngine::MeshUtilities
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.33333f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 
-			unsigned int offset = vertices.size();
+			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
 			vertices.push_back(topRight);
 			vertices.push_back(topLeft);
@@ -103,7 +103,7 @@ namespace BerylEngine::MeshUtilities
 			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.66666f } };
 
-			unsigned int offset = vertices.size();
+			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
 			vertices.push_back(topRight);
 			vertices.push_back(topLeft);
@@ -125,7 +125,7 @@ namespace BerylEngine::MeshUtilities
 			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.33333f } };
 
-			unsigned int offset = vertices.size();
+			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
 			vertices.push_back(topRight);
 			vertices.push_back(topLeft);
@@ -147,7 +147,7 @@ namespace BerylEngine::MeshUtilities
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
 
-			unsigned int offset = vertices.size();
+			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
 			vertices.push_back(topRight);
 			vertices.push_back(topLeft);
@@ -169,7 +169,7 @@ namespace BerylEngine::MeshUtilities
 			StaticMesh::Vertex bottomLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, 0.5f, -0.5f }, normal, { 1.0f, 0.0f } };
 
-			unsigned int offset = vertices.size();
+			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
 			vertices.push_back(topRight);
 			vertices.push_back(topLeft);

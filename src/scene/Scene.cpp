@@ -34,7 +34,7 @@ namespace BerylEngine
 		context.camera.projectionMatrix = camera.projectionMatrix();
 		context.sunDirection = glm::normalize(glm::mat3(camera.viewMatrix()) * glm::normalize(glm::vec3(0.8f, 0.1f, 0.3f)));
 		context.sunColor = glm::vec3(0.6f, 0.6f, 0.6f);
-		context.lightCount = m_lights.size();
+		context.lightCount = glm::uint(m_lights.size());
 
 		TypedBuffer<ShaderDefs::FrameContext> contextBuffer(&context, 1);
 		contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
