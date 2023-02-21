@@ -34,42 +34,34 @@ namespace BerylEngine::MeshUtilities
 		return glm::vec4(tangent, bitangentSign);
 	}
 
-	std::shared_ptr<StaticMesh> staticPlane(unsigned int subdivision)
+	std::shared_ptr<StaticMesh> staticPlane()
 	{
 		std::vector<StaticMesh::Vertex> vertices;
-		float start = (subdivision != 0 && subdivision % 2 == 0) ? -0.75f : -0.5f;
-		float offset = subdivision == 0 ? 1.0f : 1 / float(subdivision);
-		for (unsigned int i = 0; i < subdivision + 2; i++)
-		{
-			for (unsigned int j = 0; j < subdivision + 2; j++)
-			{
-				StaticMesh::Vertex vertex;
-				vertex.coords = glm::vec3(start + offset * j, 0.0f, start + offset * i);
-				vertex.normals = glm::vec3(0.0f, 1.0f, 0.0f);
-				vertex.uvs = glm::vec2(offset * j, offset * i);
-
-				vertices.push_back(vertex);
-			}
-		}
-
 		std::vector<unsigned int> indices;
-		unsigned int verticesPerLine = subdivision + 2;
-		for (unsigned int i = 0; i < subdivision + 1; i++)
-		{
-			for (unsigned int j = 0; j < subdivision + 1; j++)
-			{
-				unsigned int idx = i * verticesPerLine + j;
-				// Right triangle
-				indices.push_back(idx + 1);
-				indices.push_back(idx);
-				indices.push_back(idx + verticesPerLine + 1);
 
-				// Left triangle
-				indices.push_back(idx + verticesPerLine + 1);
-				indices.push_back(idx);
-				indices.push_back(idx + verticesPerLine);
-			}
-		}
+		glm::vec3 normal(-1.0f, 0.0f, 0.0f);
+		StaticMesh::Vertex bottomLeft = { { -0.5f, 0.0f, 0.5f }, normal, { 0.0f, 0.0f } };
+		StaticMesh::Vertex bottomRight = { { 0.5f, 0.0f, 0.5f }, normal, { 1.0f, 0.0f } };
+		StaticMesh::Vertex topLeft = { { -0.5f, 0.0f, -0.5f }, normal, { 0.0f, 1.0f } };
+		StaticMesh::Vertex topRight = { { 0.5f, 0.0f, -0.5f }, normal, { 1.0f, 1.0f } };
+
+		glm::vec4 tangentData = processTangentData(bottomLeft, topRight, topLeft);
+		bottomLeft.tangentData = tangentData;
+		bottomRight.tangentData = tangentData;
+		topLeft.tangentData = tangentData;
+		topRight.tangentData = tangentData;
+
+		vertices.push_back(bottomLeft);
+		vertices.push_back(topRight);
+		vertices.push_back(topLeft);
+		vertices.push_back(bottomRight);
+
+		indices.push_back(0);
+		indices.push_back(1);
+		indices.push_back(2);
+		indices.push_back(0);
+		indices.push_back(3);
+		indices.push_back(1);
 
 		return std::make_shared<StaticMesh>(vertices, indices);
 	}
@@ -82,10 +74,16 @@ namespace BerylEngine::MeshUtilities
 		{
 			// Front face
 			glm::vec3 normal(0.0f, 0.0f, 1.0f);
-			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, 0.5f }, normal, { 0.0f, 0.33333f } };
-			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.0f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.0f } };
+			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, 0.5f }, normal, { 0.0f, 0.33333f } };
+			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
+
+			glm::vec4 tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			bottomLeft.tangentData = tangentData;
+			bottomRight.tangentData = tangentData;
+			topLeft.tangentData = tangentData;
+			topRight.tangentData = tangentData;
 
 			vertices.push_back(bottomLeft);
 			vertices.push_back(topRight);
@@ -103,10 +101,16 @@ namespace BerylEngine::MeshUtilities
 		{
 			// Left face
 			glm::vec3 normal(-1.0f, 0.0f, 0.0f);
-			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
-			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.33333f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
+			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
+			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
+
+			glm::vec4 tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			bottomLeft.tangentData = tangentData;
+			bottomRight.tangentData = tangentData;
+			topLeft.tangentData = tangentData;
+			topRight.tangentData = tangentData;
 
 			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
@@ -125,10 +129,16 @@ namespace BerylEngine::MeshUtilities
 		{
 			// Back face
 			glm::vec3 normal(0.0f, 0.0f, -1.0f);
-			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.0f, 1.0f } };
-			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, -0.5f }, normal, { 0.33333f, 1.0f } };
 			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.66666f } };
+			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.0f, 1.0f } };
+			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, -0.5f }, normal, { 0.33333f, 1.0f } };
+
+			glm::vec4 tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			bottomLeft.tangentData = tangentData;
+			bottomRight.tangentData = tangentData;
+			topLeft.tangentData = tangentData;
+			topRight.tangentData = tangentData;
 
 			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
@@ -147,10 +157,16 @@ namespace BerylEngine::MeshUtilities
 		{
 			// Right face
 			glm::vec3 normal(1.0f, 0.0f, 0.0f);
-			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
-			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.66666f } };
 			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.33333f } };
+			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
+			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.66666f } };
+
+			glm::vec4 tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			bottomLeft.tangentData = tangentData;
+			bottomRight.tangentData = tangentData;
+			topLeft.tangentData = tangentData;
+			topRight.tangentData = tangentData;
 
 			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
@@ -169,10 +185,16 @@ namespace BerylEngine::MeshUtilities
 		{
 			// Bottom face
 			glm::vec3 normal(0.0f, -1.0f, 0.0f);
-			StaticMesh::Vertex topLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
-			StaticMesh::Vertex topRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
+			StaticMesh::Vertex topLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
+			StaticMesh::Vertex topRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
+
+			glm::vec4 tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			bottomLeft.tangentData = tangentData;
+			bottomRight.tangentData = tangentData;
+			topLeft.tangentData = tangentData;
+			topRight.tangentData = tangentData;
 
 			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
@@ -191,10 +213,16 @@ namespace BerylEngine::MeshUtilities
 		{
 			// Top face
 			glm::vec3 normal(0.0f, 1.0f, 0.0f);
-			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
-			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 1.0f, 0.33333f } };
 			StaticMesh::Vertex bottomLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, 0.5f, -0.5f }, normal, { 1.0f, 0.0f } };
+			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
+			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 1.0f, 0.33333f } };
+
+			glm::vec4 tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			bottomLeft.tangentData = tangentData;
+			bottomRight.tangentData = tangentData;
+			topLeft.tangentData = tangentData;
+			topRight.tangentData = tangentData;
 
 			unsigned int offset = (unsigned int)vertices.size();
 			vertices.push_back(bottomLeft);
