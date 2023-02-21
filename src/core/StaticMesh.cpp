@@ -13,6 +13,7 @@ namespace BerylEngine
 		layout.Add<float>(3);
 		layout.Add<float>(3);
 		layout.Add<float>(2);
+		layout.Add<float>(4);
 
 		m_vao = std::make_unique<VertexArray>(m_vbo, layout);
 		m_ibo = std::make_unique<TypedBuffer<unsigned int>>(indices.data(), indices.size());
