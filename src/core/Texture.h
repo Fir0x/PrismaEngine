@@ -23,7 +23,7 @@ namespace BerylEngine
 		Texture(int width, int height, TextureFormat format, unsigned char* data);
 		~Texture();
 
-		static std::shared_ptr<Texture> fromFile(const std::string& path);
+		static std::shared_ptr<Texture> fromFile(const std::string& path, TextureFormat textureFormat);
 
 		unsigned int getId() const;
 

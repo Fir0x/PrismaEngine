@@ -27,7 +27,6 @@ namespace BerylEngine
 			return { GL_RGBA, GL_RGBA8, GL_UNSIGNED_BYTE };
 		default:
 			FATAL("Unknown texture fomat");
-			break;
 		}
 	}
 
@@ -53,7 +52,7 @@ namespace BerylEngine
 		glGenerateTextureMipmap(m_id);
 	}
 
-	std::shared_ptr<Texture> Texture::fromFile(const std::string& path)
+	std::shared_ptr<Texture> Texture::fromFile(const std::string& path, TextureFormat textureFormat)
 	{
 		auto absPath = std::filesystem::absolute(path).string();
 
@@ -66,7 +65,7 @@ namespace BerylEngine
 			return nullptr;
 		}
 
-		auto texture = std::make_shared<Texture>(width, height, TextureFormat::RGBA8_UNORM, data);
+		auto texture = std::make_shared<Texture>(width, height, textureFormat, data);
 
 		stbi_image_free(data);
 
