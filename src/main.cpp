@@ -62,17 +62,19 @@ int main(void)
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, screen_size_callback);
 
-        std::string defines[] = { "ALBEDO_TEX"};
+        std::string defines[] = { "NORMAL_MAPPED" };
         auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag", defines);
-        auto texture = Texture::fromFile("uvTestTexture.png");
+        auto albedoTex = Texture::fromFile("uvTestTexture.png", Texture::TextureFormat::RGBA8_UNORM);
+        auto normalTex = Texture::fromFile("brickwall_normal.jpg", Texture::TextureFormat::RGB8_UNORM);
         Material material(program);
-        material.setTexture(0, texture);
-        auto mesh = MeshUtilities::staticCube();
+        material.setTexture(0, albedoTex);
+        material.setTexture(1, normalTex);
+        auto mesh = MeshUtilities::staticPlane();
         MeshRenderer renderer(mesh, material);
         SceneObject planeObject(renderer);
 
         scene.addObject(planeObject);
-        scene.addLight({ glm::vec3(0.0f, 1.3f, 0.0f), 1.0f, glm::vec3(1.0f) });
+        scene.addLight({ glm::vec3(0.0f, 0.4f, 0.0f), 1.0f, glm::vec3(1.0f) });
 
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
