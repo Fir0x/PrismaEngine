@@ -39,7 +39,7 @@ namespace BerylEngine::MeshUtilities
 		std::vector<StaticMesh::Vertex> vertices;
 		std::vector<unsigned int> indices;
 
-		glm::vec3 normal(-1.0f, 0.0f, 0.0f);
+		glm::vec3 normal(0.0f, 1.0f, 0.0f);
 		StaticMesh::Vertex bottomLeft = { { -0.5f, 0.0f, 0.5f }, normal, { 0.0f, 0.0f } };
 		StaticMesh::Vertex bottomRight = { { 0.5f, 0.0f, 0.5f }, normal, { 1.0f, 0.0f } };
 		StaticMesh::Vertex topLeft = { { -0.5f, 0.0f, -0.5f }, normal, { 0.0f, 1.0f } };
