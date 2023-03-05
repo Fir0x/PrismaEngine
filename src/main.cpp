@@ -1,10 +1,12 @@
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
+#include <imgui/imgui.h>
 
 #include "core/graphics.h"
 #include "inputManager.h"
 #include "scene/SceneView.h"
 #include "extra/meshUtilities.h"
+#include "GUIRenderer.h"
 
 static struct Settings
 {
@@ -62,13 +64,13 @@ int main(void)
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, screen_size_callback);
 
-        std::string defines[] = { "NORMAL_MAPPED" };
+        std::string defines[] = { "NO_DEFINES" };
         auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag", defines);
-        auto albedoTex = Texture::fromFile("uvTestTexture.png", Texture::TextureFormat::RGBA8_UNORM);
-        auto normalTex = Texture::fromFile("brickwall_normal.jpg", Texture::TextureFormat::RGB8_UNORM);
+        //auto albedoTex = Texture::fromFile("uvTestTexture.png", Texture::TextureFormat::RGBA8_UNORM);
+        //auto normalTex = Texture::fromFile("brickwall_normal.jpg", Texture::TextureFormat::RGB8_UNORM);
         Material material(program);
-        material.setTexture(0, albedoTex);
-        material.setTexture(1, normalTex);
+        //material.setTexture(0, albedoTex);
+        //material.setTexture(1, normalTex);
         auto mesh = MeshUtilities::staticPlane();
         MeshRenderer renderer(mesh, material);
         SceneObject planeObject(renderer);
@@ -76,14 +78,22 @@ int main(void)
         scene.addObject(planeObject);
         scene.addLight({ glm::vec3(0.0f, 0.4f, 0.0f), 1.0f, glm::vec3(1.0f) });
 
+        GUIRenderer guiRenderer(window);
+
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
         {
-            processInput(window);
+            processInput(window, guiRenderer);
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             sceneView.render();
+
+            guiRenderer.start();
+            {
+                ImGui::ShowDemoWindow();
+            }
+            guiRenderer.finish();
 
             glfwSwapBuffers(window);
 

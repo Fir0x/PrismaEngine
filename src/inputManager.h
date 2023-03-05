@@ -4,7 +4,11 @@
 #include <GLFW/glfw3.h>
 
 #include "scene/Camera.h"
+#include "GUIRenderer.h"
 
-void linkCamera(BerylEngine::Camera* camera);
-void processInput(GLFWwindow* window);
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+namespace BerylEngine
+{
+	void linkCamera(BerylEngine::Camera* camera);
+	void processInput(GLFWwindow* window, const GUIRenderer& guiRenderer);
+	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+}
