@@ -90,9 +90,6 @@ int main(void)
             sceneView.render();
 
             guiRenderer.start();
-            {
-                ImGui::ShowDemoWindow();
-            }
             guiRenderer.finish();
 
             glfwSwapBuffers(window);
