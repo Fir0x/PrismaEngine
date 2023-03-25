@@ -25,6 +25,8 @@ namespace BerylEngine
 			return { GL_RGB, GL_RGB8, GL_UNSIGNED_BYTE };
 		case Texture::TextureFormat::RGBA8_UNORM:
 			return { GL_RGBA, GL_RGBA8, GL_UNSIGNED_BYTE };
+		case Texture::TextureFormat::Depth32_FLOAT:
+			return { GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT32F, GL_FLOAT };
 		default:
 			FATAL("Unknown texture fomat");
 		}

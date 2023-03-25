@@ -7,6 +7,7 @@
 #include "scene/SceneView.h"
 #include "extra/meshUtilities.h"
 #include "GUIRenderer.h"
+#include "core/FrameBuffer.h"
 
 static struct Settings
 {
@@ -80,17 +81,23 @@ int main(void)
 
         GUIRenderer guiRenderer(window);
 
+        Texture colorTexture(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
+        Texture depthTexture(settings.screen_width, settings.screen_height, Texture::TextureFormat::Depth32_FLOAT);
+        Framebuffer mainFramebuffer(&depthTexture, std::array{&colorTexture});
+
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
         {
             processInput(window, guiRenderer);
 
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            mainFramebuffer.bind(true);
 
             sceneView.render();
 
             guiRenderer.start();
             guiRenderer.finish();
+
+            mainFramebuffer.blit(false);
 
             glfwSwapBuffers(window);
 
