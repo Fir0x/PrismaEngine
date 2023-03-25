@@ -9,7 +9,7 @@ namespace BerylEngine
 	class VertexArray : NonCopyable
 	{
 	private:
-		unsigned int m_id;
+		unsigned int m_handle;
 
 	public:
 		VertexArray() = default;

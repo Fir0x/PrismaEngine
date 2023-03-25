@@ -28,7 +28,7 @@ namespace BerylEngine
 	private:
 		Framebuffer(Texture* depth, Texture** renderTargets, size_t targetsCount);
 
-		unsigned int m_id;
+		unsigned int m_handle;
 		glm::ivec2 m_size;
 
 	};

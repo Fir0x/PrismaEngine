@@ -8,8 +8,8 @@ namespace BerylEngine
 {
 	VertexArray::VertexArray(const ByteBuffer& vb, const VertexBufferLayout& layout)
 	{
-		glGenVertexArrays(1, &m_id);
-		glBindVertexArray(m_id);
+		glGenVertexArrays(1, &m_handle);
+		glBindVertexArray(m_handle);
 
 		vb.bind(BufferUsageType::VertexBuffer);
 		const auto& elements = layout.get_elements();
@@ -24,19 +24,19 @@ namespace BerylEngine
 			offset += elm.count * VertexBufferElement::get_type_size(elm.type);
 		}
 
-		spdlog::trace("Vertex array {} created", m_id);
+		spdlog::trace("Vertex array {} created", m_handle);
 	}
 
 	VertexArray::~VertexArray()
 	{
-		glDeleteVertexArrays(1, &m_id);
+		glDeleteVertexArrays(1, &m_handle);
 
-		spdlog::trace("Vertex array {} deleted", m_id);
+		spdlog::trace("Vertex array {} deleted", m_handle);
 	}
 
 	void VertexArray::bind() const
 	{
-		glBindVertexArray(m_id);
+		glBindVertexArray(m_handle);
 	}
 
 	void VertexArray::unbind() const

@@ -18,7 +18,7 @@ namespace BerylEngine
 	class Program
 	{
 	private:
-		unsigned int m_id;
+		unsigned int m_handle;
 		std::unordered_map<std::string, int> m_uniformLocations;
 
 		void fetchUniformLocations();

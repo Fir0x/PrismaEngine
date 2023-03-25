@@ -35,23 +35,23 @@ namespace BerylEngine
 	Texture::Texture(int width, int height, TextureFormat format)
 		: m_width(width), m_height(height)
 	{
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_id);
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_handle);
 
 		TextureFormatGL formatGL = textureFormat2GL(format);
-		glTextureStorage2D(m_id, 1, formatGL.internalFormat, width, height);
+		glTextureStorage2D(m_handle, 1, formatGL.internalFormat, width, height);
 
-		spdlog::trace("Texture {} created. Width = {} | Height = {}.", m_id, width, height);
+		spdlog::trace("Texture {} created. Width = {} | Height = {}.", m_handle, width, height);
 	}
 
 	Texture::Texture(int width, int height, TextureFormat format, unsigned char* data)
 		: m_width(width), m_height(height)
 	{
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_id);
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_handle);
 
 		TextureFormatGL formatGL = textureFormat2GL(format);
-		glTextureStorage2D(m_id, getMipLevel(width, height), formatGL.internalFormat, width, height);
-		glTextureSubImage2D(m_id, 0, 0, 0, width, height, formatGL.format, formatGL.componentType, data);
-		glGenerateTextureMipmap(m_id);
+		glTextureStorage2D(m_handle, getMipLevel(width, height), formatGL.internalFormat, width, height);
+		glTextureSubImage2D(m_handle, 0, 0, 0, width, height, formatGL.format, formatGL.componentType, data);
+		glGenerateTextureMipmap(m_handle);
 	}
 
 	std::shared_ptr<Texture> Texture::fromFile(const std::string& path, TextureFormat textureFormat)
@@ -78,14 +78,14 @@ namespace BerylEngine
 
 	Texture::~Texture()
 	{
-		glDeleteTextures(1, &m_id);
+		glDeleteTextures(1, &m_handle);
 
-		spdlog::trace("Texture {} deleted.", m_id);
+		spdlog::trace("Texture {} deleted.", m_handle);
 	}
 
 	unsigned int Texture::getId() const
 	{
-		return m_id;
+		return m_handle;
 	}
 
 	glm::ivec2 Texture::getSize() const
@@ -95,7 +95,7 @@ namespace BerylEngine
 
 	void Texture::bind() const
 	{
-		glBindTexture(GL_TEXTURE_2D, m_id);
+		glBindTexture(GL_TEXTURE_2D, m_handle);
 	}
 
 	void Texture::unbind() const

@@ -8,10 +8,10 @@ namespace BerylEngine
 	ByteBuffer::ByteBuffer(const void* data, size_t size)
 	{
 		m_size = size;
-		glCreateBuffers(1, &m_id);
-		glNamedBufferData(m_id, size, data, GL_STATIC_DRAW);
+		glCreateBuffers(1, &m_handle);
+		glNamedBufferData(m_handle, size, data, GL_STATIC_DRAW);
 
-		spdlog::trace("Buffer {} allocated. Size is {}.", m_id, size);
+		spdlog::trace("Buffer {} allocated. Size is {}.", m_handle, size);
 	}
 
 	ByteBuffer::ByteBuffer(size_t size)
@@ -21,18 +21,18 @@ namespace BerylEngine
 
 	ByteBuffer::~ByteBuffer()
 	{
-		glDeleteBuffers(1, &m_id);
+		glDeleteBuffers(1, &m_handle);
 
-		spdlog::trace("Buffer {} deleted.", m_id);
+		spdlog::trace("Buffer {} deleted.", m_handle);
 	}
 
 	void ByteBuffer::bind(BufferUsageType usageType) const
 	{
-		glBindBuffer(usageType2GL(usageType), m_id);
+		glBindBuffer(usageType2GL(usageType), m_handle);
 	}
 
 	void ByteBuffer::setAccess(AccessType accessType) const
 	{
-		glMapNamedBuffer(m_id, accessType2GL(accessType));
+		glMapNamedBuffer(m_handle, accessType2GL(accessType));
 	}
 }

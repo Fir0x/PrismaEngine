@@ -34,7 +34,7 @@ namespace BerylEngine
 		void bindToUnit(const int unit) const;
 
 	private:
-		unsigned int m_id;
+		unsigned int m_handle;
 		int m_width;
 		int m_height;
 

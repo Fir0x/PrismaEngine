@@ -9,7 +9,7 @@ namespace BerylEngine
 	class ByteBuffer : NonCopyable
 	{
 	private:
-		unsigned int m_id;
+		unsigned int m_handle;
 
 	protected:
 		size_t m_size;
@@ -29,7 +29,7 @@ namespace BerylEngine
 		void bind(int bindingPoint) const
 		{
 			static_assert(U == BufferUsageType::UniformBuffer || U == BufferUsageType::ShaderStorage, "Bad usage type");
-			glBindBufferBase(usageType2GL(U), bindingPoint, m_id);
+			glBindBufferBase(usageType2GL(U), bindingPoint, m_handle);
 		}
 
 		void setAccess(AccessType accessType) const;
