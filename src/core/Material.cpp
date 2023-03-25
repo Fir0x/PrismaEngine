@@ -129,16 +129,12 @@ namespace BerylEngine
 
 		case DepthMode::Standard:
 			glEnable(GL_DEPTH_TEST);
-			// TODO
-			// Use GL_GEQUAL after reversed-z implementation
-			glDepthFunc(GL_LEQUAL);
+			glDepthFunc(GL_GEQUAL);
 			break;
 
 		case DepthMode::Reversed:
 			glEnable(GL_DEPTH_TEST);
-			// TODO
-			// Use GL_LEQUAL after reversed-z implementation
-			glDepthFunc(GL_GEQUAL);
+			glDepthFunc(GL_LEQUAL);
 			break;
 		}
 

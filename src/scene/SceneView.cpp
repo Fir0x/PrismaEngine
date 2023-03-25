@@ -12,8 +12,8 @@ namespace BerylEngine
 	{
 	}
 
-	SceneView::SceneView(const Scene& scene, const glm::mat4& frustum, const glm::vec3& cameraPosition)
-		: m_scene(scene), m_camera(frustum, cameraPosition)
+	SceneView::SceneView(const Scene& scene, const glm::vec3& cameraPosition, float aspectRatio)
+		: m_scene(scene), m_camera(cameraPosition, aspectRatio)
 	{
 	}
 

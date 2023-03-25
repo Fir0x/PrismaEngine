@@ -21,22 +21,18 @@ namespace BerylEngine
 		void addPitch(float angle);
 		void addYaw(float angle);
 
-		void initialize(glm::mat4 frustum, glm::vec3 position, float yaw,
-						float pitch, glm::vec3 worldUp);
+		glm::mat4 buildProjection(float zNear, float fovYDegree, float aspectRatio);
+		void initialize(const glm::mat4& frustum, const glm::vec3& position, float yaw,
+						float pitch);
 
 		void updateView();
 
 	public:
-		Camera(glm::mat4 frustum = glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f),
-				glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
-				float yaw = -90.0f,
-				float pitch = 0.0f,
-				glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
-
-		Camera(glm::vec3 position,
-				float yaw = -90.0f,
-				float pitch = 0.0f,
-				glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
+		Camera(const glm::vec3& position, float yaw, float pitch, float aspectRatio);
+		Camera(const glm::vec3& position, float yaw, float pitch);
+		Camera(const glm::vec3& position, float aspectRatio);
+		Camera(const glm::vec3& position);
+		Camera();
 
 		glm::vec3 right() const;
 		glm::vec3 up() const;

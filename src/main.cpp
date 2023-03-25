@@ -57,9 +57,9 @@ int main(void)
     spdlog::info("Beryl Engine started");
 
     {
-        float aspectRatio = (float)settings.screen_width / settings.screen_height;
+        const float aspectRatio = (float)settings.screen_width / settings.screen_height;
         Scene scene;
-        SceneView sceneView(scene, glm::perspective(45.0f, aspectRatio, 0.1f, 100.0f), glm::vec3(0.0f, 0.0f, 5.0f));
+        SceneView sceneView(scene, glm::vec3(0.0f, 0.0f, 5.0f), aspectRatio);
         linkCamera(&sceneView.camera());
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, screen_size_callback);

@@ -10,7 +10,7 @@ namespace BerylEngine
 	public:
 		SceneView(const Scene& scene);
 		SceneView(const Scene& scene, const glm::vec3& cameraPosition);
-		SceneView(const Scene& scene, const glm::mat4& frustum, const glm::vec3& cameraPosition);
+		SceneView(const Scene& scene, const glm::vec3& cameraPosition, float aspectRatio);
 
 		Camera& camera();
 

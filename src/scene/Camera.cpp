@@ -4,22 +4,43 @@
 
 namespace BerylEngine
 {
-	Camera::Camera(glm::mat4 frustum, glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp)
+	Camera::Camera(const glm::vec3& position, float yaw, float pitch, float aspectRatio)
 	{
-		initialize(frustum, pos, yaw, pitch, worldUp);
+		initialize(buildProjection(0.1f, 60.0f, aspectRatio), position, yaw, pitch);
 	}
 
-	Camera::Camera(glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp)
+	Camera::Camera(const glm::vec3& position, float yaw, float pitch) : Camera(position, yaw, pitch, 16.0f / 9.0f)
 	{
-		initialize(glm::perspective(45.0f, 16.0f / 9.0f, 0.1f, 100.0f), pos, yaw, pitch, worldUp);
 	}
 
+	Camera::Camera(const glm::vec3& position, float aspectRatio) : Camera(position, -90.0f, 0.0f, aspectRatio)
+	{
+	}
 
-	void Camera::initialize(glm::mat4 frustum, glm::vec3 pos, float yaw, float pitch, glm::vec3 worldUp)
+	Camera::Camera(const glm::vec3& position) : Camera(position, -90.0f, 0.0f)
+	{
+	}
+
+	Camera::Camera() : Camera(glm::vec3(0.0f))
+	{
+	}
+
+	glm::mat4 Camera::buildProjection(float zNear, float fovYDegree, float aspectRatio)
+	{
+		float fovYRadian = glm::radians(fovYDegree);
+		float f = 1.0f / tan(fovYRadian / 2.0f);
+		return glm::mat4(
+			f / aspectRatio, 0.0f, 0.0f, 0.0f,
+			0.0f, f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, -1.0f,
+			0.0f, 0.0f, zNear, 0.0f);
+	}
+
+	void Camera::initialize(const glm::mat4& frustum, const glm::vec3& pos, float yaw, float pitch)
 	{
 		m_yaw = yaw;
 		m_pitch = pitch;
-		m_worldUp = worldUp;
+		m_worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 		m_projMatrix = frustum;
 
 		glm::vec3 forward;

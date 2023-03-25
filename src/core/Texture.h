@@ -26,6 +26,7 @@ namespace BerylEngine
 		static std::shared_ptr<Texture> fromFile(const std::string& path, TextureFormat textureFormat);
 
 		unsigned int getId() const;
+		glm::ivec2 getSize() const;
 
 		void bind() const;
 		void unbind() const;

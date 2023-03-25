@@ -37,9 +37,14 @@ namespace BerylEngine
         if (isDebuggerPresent())
             glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
-        glDepthRange(0.0, 1.0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+
+        // Reverse-Z
+        glClipControl(GL_LOWER_LEFT, GL_ZERO_TO_ONE);
+        glClearDepth(0.0f);
+
+        //glDepthRange(0.0, 1.0);
 
         spdlog::info("Graphics API initialized.");
     }

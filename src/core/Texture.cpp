@@ -86,6 +86,11 @@ namespace BerylEngine
 		return m_id;
 	}
 
+	glm::ivec2 Texture::getSize() const
+	{
+		return glm::ivec2(m_width, m_height);
+	}
+
 	void Texture::bind() const
 	{
 		glBindTexture(GL_TEXTURE_2D, m_id);
