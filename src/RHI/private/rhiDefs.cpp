@@ -1,4 +1,4 @@
-#include "../public/graphicsDefs.h"
+#include "rhiDefs.h"
 
 namespace BerylEngine
 {

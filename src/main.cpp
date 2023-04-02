@@ -5,7 +5,7 @@
 #include "geometry/public/meshUtilities.h"
 #include "input/public/inputManager.h"
 #include "scene/public/SceneView.h"
-#include "RHI/public/graphics.h"
+#include "RHI/public/utils.h"
 #include "RHI/public/FrameBuffer.h"
 #include "rendering/public/GUIRenderer.h"
 #include "rendering/public/Material.h"

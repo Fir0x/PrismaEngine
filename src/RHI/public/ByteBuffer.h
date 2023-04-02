@@ -1,6 +1,6 @@
 #pragma once
 
-#include "graphicsDefs.h"
+#include "RHI/public/rhiDefs.h"
 
 #include "core/public/utils.h"
 
@@ -10,6 +10,13 @@ namespace BerylEngine
 	{
 	private:
 		unsigned int m_handle;
+
+		/// <summary>
+		/// This methods exists to hide implementation dtails of its templated version.
+		/// </summary>
+		/// <param name="usageType"></param>
+		/// <param name="bindingPoint"></param>
+		void bind(BufferUsageType usageType, int bindingPoint) const;
 
 	protected:
 		size_t m_size;
@@ -29,7 +36,7 @@ namespace BerylEngine
 		void bind(int bindingPoint) const
 		{
 			static_assert(U == BufferUsageType::UniformBuffer || U == BufferUsageType::ShaderStorage, "Bad usage type");
-			glBindBufferBase(usageType2GL(U), bindingPoint, m_handle);
+			bind(U, bindingPoint);
 		}
 
 		void setAccess(AccessType accessType) const;

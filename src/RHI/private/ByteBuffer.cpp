@@ -1,10 +1,12 @@
-#include "ByteBuffer.h"
+#include "../public/ByteBuffer.h"
 
+#include <GL/glew.h>
 #include <spdlog/spdlog.h>
+
+#include "rhiDefs.h"
 
 namespace BerylEngine
 {
-
 	ByteBuffer::ByteBuffer(const void* data, size_t size)
 	{
 		m_size = size;
@@ -29,6 +31,11 @@ namespace BerylEngine
 	void ByteBuffer::bind(BufferUsageType usageType) const
 	{
 		glBindBuffer(usageType2GL(usageType), m_handle);
+	}
+
+	void ByteBuffer::bind(BufferUsageType usageType, int bindingPoint) const
+	{
+		glBindBufferBase(usageType2GL(usageType), bindingPoint, m_handle);
 	}
 
 	void ByteBuffer::setAccess(AccessType accessType) const

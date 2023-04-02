@@ -1,4 +1,4 @@
-#include "../public/graphics.h"
+#include "../public/utils.h"
 
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
