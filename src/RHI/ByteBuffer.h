@@ -2,7 +2,7 @@
 
 #include "graphicsDefs.h"
 
-#include "utils.h"
+#include "../core/utils.h"
 
 namespace BerylEngine
 {

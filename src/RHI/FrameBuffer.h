@@ -4,6 +4,7 @@
 #include <memory>
 #include <glm/vec2.hpp>
 
+#include "../core/utils.h"
 #include "Texture.h"
 
 namespace BerylEngine

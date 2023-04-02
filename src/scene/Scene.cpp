@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-#include "../core/TypedBuffer.h"
+#include "../RHI/TypedBuffer.h"
 #include "shaderDefs.h"
 
 namespace BerylEngine

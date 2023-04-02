@@ -2,10 +2,10 @@
 
 #include <glm/glm.hpp>
 
-#include "Program.h"
-#include "Texture.h"
+#include "../RHI/Program.h"
+#include "../RHI/Texture.h"
 
-#include "utils.h"
+#include "../core/utils.h"
 
 namespace BerylEngine
 {

@@ -3,8 +3,8 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include "scene/Camera.h"
-#include "GUIRenderer.h"
+#include "../scene/Camera.h"
+#include "../rendering/GUIRenderer.h"
 
 namespace BerylEngine
 {

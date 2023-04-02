@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
 
-#include "utils.h"
+#include "../core/utils.h"
 
 namespace BerylEngine
 {

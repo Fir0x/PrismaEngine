@@ -2,12 +2,13 @@
 #include <spdlog/spdlog.h>
 #include <imgui/imgui.h>
 
-#include "core/graphics.h"
-#include "inputManager.h"
+#include "geometry/meshUtilities.h"
+#include "input/inputManager.h"
 #include "scene/SceneView.h"
-#include "extra/meshUtilities.h"
-#include "GUIRenderer.h"
-#include "core/FrameBuffer.h"
+#include "RHI/graphics.h"
+#include "RHI/FrameBuffer.h"
+#include "rendering/GUIRenderer.h"
+#include "rendering/Material.h"
 
 static struct Settings
 {
@@ -72,12 +73,12 @@ int main(void)
         Material material(program);
         //material.setTexture(0, albedoTex);
         //material.setTexture(1, normalTex);
-        auto mesh = MeshUtilities::staticPlane();
+        auto mesh = MeshUtilities::staticCube();
         MeshRenderer renderer(mesh, material);
         SceneObject planeObject(renderer);
 
         scene.addObject(planeObject);
-        scene.addLight({ glm::vec3(0.0f, 0.4f, 0.0f), 1.0f, glm::vec3(1.0f) });
+        scene.addLight({ glm::vec3(0.0f, 0.7f, 0.0f), 1.0f, glm::vec3(1.0f) });
 
         GUIRenderer guiRenderer(window);
 

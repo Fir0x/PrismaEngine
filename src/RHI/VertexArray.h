@@ -2,7 +2,7 @@
 
 #include "ByteBuffer.h"
 #include "VertexBufferLayout.h"
-#include "utils.h"
+#include "../core/utils.h"
 
 namespace BerylEngine
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../core/Material.h"
-#include "../../core/StaticMesh.h"
+#include "Material.h"
+#include "../geometry/StaticMesh.h"
 
 namespace BerylEngine
 {

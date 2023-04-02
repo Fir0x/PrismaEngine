@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/StaticMesh.h"
+#include "StaticMesh.h"
 
 namespace BerylEngine::MeshUtilities
 {

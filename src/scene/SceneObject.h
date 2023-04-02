@@ -3,8 +3,8 @@
 #include <glm/glm.hpp>
 
 #include "Camera.h"
-#include "components/Transform.h"
-#include "components/MeshRenderer.h"
+#include "Transform.h"
+#include "../rendering/MeshRenderer.h"
 
 namespace BerylEngine
 {

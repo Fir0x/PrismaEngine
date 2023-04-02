@@ -4,7 +4,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-#include "utils.h"
+#include "../core/utils.h"
 
 namespace BerylEngine
 {

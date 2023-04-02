@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 
-#include "TypedBuffer.h"
+#include "../RHI/TypedBuffer.h"
 #include "StaticMesh.h"
-#include "VertexArray.h"
+#include "../RHI/VertexArray.h"
 
 namespace BerylEngine
 {
