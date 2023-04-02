@@ -2,13 +2,13 @@
 #include <spdlog/spdlog.h>
 #include <imgui/imgui.h>
 
-#include "geometry/meshUtilities.h"
-#include "input/inputManager.h"
-#include "scene/SceneView.h"
-#include "RHI/graphics.h"
-#include "RHI/FrameBuffer.h"
-#include "rendering/GUIRenderer.h"
-#include "rendering/Material.h"
+#include "geometry/public/meshUtilities.h"
+#include "input/public/inputManager.h"
+#include "scene/public/SceneView.h"
+#include "RHI/public/graphics.h"
+#include "RHI/public/FrameBuffer.h"
+#include "rendering/public/GUIRenderer.h"
+#include "rendering/public/Material.h"
 
 static struct Settings
 {
