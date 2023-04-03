@@ -6,9 +6,6 @@ namespace BerylEngine
 {
 	class Transform
 	{
-	private:
-		glm::mat4 m_transforms;
-
 	public:
 		Transform();
 		Transform(const glm::vec3& position);
@@ -27,5 +24,8 @@ namespace BerylEngine
 		const glm::vec3 getRight() const;
 		const glm::vec3 getUp() const;
 		const glm::vec3 getForward() const;
+
+	private:
+		glm::mat4 m_transforms;
 	};
 }

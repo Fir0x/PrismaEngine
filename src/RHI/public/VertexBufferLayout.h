@@ -27,10 +27,6 @@ namespace BerylEngine
 
 	class VertexBufferLayout
 	{
-	private:
-		std::vector<VertexBufferElement> m_elements;
-		unsigned int m_stride = 0;
-
 	public:
 		const std::vector<VertexBufferElement>& get_elements() const
 		{
@@ -58,6 +54,10 @@ namespace BerylEngine
 			m_elements.push_back({ GL_UNSIGNED_INT, count, false });
 			m_stride += count * VertexBufferElement::get_type_size(GL_UNSIGNED_INT);
 		}
+
+	private:
+		std::vector<VertexBufferElement> m_elements;
+		unsigned int m_stride = 0;
 	};
 }
 

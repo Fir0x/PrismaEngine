@@ -9,19 +9,6 @@ namespace BerylEngine
 {
 	class ByteBuffer : NonCopyable
 	{
-	private:
-		GLHandle m_handle;
-
-		/// <summary>
-		/// This methods exists to hide implementation dtails of its templated version.
-		/// </summary>
-		/// <param name="usageType"></param>
-		/// <param name="bindingPoint"></param>
-		void bind(BufferUsageType usageType, int bindingPoint) const;
-
-	protected:
-		size_t m_size;
-
 	public:
 		ByteBuffer() = default;
 
@@ -41,5 +28,18 @@ namespace BerylEngine
 		}
 
 		void setAccess(AccessType accessType) const;
+
+	protected:
+		size_t m_size;
+
+	private:
+		/// <summary>
+		/// This methods exists to hide implementation dtails of its templated version.
+		/// </summary>
+		/// <param name="usageType"></param>
+		/// <param name="bindingPoint"></param>
+		void bind(BufferUsageType usageType, int bindingPoint) const;
+
+		GLHandle m_handle;
 	};
 }

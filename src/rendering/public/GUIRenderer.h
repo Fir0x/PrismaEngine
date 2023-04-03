@@ -7,9 +7,6 @@ namespace BerylEngine
 {
 	class GUIRenderer
 	{
-	private:
-		GLFWwindow* m_window = nullptr;
-
 	public:
 		GUIRenderer(GLFWwindow* window);
 		~GUIRenderer();
@@ -18,5 +15,8 @@ namespace BerylEngine
 		void finish();
 
 		bool forwardMouseEvent(int button, bool down) const;
+
+	private:
+		GLFWwindow* m_window = nullptr;
 	};
 }

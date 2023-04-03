@@ -10,9 +10,6 @@ namespace BerylEngine
 {
 	class VertexArray : NonCopyable
 	{
-	private:
-		GLHandle m_handle;
-
 	public:
 		VertexArray() = default;
 		VertexArray(const ByteBuffer& vb, const VertexBufferLayout& layout);
@@ -22,5 +19,8 @@ namespace BerylEngine
 
 		void bind() const;
 		void unbind() const;
+
+	private:
+		GLHandle m_handle;
 	};
 }

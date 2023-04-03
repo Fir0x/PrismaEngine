@@ -9,24 +9,6 @@ namespace BerylEngine
 {
 	class Camera
 	{
-	private:
-		glm::vec3 m_worldUp;
-
-		float m_pitch = 0;
-		float m_yaw = 0;
-
-		glm::mat4 m_viewMatrix;
-		glm::mat4 m_projMatrix;
-
-		void addPitch(float angle);
-		void addYaw(float angle);
-
-		glm::mat4 buildProjection(float zNear, float fovYDegree, float aspectRatio);
-		void initialize(const glm::mat4& frustum, const glm::vec3& position, float yaw,
-						float pitch);
-
-		void updateView();
-
 	public:
 		Camera(const glm::vec3& position, float yaw, float pitch, float aspectRatio);
 		Camera(const glm::vec3& position, float yaw, float pitch);
@@ -48,5 +30,23 @@ namespace BerylEngine
 		void rotate(float pitchAngle, float yawAngle);
 
 		void onScreenSizeChange(int w, int h);
+
+	private:
+		glm::vec3 m_worldUp;
+
+		float m_pitch = 0;
+		float m_yaw = 0;
+
+		glm::mat4 m_viewMatrix;
+		glm::mat4 m_projMatrix;
+
+		void addPitch(float angle);
+		void addYaw(float angle);
+
+		glm::mat4 buildProjection(float zNear, float fovYDegree, float aspectRatio);
+		void initialize(const glm::mat4& frustum, const glm::vec3& position, float yaw,
+			float pitch);
+
+		void updateView();
 	};
 }

@@ -19,13 +19,6 @@ namespace BerylEngine
 
 	class Program
 	{
-	private:
-		GLHandle m_handle;
-		std::unordered_map<std::string, int> m_uniformLocations;
-
-		void fetchUniformLocations();
-		int getUniformLocation(const char* name) const;
-
 	public:
 		Program(const std::string& compute_src);
 		Program(const std::string& vertex_src, const std::string& fragment_src);
@@ -52,5 +45,12 @@ namespace BerylEngine
 		void setUniform(const char* name, float v0, float v1, float v2, float v3) const;
 		void setUniform(const char* name, const glm::mat3& matrix, bool transpose = false) const;
 		void setUniform(const char* name, const glm::mat4& matrix, bool transpose = false) const;
+
+	private:
+		GLHandle m_handle;
+		std::unordered_map<std::string, int> m_uniformLocations;
+
+		void fetchUniformLocations();
+		int getUniformLocation(const char* name) const;
 	};
 }
