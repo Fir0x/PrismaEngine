@@ -6,6 +6,7 @@
 
 #include "core/public/utils.h"
 #include "Texture.h"
+#include "APIHandle.h"
 
 namespace BerylEngine
 {
@@ -29,7 +30,7 @@ namespace BerylEngine
 	private:
 		Framebuffer(Texture* depth, Texture** renderTargets, size_t targetsCount);
 
-		unsigned int m_handle;
+		GLHandle m_handle;
 		glm::ivec2 m_size;
 
 	};

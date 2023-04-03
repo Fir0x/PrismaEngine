@@ -4,12 +4,14 @@
 #include "VertexBufferLayout.h"
 #include "core/public/utils.h"
 
+#include "APIHandle.h"
+
 namespace BerylEngine
 {
 	class VertexArray : NonCopyable
 	{
 	private:
-		unsigned int m_handle;
+		GLHandle m_handle;
 
 	public:
 		VertexArray() = default;

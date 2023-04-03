@@ -29,6 +29,7 @@
     <ClCompile Include="src\RHI\private\FrameBuffer.cpp" />
     <ClCompile Include="src\RHI\private\utils.cpp" />
     <ClCompile Include="src\rendering\private\GUIRenderer.cpp" />
+    <ClCompile Include="src\RHI\private\APIHandle.cpp" />
     <ClCompile Include="src\scene\private\PointLight.cpp" />
     <ClCompile Include="src\scene\private\SceneView.cpp" />
     <ClCompile Include="src\rendering\private\Material.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h" />
     <ClInclude Include="src\RHI\private\rhiDefs.h" />
     <ClInclude Include="src\RHI\public\FrameBuffer.h" />
+    <ClInclude Include="src\RHI\public\APIHandle.h" />
     <ClInclude Include="src\RHI\public\utils.h" />
     <ClInclude Include="src\rendering\public\GUIRenderer.h" />
     <ClInclude Include="src\scene\public\PointLight.h" />

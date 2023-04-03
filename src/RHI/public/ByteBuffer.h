@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RHI/public/rhiDefs.h"
+#include "RHI/public/APIHandle.h"
 
 #include "core/public/utils.h"
 
@@ -9,7 +10,7 @@ namespace BerylEngine
 	class ByteBuffer : NonCopyable
 	{
 	private:
-		unsigned int m_handle;
+		GLHandle m_handle;
 
 		/// <summary>
 		/// This methods exists to hide implementation dtails of its templated version.

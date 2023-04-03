@@ -81,62 +81,64 @@ namespace BerylEngine
 		return true;
 	}
 
-	Program::Program(const std::string& compute_src)
+	static unsigned int createHandle()
 	{
-		m_handle = glCreateProgram();
+		return glCreateProgram();
+	}
 
+	Program::Program(const std::string& compute_src)
+		: m_handle(createHandle())
+	{
 		auto compute = compileShader(compute_src, GL_COMPUTE_SHADER);
 
-		glAttachShader(m_handle, compute);
+		glAttachShader(m_handle.get(), compute);
 
-		bool linkSuccess = linkProgram(m_handle);
+		bool linkSuccess = linkProgram(m_handle.get());
 
 		glDeleteShader(compute);
 
 		if (!linkSuccess)
 		{
-			glDeleteProgram(m_handle);
+			glDeleteProgram(m_handle.get());
 		}
 
 		fetchUniformLocations();
 	}
 
 	Program::Program(const std::string& vertex_src, const std::string& fragment_src)
+		: m_handle(createHandle())
 	{
-		m_handle = glCreateProgram();
-
 		auto vertex = compileShader(vertex_src, GL_VERTEX_SHADER);
 		auto fragment = compileShader(fragment_src, GL_FRAGMENT_SHADER);
 
-		glAttachShader(m_handle, vertex);
-		glAttachShader(m_handle, fragment);
+		glAttachShader(m_handle.get(), vertex);
+		glAttachShader(m_handle.get(), fragment);
 
-		bool linkSuccess = linkProgram(m_handle);
+		bool linkSuccess = linkProgram(m_handle.get());
 
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 
 		if (!linkSuccess)
 		{
-			glDeleteProgram(m_handle);
+			glDeleteProgram(m_handle.get());
 		}
 
 		fetchUniformLocations();
 	}
 
 	Program::Program(const std::string& vertex_src, const std::string& geometry_src, const std::string& fragment_src)
+		: m_handle(createHandle())
 	{
-		m_handle = glCreateProgram();
-
 		auto vertex = compileShader(vertex_src, GL_VERTEX_SHADER);
 		auto geometry = compileShader(geometry_src, GL_GEOMETRY_SHADER);
 		auto fragment = compileShader(fragment_src, GL_FRAGMENT_SHADER);
 
-		glAttachShader(m_handle, vertex);
-		glAttachShader(m_handle, geometry);
-		glAttachShader(m_handle, fragment);
+		glAttachShader(m_handle.get(), vertex);
+		glAttachShader(m_handle.get(), geometry);
+		glAttachShader(m_handle.get(), fragment);
 
-		bool linkSuccess = linkProgram(m_handle);
+		bool linkSuccess = linkProgram(m_handle.get());
 
 		glDeleteShader(vertex);
 		glDeleteShader(geometry);
@@ -144,7 +146,7 @@ namespace BerylEngine
 
 		if (!linkSuccess)
 		{
-			glDeleteProgram(m_handle);
+			glDeleteProgram(m_handle.get());
 		}
 
 		fetchUniformLocations();
@@ -152,7 +154,7 @@ namespace BerylEngine
 
 	Program::~Program()
 	{
-		glDeleteProgram(m_handle);
+		glDeleteProgram(m_handle.get());
 	}
 
 	static std::string retrieveInclude(const std::string& includeLine, const std::string& startPath)
@@ -289,13 +291,13 @@ namespace BerylEngine
 
 	void Program::bind()
 	{
-		glUseProgram(m_handle);
+		glUseProgram(m_handle.get());
 	}
 
 	void Program::fetchUniformLocations()
 	{
 		int uniform_count = 0;
-		glGetProgramiv(m_handle, GL_ACTIVE_UNIFORMS, &uniform_count);
+		glGetProgramiv(m_handle.get(), GL_ACTIVE_UNIFORMS, &uniform_count);
 
 		for (int i = 0; i != uniform_count; ++i) {
 			char name[1024] = {};
@@ -303,9 +305,9 @@ namespace BerylEngine
 			int discard = 0;
 			GLenum type = GL_NONE;
 
-			glGetActiveUniform(m_handle, i, sizeof(name), &len, &discard, &type, name);
+			glGetActiveUniform(m_handle.get(), i, sizeof(name), &len, &discard, &type, name);
 
-			m_uniformLocations.emplace(name, glGetUniformLocation(m_handle, name));
+			m_uniformLocations.emplace(name, glGetUniformLocation(m_handle.get(), name));
 		}
 	}
 
@@ -320,19 +322,19 @@ namespace BerylEngine
 	void Program::setUniform(const char* name, int v0) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniform1i(m_handle, location, v0);
+		glProgramUniform1i(m_handle.get(), location, v0);
 	}
 
 	void Program::setUniform(const char* name, float v0) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniform1f(m_handle, location, v0);
+		glProgramUniform1f(m_handle.get(), location, v0);
 	}
 
 	void Program::setUniform(const char* name, float v0, float v1, float v2) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniform3f(m_handle, location, v0, v1, v2);
+		glProgramUniform3f(m_handle.get(), location, v0, v1, v2);
 	}
 
 	void Program::setUniform(const char* name, const glm::vec3& v) const
@@ -343,18 +345,18 @@ namespace BerylEngine
 	void Program::setUniform(const char* name, float v0, float v1, float v2, float v3) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniform4f(m_handle, location, v0, v1, v2, v3);
+		glProgramUniform4f(m_handle.get(), location, v0, v1, v2, v3);
 	}
 
 	void Program::setUniform(const char* name, const glm::mat3& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniformMatrix3fv(m_handle, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
+		glProgramUniformMatrix3fv(m_handle.get(), location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void Program::setUniform(const char* name, const glm::mat4& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniformMatrix4fv(m_handle, location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
+		glProgramUniformMatrix4fv(m_handle.get(), location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
 	}
 }

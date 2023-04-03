@@ -1,6 +1,7 @@
 #include "../public/FrameBuffer.h"
 
 #include <GL/glew.h>
+#include <spdlog/spdlog.h>
 
 namespace BerylEngine
 {
@@ -8,13 +9,19 @@ namespace BerylEngine
 	{
 	}
 
-	Framebuffer::Framebuffer(Texture* depth, Texture** renderTargets, size_t targetsCount)
-        : m_size({0,0})
-	{
-        glCreateFramebuffers(1, &m_handle);
+    static unsigned int createHandle()
+    {
+        unsigned int handle;
+        glCreateFramebuffers(1, &handle);
 
+        return handle;
+    }
+
+	Framebuffer::Framebuffer(Texture* depth, Texture** renderTargets, size_t targetsCount)
+        : m_size({0,0}), m_handle(createHandle())
+	{
         if (depth) {
-            glNamedFramebufferTexture(m_handle, GL_DEPTH_ATTACHMENT, depth->getId(), 0);
+            glNamedFramebufferTexture(m_handle.get(), GL_DEPTH_ATTACHMENT, depth->getHandle(), 0);
             m_size = depth->getSize();
         }
 
@@ -22,7 +29,7 @@ namespace BerylEngine
             FATAL("Too many render targets");
 
         for (size_t i = 0; i != targetsCount; ++i) {
-            glNamedFramebufferTexture(m_handle, GLenum(GL_COLOR_ATTACHMENT0 + i), renderTargets[i]->getId(), 0);
+            glNamedFramebufferTexture(m_handle.get(), GLenum(GL_COLOR_ATTACHMENT0 + i), renderTargets[i]->getHandle(), 0);
 
             glm::ivec2 targetSize = renderTargets[i]->getSize();
             if (targetSize.x < m_size.x)
@@ -43,18 +50,22 @@ namespace BerylEngine
             GL_COLOR_ATTACHMENT7
         };
 
-        glNamedFramebufferDrawBuffers(m_handle, GLsizei(targetsCount), draw_buffers);
+        glNamedFramebufferDrawBuffers(m_handle.get(), GLsizei(targetsCount), draw_buffers);
 	}
 
     Framebuffer::~Framebuffer()
     {
-        if (m_handle != 0)
-            glDeleteFramebuffers(1, &m_handle);
+        if (unsigned int handle = m_handle.get())
+        {
+            glDeleteFramebuffers(1, &handle);
+
+            spdlog::trace("Framebuffer {} deleted.", handle);
+        }
     }
 
     void Framebuffer::bind(bool clear) const
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, m_handle);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_handle.get());
         glViewport(0, 0, m_size.x, m_size.y);
 
         if (clear)
@@ -63,7 +74,7 @@ namespace BerylEngine
 
     void Framebuffer::bind(bool clearTargets, bool clearDepth) const
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, m_handle);
+        glBindFramebuffer(GL_FRAMEBUFFER, m_handle.get());
         glViewport(0, 0, m_size.x, m_size.y);
 
         if (clearTargets || clearDepth)
@@ -83,7 +94,7 @@ namespace BerylEngine
         int viewport[4] = {};
         glGetIntegerv(GL_VIEWPORT, viewport);
 
-        glBlitNamedFramebuffer(m_handle, 0,
+        glBlitNamedFramebuffer(m_handle.get(), 0,
             0, 0, m_size.x, m_size.y,
             0, 0, viewport[2], viewport[3],
             GL_COLOR_BUFFER_BIT | (copyDepth ? GL_DEPTH_BUFFER : 0),

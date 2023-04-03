@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "core/public/utils.h"
+#include "APIHandle.h"
 
 namespace BerylEngine
 {
@@ -25,7 +26,7 @@ namespace BerylEngine
 
 		static std::shared_ptr<Texture> fromFile(const std::string& path, TextureFormat textureFormat);
 
-		unsigned int getId() const;
+		unsigned int getHandle() const;
 		glm::ivec2 getSize() const;
 
 		void bind() const;
@@ -34,7 +35,7 @@ namespace BerylEngine
 		void bindToUnit(const int unit) const;
 
 	private:
-		unsigned int m_handle;
+		GLHandle m_handle;
 		int m_width;
 		int m_height;
 

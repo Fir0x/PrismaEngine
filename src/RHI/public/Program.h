@@ -7,6 +7,8 @@
 
 #include <glm/glm.hpp>
 
+#include "APIHandle.h"
+
 namespace BerylEngine
 {
 	struct ShaderSources
@@ -18,7 +20,7 @@ namespace BerylEngine
 	class Program
 	{
 	private:
-		unsigned int m_handle;
+		GLHandle m_handle;
 		std::unordered_map<std::string, int> m_uniformLocations;
 
 		void fetchUniformLocations();
