@@ -17,11 +17,11 @@ namespace BerylEngine
 		const glm::vec3& position() const;
 		float radius() const;
 		const glm::vec3& color() const;
-		/// <summary>
-		/// Give the light's attenuation coefficients
-		/// </summary>
-		/// <param name="linear"></param>
-		/// <param name="quadratic"></param>
+		/**
+		 * @brief Give the light's attenuation coefficients
+		 * @param linear 
+		 * @param quadratic 
+		*/
 		void coefficients(float& linear, float& quadratic) const;
 
 	private:

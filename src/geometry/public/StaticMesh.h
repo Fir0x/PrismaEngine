@@ -15,8 +15,8 @@ namespace BerylEngine
 	public:
 		struct Vertex
 		{
-			glm::vec3 coords;
-			glm::vec3 normals;
+			glm::vec3 position;
+			glm::vec3 normal;
 			glm::vec2 uvs;
 			glm::vec4 tangentData; // Tangent vector + bitangent sign
 		};

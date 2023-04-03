@@ -27,7 +27,7 @@ namespace BerylEngine
 		m_lights.erase(m_lights.begin() + index);
 	}
 
-	void Scene::render(const Camera& camera) const
+	void Scene::draw(const Camera& camera) const
 	{
 		ShaderDefs::FrameContext context;
 		context.camera.viewMatrix = camera.viewMatrix();

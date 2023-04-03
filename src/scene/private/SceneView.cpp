@@ -24,6 +24,6 @@ namespace BerylEngine
 
 	void SceneView::render() const
 	{
-		m_scene.render(m_camera);
+		m_scene.draw(m_camera);
 	}
 }

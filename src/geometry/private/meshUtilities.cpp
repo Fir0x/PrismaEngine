@@ -10,8 +10,8 @@ namespace BerylEngine::MeshUtilities
 	static glm::vec4 processTangentData(const StaticMesh::Vertex& v1, const StaticMesh::Vertex& v2,
 										const StaticMesh::Vertex& v3)
 	{
-		glm::vec3 edge1 = v2.coords - v1.coords;
-		glm::vec3 edge2 = v3.coords - v1.coords;
+		glm::vec3 edge1 = v2.position - v1.position;
+		glm::vec3 edge2 = v3.position - v1.position;
 		glm::vec2 deltaUV1 = v2.uvs - v1.uvs;
 		glm::vec2 deltaUV2 = v3.uvs - v1.uvs;
 		
@@ -29,7 +29,7 @@ namespace BerylEngine::MeshUtilities
 		bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
 		bitangent = glm::normalize(bitangent);
 
-		float bitangentSign = glm::dot(glm::cross(tangent, bitangent), v1.normals);
+		float bitangentSign = glm::dot(glm::cross(tangent, bitangent), v1.normal);
 
 		return glm::vec4(tangent, bitangentSign);
 	}

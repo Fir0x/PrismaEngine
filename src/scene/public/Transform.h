@@ -14,10 +14,10 @@ namespace BerylEngine
 		void rotate(float angleX, float angleY, float angleZ);
 		void scale(float scaleX, float scaleY, float scaleZ);
 
-		/// <summary>
-		/// Uniform scaling on all axes
-		/// </summary>
-		/// <param name="x"></param>
+		/**
+		 * @brief Uniform scaling on all axes
+		 * @param factor 
+		*/
 		void scale(float factor);
 
 		const glm::mat4& getMatrix() const;

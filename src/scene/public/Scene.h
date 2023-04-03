@@ -17,7 +17,7 @@ namespace BerylEngine
 		size_t addLight(const PointLight& light);
 		void removeLight(size_t index);
 
-		void render(const Camera& camera) const;
+		void draw(const Camera& camera) const;
 
 	private:
 		std::vector<SceneObject> m_objects;
