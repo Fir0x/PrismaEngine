@@ -1,6 +1,6 @@
 #pragma once
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	void initGraphicsAPI();
 }

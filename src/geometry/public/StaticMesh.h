@@ -8,7 +8,7 @@
 #include "RHI/public/TypedBuffer.h"
 #include "RHI/public/VertexArray.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class StaticMesh
 	{

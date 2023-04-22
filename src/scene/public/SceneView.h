@@ -3,7 +3,7 @@
 #include "Camera.h"
 #include "Scene.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class SceneView
 	{

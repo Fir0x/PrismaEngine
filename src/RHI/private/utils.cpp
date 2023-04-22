@@ -5,7 +5,7 @@
 
 #include "core/public/utils.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
     static void debugCallback(GLenum, GLenum type, GLuint, GLenum sev, GLsizei, const char* msg, const void*)
     {

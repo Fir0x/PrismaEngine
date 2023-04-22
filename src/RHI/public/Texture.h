@@ -7,7 +7,7 @@
 #include "core/public/utils.h"
 #include "APIHandle.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class Texture : public NonCopyable
 	{

@@ -8,7 +8,7 @@
 #include "Texture.h"
 #include "APIHandle.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class Framebuffer : NonCopyable
 	{

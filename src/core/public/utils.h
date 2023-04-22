@@ -4,7 +4,7 @@
 #include <vector>
 
 #define FWD(var) std::forward<decltype(var)>(var)
-#define FATAL(msg) BerylEngine::fatal(msg, __FILE__, __LINE__)
+#define FATAL(msg) PrismaEngine::fatal(msg, __FILE__, __LINE__)
 #define ALWAYS_ASSERT(cond, msg) do { if(!(cond)) { FATAL(msg); } } while(false)
 #ifdef NDEBUG
 #define DEBUG_ASSERT(cond) do { } while(false);
@@ -12,7 +12,7 @@
 #define DEBUG_ASSERT(cond) ALWAYS_ASSERT(cond, "Assertion failed: " #cond)
 #endif
 
-namespace BerylEngine
+namespace PrismaEngine
 {
     bool isDebuggerPresent();
     void debugBreak();

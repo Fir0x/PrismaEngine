@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	SceneObject::SceneObject(const MeshRenderer& renderer)
 		: m_transform(), m_renderer(renderer)

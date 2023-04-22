@@ -5,7 +5,7 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
-namespace BerylEngine::MeshUtilities
+namespace PrismaEngine::MeshUtilities
 {
 	static glm::vec4 processTangentData(const StaticMesh::Vertex& v1, const StaticMesh::Vertex& v2,
 										const StaticMesh::Vertex& v3)

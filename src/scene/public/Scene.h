@@ -6,7 +6,7 @@
 #include "PointLight.h"
 #include "SceneObject.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class Scene
 	{

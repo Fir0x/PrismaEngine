@@ -2,14 +2,14 @@
 
 #include <glm/glm.hpp>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
     static float lastFrameTime = 0;
     static bool mouseCamera = true;
     static bool firstFocus = true;
-    static BerylEngine::Camera* mainCamera;
+    static PrismaEngine::Camera* mainCamera;
 
-    void linkCamera(BerylEngine::Camera* camera)
+    void linkCamera(PrismaEngine::Camera* camera)
     {
         mainCamera = camera;
     }

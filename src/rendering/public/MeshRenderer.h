@@ -3,7 +3,7 @@
 #include "Material.h"
 #include "geometry/public/StaticMesh.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class MeshRenderer
 	{

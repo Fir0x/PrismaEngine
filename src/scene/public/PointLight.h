@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class PointLight
 	{

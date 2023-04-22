@@ -1,6 +1,6 @@
 #include "../public/APIHandle.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
     GLHandle::GLHandle(unsigned int handle) : APIHandle(handle)
     {

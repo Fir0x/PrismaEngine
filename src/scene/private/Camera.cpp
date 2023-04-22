@@ -2,7 +2,7 @@
 
 #include <glm/ext.hpp>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	Camera::Camera(const glm::vec3& position, float yaw, float pitch, float aspectRatio)
 	{

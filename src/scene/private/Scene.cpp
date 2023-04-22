@@ -3,7 +3,7 @@
 #include "RHI/public/TypedBuffer.h"
 #include "rendering/public/shaderDefs.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	size_t Scene::addObject(const SceneObject& object)
 	{

@@ -6,7 +6,7 @@
 
 #include "APIHandle.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class VertexArray : NonCopyable
 	{

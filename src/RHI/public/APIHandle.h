@@ -2,7 +2,7 @@
 
 #include "core/public/utils.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	template <class T>
 	class APIHandle : NonCopyable

@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	Material::Material(std::shared_ptr<Program> program, BlendMode blendMode, DepthMode depthMode, bool writeDepth,
 						CullMode cullMode)

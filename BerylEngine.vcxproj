@@ -97,6 +97,7 @@
     <ProjectGuid>{2da9f74b-25fc-49d9-9736-1dc5a650d71d}</ProjectGuid>
     <RootNamespace>BerylEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>PrismaEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

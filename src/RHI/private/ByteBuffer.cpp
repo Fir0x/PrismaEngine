@@ -5,7 +5,7 @@
 
 #include "rhiDefs.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	static unsigned int createHandle()
 	{

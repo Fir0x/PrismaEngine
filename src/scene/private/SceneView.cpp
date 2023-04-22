@@ -1,6 +1,6 @@
 #include "../public/SceneView.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	SceneView::SceneView(const Scene& scene)
 		: m_scene(scene)

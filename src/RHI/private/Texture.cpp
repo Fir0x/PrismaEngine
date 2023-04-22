@@ -8,7 +8,7 @@
 
 #include "core/public/utils.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	struct TextureFormatGL
 	{

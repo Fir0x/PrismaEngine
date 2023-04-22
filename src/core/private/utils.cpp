@@ -4,7 +4,7 @@
 #include <sstream>
 #include <Windows.h>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	bool isDebuggerPresent()
 	{

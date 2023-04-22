@@ -1,6 +1,6 @@
 #include "../public/MeshRenderer.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	MeshRenderer::MeshRenderer(std::shared_ptr<const StaticMesh> mesh, const Material& material)
 		: m_mesh(mesh), m_material(material)

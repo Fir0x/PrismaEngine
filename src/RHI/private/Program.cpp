@@ -6,7 +6,7 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	static std::string glShader2Str(GLenum shaderType)
 	{

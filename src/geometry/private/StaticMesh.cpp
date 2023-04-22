@@ -4,7 +4,7 @@
 
 #include "core/public/utils.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	StaticMesh::StaticMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
 		: m_vbo(vertices.data(), vertices.size())

@@ -6,7 +6,7 @@
 #include "Transform.h"
 #include "rendering/public/MeshRenderer.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class SceneObject
 	{

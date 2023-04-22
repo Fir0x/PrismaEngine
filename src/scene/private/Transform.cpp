@@ -2,7 +2,7 @@
 
 #include <glm/ext.hpp>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	Transform::Transform()
 	{

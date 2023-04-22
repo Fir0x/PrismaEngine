@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	class Camera
 	{

@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	Framebuffer::Framebuffer(Texture* depth) : Framebuffer(depth, nullptr, 0)
 	{

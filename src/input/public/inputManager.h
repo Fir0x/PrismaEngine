@@ -6,9 +6,9 @@
 #include "scene/public/Camera.h"
 #include "rendering/public/GUIRenderer.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
-	void linkCamera(BerylEngine::Camera* camera);
+	void linkCamera(PrismaEngine::Camera* camera);
 	void processInput(GLFWwindow* window, const GUIRenderer& guiRenderer);
 	void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 }

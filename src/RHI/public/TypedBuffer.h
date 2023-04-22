@@ -2,7 +2,7 @@
 
 #include "ByteBuffer.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	template <typename T>
 	class TypedBuffer : public ByteBuffer

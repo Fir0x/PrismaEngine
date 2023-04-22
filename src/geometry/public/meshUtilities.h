@@ -2,7 +2,7 @@
 
 #include "StaticMesh.h"
 
-namespace BerylEngine::MeshUtilities
+namespace PrismaEngine::MeshUtilities
 {
 	/**
 	 * @brief Generate a static plane mesh.

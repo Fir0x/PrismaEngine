@@ -9,7 +9,7 @@
 
 #include "APIHandle.h"
 
-namespace BerylEngine
+namespace PrismaEngine
 {
 	struct ShaderSources
 	{
