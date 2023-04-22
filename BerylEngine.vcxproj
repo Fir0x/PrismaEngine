@@ -59,6 +59,7 @@
     <ClInclude Include="libs\imgui\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\rendering\public\shaderDefs.h" />
     <ClInclude Include="src\RHI\private\rhiDefs.h" />
     <ClInclude Include="src\RHI\public\FrameBuffer.h" />
     <ClInclude Include="src\RHI\public\APIHandle.h" />
@@ -83,7 +84,6 @@
     <ClInclude Include="src\scene\public\Transform.h" />
     <ClInclude Include="src\scene\public\Scene.h" />
     <ClInclude Include="src\scene\public\SceneObject.h" />
-    <ClInclude Include="src\scene\public\shaderDefs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.frag" />

@@ -1,7 +1,7 @@
 #include "../public/Scene.h"
 
 #include "RHI/public/TypedBuffer.h"
-#include "../public/shaderDefs.h"
+#include "rendering/public/shaderDefs.h"
 
 namespace BerylEngine
 {
