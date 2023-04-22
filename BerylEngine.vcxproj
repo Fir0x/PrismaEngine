@@ -88,6 +88,8 @@
   <ItemGroup>
     <None Include="shaders\basic.frag" />
     <None Include="shaders\basic.vert" />
+    <None Include="shaders\deferred_gbuffer.frag" />
+    <None Include="shaders\deferred_lighting.frag" />
     <None Include="shaders\defines\constants.glsl" />
     <None Include="shaders\defines\structs.glsl" />
   </ItemGroup>

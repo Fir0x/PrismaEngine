@@ -197,13 +197,13 @@
     <ClInclude Include="src\scene\public\SceneObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\scene\public\shaderDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\RHI\private\rhiDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RHI\public\APIHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rendering\public\shaderDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -212,5 +212,7 @@
     <None Include="shaders\basic.frag" />
     <None Include="shaders\defines\constants.glsl" />
     <None Include="shaders\defines\structs.glsl" />
+    <None Include="shaders\deferred_gbuffer.frag" />
+    <None Include="shaders\deferred_lighting.frag" />
   </ItemGroup>
 </Project>

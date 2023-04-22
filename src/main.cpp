@@ -67,10 +67,10 @@ int main(void)
         glfwSetFramebufferSizeCallback(window, screen_size_callback);
 
         std::string defines[] = { "NO_DEFINES" };
-        auto program = Program::fromFiles("shaders/basic.vert", "shaders/basic.frag", defines);
+        auto gBufferProgram = Program::fromFiles("shaders/basic.vert", "shaders/deferred_gbuffer.frag", defines);
         //auto albedoTex = Texture::fromFile("uvTestTexture.png", Texture::TextureFormat::RGBA8_UNORM);
         //auto normalTex = Texture::fromFile("brickwall_normal.jpg", Texture::TextureFormat::RGB8_UNORM);
-        Material material(program);
+        Material material(gBufferProgram);
         //material.setTexture(0, albedoTex);
         //material.setTexture(1, normalTex);
         auto mesh = MeshUtilities::staticCube();
@@ -82,23 +82,24 @@ int main(void)
 
         GUIRenderer guiRenderer(window);
 
-        Texture colorTexture(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
-        Texture depthTexture(settings.screen_width, settings.screen_height, Texture::TextureFormat::Depth32_FLOAT);
-        Framebuffer mainFramebuffer(&depthTexture, std::array{&colorTexture});
+        auto colorTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
+        auto normalTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGB8_UNORM);
+        auto depthTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::Depth32_FLOAT);
+        Framebuffer gBuffer(depthTexture.get(), std::array{colorTexture.get(), normalTexture.get()});
 
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
         {
             processInput(window, guiRenderer);
 
-            mainFramebuffer.bind(true);
+            gBuffer.bind(true);
 
-            sceneView.render();
+            sceneView.renderGeometry();
 
             guiRenderer.start();
             guiRenderer.finish();
 
-            mainFramebuffer.blit(false);
+            gBuffer.blit(false);
 
             glfwSwapBuffers(window);
 

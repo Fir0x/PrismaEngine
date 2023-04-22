@@ -17,7 +17,8 @@ namespace PrismaEngine
 		size_t addLight(const PointLight& light);
 		void removeLight(size_t index);
 
-		void draw(const Camera& camera) const;
+		void drawGeometry(const Camera& camera) const;
+		void drawLights(const Camera& camera) const;
 
 	private:
 		std::vector<SceneObject> m_objects;

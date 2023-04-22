@@ -27,7 +27,7 @@ namespace PrismaEngine
 		m_lights.erase(m_lights.begin() + index);
 	}
 
-	void Scene::draw(const Camera& camera) const
+	void Scene::drawGeometry(const Camera& camera) const
 	{
 		ShaderDefs::FrameContext context;
 		context.camera.viewMatrix = camera.viewMatrix();
@@ -39,6 +39,12 @@ namespace PrismaEngine
 		TypedBuffer<ShaderDefs::FrameContext> contextBuffer(&context, 1);
 		contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
 
+		for (const auto& obj : m_objects)
+			obj.draw();
+	}
+
+	void Scene::drawLights(const Camera& camera) const
+	{
 		std::vector<ShaderDefs::PointLight> mappedLights;
 		for (const auto& light : m_lights)
 		{
@@ -51,8 +57,5 @@ namespace PrismaEngine
 		}
 		TypedBuffer<ShaderDefs::PointLight> lightBuffer(mappedLights.data(), mappedLights.size());
 		lightBuffer.bind<BufferUsageType::ShaderStorage>(1);
-
-		for (const auto& obj : m_objects)
-			obj.draw();
 	}
 }

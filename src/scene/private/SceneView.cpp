@@ -22,8 +22,13 @@ namespace PrismaEngine
 		return m_camera;
 	}
 
-	void SceneView::render() const
+	void SceneView::renderGeometry() const
 	{
-		m_scene.draw(m_camera);
+		m_scene.drawGeometry(m_camera);
+	}
+
+	void SceneView::renderLights() const
+	{
+		m_scene.drawLights(m_camera);
 	}
 }

@@ -14,7 +14,8 @@ namespace PrismaEngine
 
 		Camera& camera();
 
-		void render() const;
+		void renderGeometry() const;
+		void renderLights() const;
 
 	private:
 		const Scene& m_scene;
