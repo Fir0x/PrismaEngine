@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include "core/public/utils.h"
+#include "RHI/public/utils.h"
 
 namespace PrismaEngine
 {
@@ -26,6 +27,6 @@ namespace PrismaEngine
 	{
 		m_vao->bind();
 		m_ibo->bind(BufferUsageType::IndexBuffer);
-		glDrawElements(GL_TRIANGLES, (unsigned int)m_ibo->getCount(), GL_UNSIGNED_INT, nullptr);
+		drawIndexedTriangles((unsigned int)m_ibo->getCount());
 	}
 }

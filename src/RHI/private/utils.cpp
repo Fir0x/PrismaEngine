@@ -48,4 +48,14 @@ namespace PrismaEngine
 
         spdlog::info("Graphics API initialized.");
     }
+
+    void drawTriangles(unsigned int vertexCount)
+    {
+        glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertexCount);
+    }
+
+    void drawIndexedTriangles(unsigned int vertexCount)
+    {
+        glDrawElements(GL_TRIANGLES, (GLsizei)vertexCount, GL_UNSIGNED_INT, nullptr);
+    }
 }
