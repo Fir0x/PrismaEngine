@@ -14,8 +14,8 @@ namespace PrismaEngine
 
 		Camera& camera();
 
-		void renderGeometry() const;
-		void renderLights() const;
+		void renderGeometry(const glm::ivec2& windowSizes) const;
+		void renderLights(const glm::ivec2& windowSizes) const;
 
 	private:
 		const Scene& m_scene;

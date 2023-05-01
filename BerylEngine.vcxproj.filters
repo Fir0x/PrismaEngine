@@ -102,6 +102,9 @@
     <ClCompile Include="src\RHI\private\APIHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scene\private\DirectionalLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\imgui\imgui\imconfig.h">
@@ -206,6 +209,9 @@
     <ClInclude Include="src\rendering\public\shaderDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\scene\public\DirectionalLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basic.vert" />
@@ -213,6 +219,8 @@
     <None Include="shaders\defines\constants.glsl" />
     <None Include="shaders\defines\structs.glsl" />
     <None Include="shaders\deferred_gbuffer.frag" />
-    <None Include="shaders\deferred_lighting.frag" />
+    <None Include="shaders\screen.vert" />
+    <None Include="shaders\lighting\deferred_directionalLight.frag" />
+    <None Include="shaders\lighting\deferred_pointLight.frag" />
   </ItemGroup>
 </Project>

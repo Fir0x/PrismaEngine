@@ -22,13 +22,13 @@ namespace PrismaEngine
 		return m_camera;
 	}
 
-	void SceneView::renderGeometry() const
+	void SceneView::renderGeometry(const glm::ivec2& windowSizes) const
 	{
-		m_scene.drawGeometry(m_camera);
+		m_scene.drawGeometry(m_camera, windowSizes);
 	}
 
-	void SceneView::renderLights() const
+	void SceneView::renderLights(const glm::ivec2& windowSizes) const
 	{
-		m_scene.drawLights(m_camera);
+		m_scene.drawLights(m_camera, windowSizes);
 	}
 }

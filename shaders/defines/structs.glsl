@@ -4,13 +4,16 @@ struct CameraData
 	mat4 projectionMatrix;
 };
 
+struct ViewportData
+{
+	uint width;
+	uint height;
+};
+
 struct FrameContext
 {
 	CameraData camera;
-	vec3 sunDirection;
-	uint lightCount;
-	vec3 sunColor;
-	float pad2;
+	ViewportData viewport;
 };
 
 struct PointLight

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Camera.h"
+#include "DirectionalLight.h"
 #include "PointLight.h"
 #include "SceneObject.h"
 
@@ -14,14 +15,15 @@ namespace PrismaEngine
 		size_t addObject(const SceneObject& object);
 		void removeObject(size_t index);
 
+		size_t addLight(const DirectionalLight& light);
 		size_t addLight(const PointLight& light);
-		void removeLight(size_t index);
 
-		void drawGeometry(const Camera& camera) const;
-		void drawLights(const Camera& camera) const;
+		void drawGeometry(const Camera& camera, const glm::ivec2& windowSizes) const;
+		void drawLights(const Camera& camera, const glm::ivec2& windowSizes) const;
 
 	private:
 		std::vector<SceneObject> m_objects;
-		std::vector<PointLight> m_lights;
+		std::vector<DirectionalLight> m_directionaLights;
+		std::vector<PointLight> m_pointLights;
 	};
 }

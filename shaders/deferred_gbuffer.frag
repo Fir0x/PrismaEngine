@@ -19,6 +19,10 @@ in vec2 fragUV;
 in vec3 fragTangent;
 in vec3 fragBitangent;
 
+vec3 remapNormal(vec3 normal) {
+    return normal / 2.0 + vec3(0.5);
+}
+
 void main()
 {
 #ifdef ALBEDO_TEX
@@ -28,7 +32,7 @@ void main()
 #endif
 #ifdef NORMAL_MAPPED
 	vec3 normalMap = texture2D(normalTexture, fragUV).xyz;
-	normalMap = normalMap * 2.0 - 1.0;
+	normalMap = normalMap * 2.0 - vec3(1.0);
 	vec3 tangent = normalize(fragTangent);
 	vec3 bitangent = normalize(fragBitangent);
 	vec3 normal = normalMap.x * tangent + normalMap.y * bitangent + normalMap.z * fragNormal;
@@ -37,5 +41,5 @@ void main()
 #endif
 
 	output_color = vec4(albedo, 1.0);
-	output_normals = normal;
+	output_normals = remapNormal(normal);
 }

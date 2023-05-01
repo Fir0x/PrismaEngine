@@ -83,23 +83,41 @@ int main(void)
         GUIRenderer guiRenderer(window);
 
         auto colorTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
-        auto normalTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGB8_UNORM);
+        auto normalTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
         auto depthTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::Depth32_FLOAT);
         Framebuffer gBuffer(depthTexture.get(), std::array{colorTexture.get(), normalTexture.get()});
+
+        auto diretionalLightProgram = Program::fromFiles("shaders/screen.vert", "shaders/lighting/deferred_directionalLight.frag");
+        Material directionalLightMat(diretionalLightProgram, Material::DepthMode::Reversed, false);
+        directionalLightMat.setTexture(0, colorTexture);
+        directionalLightMat.setTexture(1, normalTexture);
+
+        glm::vec3 sunDirection = glm::normalize(glm::vec3(0.8f, 0.1f, 0.3f));
+        glm::vec3 sunColor = glm::vec3(0.6f, 0.6f, 0.6f);
+        scene.addLight(DirectionalLight(sunDirection, sunColor, directionalLightMat));
+
+        auto finalColorTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
+        Framebuffer finalColorBuffer(depthTexture.get(), std::array{ finalColorTexture.get() });
 
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
         {
             processInput(window, guiRenderer);
 
+            const glm::ivec2 windowSizes(settings.screen_width, settings.screen_height);
+
             gBuffer.bind(true);
 
-            sceneView.renderGeometry();
+            sceneView.renderGeometry(windowSizes);
+
+            finalColorBuffer.bind(true);
+            sceneView.renderLights(windowSizes);
+            drawTriangles(3);
 
             guiRenderer.start();
             guiRenderer.finish();
 
-            gBuffer.blit(false);
+            finalColorBuffer.blit(false);
 
             glfwSwapBuffers(window);
 
