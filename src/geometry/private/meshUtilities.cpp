@@ -7,6 +7,8 @@
 
 namespace PrismaEngine::MeshUtilities
 {
+#define DEG2RAD 0.017453292519943295
+
 	static glm::vec4 processTangentData(const StaticMesh::Vertex& v1, const StaticMesh::Vertex& v2,
 										const StaticMesh::Vertex& v3)
 	{
@@ -240,6 +242,142 @@ namespace PrismaEngine::MeshUtilities
 
 		return std::make_shared<StaticMesh>(vertices, indices);
 	}
+
+	std::shared_ptr<StaticMesh> staticSphere(unsigned int segmentCount, unsigned int ringCount)
+	{
+		if (segmentCount < 3)
+			segmentCount = 3;
+
+		if (ringCount < 3)
+			ringCount = 3;
+
+		std::vector<StaticMesh::Vertex> vertices;
+		std::vector<unsigned int> indices;
+
+		const float horizontalUVShift = 1.0f / float(segmentCount);
+		const float verticalUVShift = 1.0f / float(ringCount);
+
+		// South pole
+		{
+			glm::vec3 position(0.0f, -1.0f, 0.0f);
+			float u = horizontalUVShift / 2.0f;
+			for (unsigned int segment = 0; segment < segmentCount; segment++)
+			{
+				StaticMesh::Vertex vertex = { position, position, { u, 0.0f } };
+				vertices.push_back(vertex);
+
+				u += horizontalUVShift;
+			}
+		}
+
+		const float shiftTheta = 360.0f / float(segmentCount);
+		const float shiftPhi = 180.0f / float(ringCount);
+
+		// Bottom ring
+		{
+			const float phi = 180.0f - shiftPhi;
+
+			const float y = cos(phi * DEG2RAD);
+			const float v = verticalUVShift;
+			{
+				const float x = sin(phi * DEG2RAD);
+				const float z = 0.0f;
+
+				StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { 0.0f , v } };
+				vertices.push_back(vertex);
+			}
+
+			for (unsigned int segment = 1; segment <= segmentCount; segment++)
+			{
+				const float theta = 360.0f - segment * shiftTheta;
+				const float x = sin(phi * DEG2RAD) * cos(theta * DEG2RAD);
+				const float z = sin(phi * DEG2RAD) * sin(theta * DEG2RAD);
+				const float u = segment * horizontalUVShift;
+
+				StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { u, v } };
+				vertices.push_back(vertex);
+
+				// Ring creation
+				unsigned int rightIndex = vertices.size() - 1;
+				unsigned int leftIndex = rightIndex - 1;
+				unsigned int poleIndex = leftIndex - segmentCount;
+
+				indices.push_back(leftIndex);
+				indices.push_back(poleIndex);
+				indices.push_back(rightIndex);
+			}
+		}
+
+		// Intermediate rings
+		{
+			float phi = 180.0f - shiftPhi * 2.0f;
+
+			for (unsigned int ring = 1; ring < ringCount - 1; ring++)
+			{
+				const float y = cos(phi * DEG2RAD);
+				const float v = (ring + 1) * verticalUVShift;
+				{
+					const float x = sin(phi * DEG2RAD);
+					const float z = 0.0f;
+
+					StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { 0.0f , v } };
+					vertices.push_back(vertex);
+				}
+
+				for (unsigned int segment = 1; segment <= segmentCount; segment++)
+				{
+					const float theta = 360.0f - segment * shiftTheta;
+					const float x = sin(phi * DEG2RAD) * cos(theta * DEG2RAD);
+					const float z = sin(phi * DEG2RAD) * sin(theta * DEG2RAD);
+					const float u = segment * horizontalUVShift;
+
+					StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { u, v } };
+					vertices.push_back(vertex);
+
+					// Ring creation
+					unsigned int topRightIndex = vertices.size() - 1;
+					unsigned int topLeftIndex = topRightIndex - 1;
+					unsigned int bottomLeftIndex = topLeftIndex - segmentCount - 1;
+					unsigned int bottomRightIndex = bottomLeftIndex + 1;
+
+					indices.push_back(topLeftIndex);
+					indices.push_back(bottomLeftIndex);
+					indices.push_back(bottomRightIndex);
+
+					indices.push_back(bottomRightIndex);
+					indices.push_back(topRightIndex);
+					indices.push_back(topLeftIndex);
+				}
+
+				phi += shiftPhi;
+			}
+		}
+
+		// North pole + top ring
+		{
+			glm::vec3 position(0.0f, 1.0f, 0.0f);
+			float u = horizontalUVShift / 2.0f;
+			for (unsigned int segment = 0; segment < segmentCount; segment++)
+			{
+				StaticMesh::Vertex vertex = { position, position, { u, 1.0f } };
+				vertices.push_back(vertex);
+
+				// Ring creation
+				unsigned int poleIndex = vertices.size() - 1;
+				unsigned int rightIndex = poleIndex - segmentCount;
+				unsigned int leftIndex = rightIndex - 1;
+
+				indices.push_back(rightIndex);
+				indices.push_back(poleIndex);
+				indices.push_back(leftIndex);
+
+				u += horizontalUVShift;
+			}
+		}
+
+		return std::make_shared<StaticMesh>(vertices, indices);
+	}
+
 	std::shared_ptr<StaticMesh> staticFromOBJ(const std::string& path)
 	{
 		std::ifstream stream;

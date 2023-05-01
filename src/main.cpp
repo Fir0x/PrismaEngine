@@ -73,7 +73,7 @@ int main(void)
         Material material(gBufferProgram);
         //material.setTexture(0, albedoTex);
         //material.setTexture(1, normalTex);
-        auto mesh = MeshUtilities::staticCube();
+        auto mesh = MeshUtilities::staticSphere(32,16);
         MeshRenderer renderer(mesh, material);
         SceneObject planeObject(renderer);
 
