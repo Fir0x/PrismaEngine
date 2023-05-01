@@ -110,7 +110,7 @@ int main(void)
 
             sceneView.renderGeometry(windowSizes);
 
-            finalColorBuffer.bind(true);
+            finalColorBuffer.bind(true, false);
             sceneView.renderLights(windowSizes);
             drawTriangles(3);
 

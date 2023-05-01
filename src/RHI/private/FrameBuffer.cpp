@@ -69,7 +69,10 @@ namespace PrismaEngine
         glViewport(0, 0, m_size.x, m_size.y);
 
         if (clear)
+        {
+            glDepthMask(GL_TRUE);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        }
     }
 
     void Framebuffer::bind(bool clearTargets, bool clearDepth) const
