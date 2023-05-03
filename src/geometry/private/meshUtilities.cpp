@@ -349,7 +349,7 @@ namespace PrismaEngine::MeshUtilities
 					indices.push_back(topLeftIndex);
 				}
 
-				phi += shiftPhi;
+				phi -= shiftPhi;
 			}
 		}
 
