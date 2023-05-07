@@ -46,6 +46,7 @@ namespace PrismaEngine
 	void Scene::drawLights(const Camera& camera, const glm::ivec2& windowSizes) const
 	{
 		ShaderDefs::FrameContext context;
+		size_t test = sizeof(ShaderDefs::FrameContext);
 		context.camera.viewMatrix = camera.viewMatrix();
 		context.camera.projectionMatrix = camera.projectionMatrix();
 		context.viewport.width = windowSizes.x;
@@ -56,17 +57,21 @@ namespace PrismaEngine
 
 		for (const auto& light : m_directionaLights)
 			light.draw(camera.viewMatrix());
-		//std::vector<ShaderDefs::PointLight> mappedLights;
-		//for (const auto& light : m_lights)
-		//{
-		//	ShaderDefs::PointLight mappedLight;
-		//	mappedLight.position = camera.viewMatrix() * glm::vec4(light.position(), 1.0f);
-		//	mappedLight.radius = light.radius();
-		//	mappedLight.color = light.color();
-		//	light.coefficients(mappedLight.linear, mappedLight.quadratic);
-		//	mappedLights.push_back(mappedLight);
-		//}
-		//TypedBuffer<ShaderDefs::PointLight> lightBuffer(mappedLights.data(), mappedLights.size());
-		//lightBuffer.bind<BufferUsageType::ShaderStorage>(1);
+
+		std::vector<ShaderDefs::PointLight> mappedLights;
+		for (const auto& light : m_pointLights)
+		{
+			ShaderDefs::PointLight mappedLight;
+			mappedLight.position = camera.viewMatrix() * glm::vec4(light.position(), 1.0f);
+			mappedLight.radius = light.radius();
+			mappedLight.color = light.color();
+			light.coefficients(mappedLight.linear, mappedLight.quadratic);
+			mappedLights.push_back(mappedLight);
+		}
+		TypedBuffer<ShaderDefs::PointLight> lightBuffer(mappedLights.data(), mappedLights.size());
+		lightBuffer.bind<BufferUsageType::ShaderStorage>(1);
+
+		for (unsigned int i = 0; i < m_pointLights.size(); i++)
+			m_pointLights[i].draw(i);
 	}
 }

@@ -1,5 +1,7 @@
 #include "../public/DirectionalLight.h"
 
+#include "RHI/public/utils.h"
+
 namespace PrismaEngine
 {
 	DirectionalLight::DirectionalLight(const glm::vec3& direction, const glm::vec3& color, const Material& material)
@@ -13,5 +15,6 @@ namespace PrismaEngine
 		const glm::vec3 viewspaceDirection = glm::normalize(glm::mat3(viewMatrix) * m_direction);
 		m_material.setUniform("lightDirection", viewspaceDirection);
 		m_material.setUniform("lightColor", m_color);
+		drawTriangles(3);
 	}
 }

@@ -6,8 +6,8 @@ struct CameraData
 
 struct ViewportData
 {
-	uint width;
-	uint height;
+	int width;
+	int height;
 };
 
 struct FrameContext

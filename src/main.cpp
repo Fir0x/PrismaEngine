@@ -78,7 +78,6 @@ int main(void)
         SceneObject planeObject(renderer);
 
         scene.addObject(planeObject);
-        scene.addLight({ glm::vec3(0.0f, 0.7f, 0.0f), 1.0f, glm::vec3(1.0f) });
 
         GUIRenderer guiRenderer(window);
 
@@ -88,13 +87,21 @@ int main(void)
         Framebuffer gBuffer(depthTexture.get(), std::array{colorTexture.get(), normalTexture.get()});
 
         auto diretionalLightProgram = Program::fromFiles("shaders/screen.vert", "shaders/lighting/deferred_directionalLight.frag");
-        Material directionalLightMat(diretionalLightProgram, Material::DepthMode::Reversed, false);
+        Material directionalLightMat(diretionalLightProgram, Material::BlendMode::Add, Material::DepthMode::Reversed, false);
         directionalLightMat.setTexture(0, colorTexture);
         directionalLightMat.setTexture(1, normalTexture);
 
         glm::vec3 sunDirection = glm::normalize(glm::vec3(0.8f, 0.1f, 0.3f));
         glm::vec3 sunColor = glm::vec3(0.6f, 0.6f, 0.6f);
         scene.addLight(DirectionalLight(sunDirection, sunColor, directionalLightMat));
+
+        auto pointLightProgram = Program::fromFiles("shaders/basic.vert", "shaders/lighting/deferred_pointLight.frag");
+        Material pointLightMat(pointLightProgram, Material::DepthMode::Reversed, false, Material::CullMode::Backface);
+        pointLightMat.setTexture(0, colorTexture);
+        pointLightMat.setTexture(1, normalTexture);
+        pointLightMat.setTexture(2, depthTexture);
+
+        scene.addLight({ glm::vec3(0.0f, 1.7f, 0.0f), 1.0f, glm::vec3(1.0f), pointLightMat });
 
         auto finalColorTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
         Framebuffer finalColorBuffer(depthTexture.get(), std::array{ finalColorTexture.get() });
@@ -112,7 +119,6 @@ int main(void)
 
             finalColorBuffer.bind(true, false);
             sceneView.renderLights(windowSizes);
-            drawTriangles(3);
 
             guiRenderer.start();
             guiRenderer.finish();

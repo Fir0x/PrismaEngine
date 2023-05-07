@@ -1,9 +1,20 @@
 #include "../public/PointLight.h"
 
+#include <glm/ext.hpp>
+
+#include "geometry/public/meshUtilities.h"
+
 namespace PrismaEngine
 {
-	PointLight::PointLight(const glm::vec3& position, float radius, const glm::vec3& color)
-		: m_position(position), m_radius(radius), m_color(color)
+	PointLight::PointLight(const Material& material)
+		: m_position(glm::vec3(0.0f)), m_radius(1.0f),
+		m_color(glm::vec3(1.0f)), m_material(material)
+	{
+	}
+
+	PointLight::PointLight(const glm::vec3& position, float radius, const glm::vec3& color, const Material& material)
+		: m_position(position), m_radius(radius),
+		m_color(color), m_material(material)
 	{
 	}
 
@@ -121,5 +132,15 @@ namespace PrismaEngine
 			linear = 0.0014f;
 			quadratic = 0.000007f;
 		}
+	}
+
+	void PointLight::draw(unsigned int index) const
+	{
+		m_material.bind();
+		glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), m_position);
+		m_material.setUniform("modelMatrix", modelMatrix);
+		m_material.setUniform("lightIndex", index);
+		auto ligthVolume = MeshUtilities::staticSphere(6, 6);
+		ligthVolume->draw();
 	}
 }

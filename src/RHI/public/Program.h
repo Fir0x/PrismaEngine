@@ -78,6 +78,7 @@ namespace PrismaEngine
 		void bind();
 
 		void setUniform(const char* name, int v0) const;
+		void setUniform(const char* name, unsigned int v0) const;
 		void setUniform(const char* name, float v0) const;
 		void setUniform(const char* name, float v0, float v1, float v2) const;
 		void setUniform(const char* name, const glm::vec3& v) const;

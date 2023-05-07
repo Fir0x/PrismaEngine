@@ -325,6 +325,12 @@ namespace PrismaEngine
 		glProgramUniform1i(m_handle.get(), location, v0);
 	}
 
+	void Program::setUniform(const char* name, unsigned int v0) const
+	{
+		int location = getUniformLocation(name);
+		glProgramUniform1ui(m_handle.get(), location, v0);
+	}
+
 	void Program::setUniform(const char* name, float v0) const
 	{
 		int location = getUniformLocation(name);
