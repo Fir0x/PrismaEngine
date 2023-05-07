@@ -29,7 +29,7 @@ void main()
 	vec3 albedo = texelFetch(albedoTexture, fragCoord, 0).xyz;
 	vec3 normal = remapNormal(texelFetch(normalTexture, fragCoord, 0).xyz);
 
-	vec3 acc = max(dot(lightDirection, normal), 0.0) * vec3(1.0, 1.0, 1.0);
+	vec3 acc = max(dot(lightDirection, normal), 0.0) * lightColor;
 	vec3 color = albedo * acc;
 
 	output_color = vec4(color, 1.0);
