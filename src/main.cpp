@@ -96,12 +96,12 @@ int main(void)
         scene.addLight(DirectionalLight(sunDirection, sunColor, directionalLightMat));
 
         auto pointLightProgram = Program::fromFiles("shaders/basic.vert", "shaders/lighting/deferred_pointLight.frag");
-        Material pointLightMat(pointLightProgram, Material::DepthMode::Reversed, false, Material::CullMode::Backface);
+        Material pointLightMat(pointLightProgram, Material::BlendMode::Add, Material::DepthMode::Reversed, false, Material::CullMode::Frontface);
         pointLightMat.setTexture(0, colorTexture);
         pointLightMat.setTexture(1, normalTexture);
         pointLightMat.setTexture(2, depthTexture);
 
-        scene.addLight({ glm::vec3(0.0f, 1.7f, 0.0f), 1.0f, glm::vec3(1.0f), pointLightMat });
+        scene.addLight({ glm::vec3(0.0f, 1.3f, 0.0f), 1.0f, glm::vec3(1.0f), pointLightMat });
 
         auto finalColorTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
         Framebuffer finalColorBuffer(depthTexture.get(), std::array{ finalColorTexture.get() });

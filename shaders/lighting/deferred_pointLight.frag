@@ -3,9 +3,6 @@
 #include "../defines/structs.glsl"
 #include "../defines/constants.glsl"
 
-#define WINDOW_WIDTH 1600
-#define WINDOW_HEIGHT 900
-
 layout(binding = 0) uniform Data {
 	FrameContext frame;
 };
@@ -33,7 +30,7 @@ vec3 lightContribution(PointLight light, vec3 position, vec3 normal)
 	float lightDistance = length(light.position - position);
 
 	vec3 diffuse = max(dot(lightDir, normal), 0.0) * light.color;
-	diffuse *= attenuation(lightDistance, light.linear, light.quadratic);
+	//diffuse *= attenuation(lightDistance, light.linear, light.quadratic);
 
 	vec3 viewDir = normalize(-position);
 	vec3 reflectedDir = reflect(-lightDir, normal);
@@ -59,10 +56,10 @@ void main() {
     vec3 color = texelFetch(albedoTexture, coord, 0).xyz;
     
     vec3 normal = remapNormal(texelFetch(normalTexture, coord, 0).xyz);
-    vec2 uv = coord / vec2(WINDOW_WIDTH, WINDOW_HEIGHT);
+    vec2 uv = coord / vec2(frame.viewport.width, frame.viewport.height);
     float depth = texelFetch(depthTexture, coord, 0).x;
 
-    vec3 position = unproject(uv, depth, inverse(frame.camera.viewMatrix * frame.camera.projectionMatrix));
+    vec3 position = unproject(uv, depth, inverse(frame.camera.projectionMatrix));
     PointLight light = pointLights[lightIndex];
 
     const vec3 acc = lightContribution(light, position, normal);
