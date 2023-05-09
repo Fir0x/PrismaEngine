@@ -257,6 +257,9 @@ namespace PrismaEngine::MeshUtilities
 		const float horizontalUVShift = 1.0f / float(segmentCount);
 		const float verticalUVShift = 1.0f / float(ringCount);
 
+		// TODO
+		// Process tangents
+
 		// South pole
 		{
 			glm::vec3 position(0.0f, -1.0f, 0.0f);
