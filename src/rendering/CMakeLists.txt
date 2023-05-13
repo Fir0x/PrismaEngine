@@ -1,13 +1,13 @@
 set(PRIVATE_FILES
-	private/GUIRenderer.cpp
-	private/Material.cpp
-	private/MeshRenderer.cpp
+	"private/GUIRenderer.cpp"
+	"private/Material.cpp"
+	"private/MeshRenderer.cpp"
 )
 
 set(PUBLIC_FILES
-	public/GUIRenderer.h
-	public/Material.h
-	public/MeshRenderer.h
+	"public/GUIRenderer.h"
+	"public/Material.h"
+	"public/MeshRenderer.h"
 )
 
 set(ALL_FILES
@@ -28,8 +28,5 @@ target_link_libraries(rendering PUBLIC
 
 target_link_libraries(rendering PRIVATE
 	glew
-	#imgui
+	imgui
 )
-
-get_target_property(DEBUG_TEST rendering COMPILE_DEFINITIONS)
-message(STATUS "Defs: ${DEBUG_TEST}")

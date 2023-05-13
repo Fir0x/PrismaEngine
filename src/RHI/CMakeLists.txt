@@ -1,26 +1,26 @@
 set(PRIVATE_FILES
-	private/APIHandle.cpp
-	private/ByteBuffer.cpp
-	private/FrameBuffer.cpp
-	private/Program.cpp
-	private/rhiDefs.cpp
-	private/rhiDefs.h
-	private/Texture.cpp
-	private/utils.cpp
-	private/VertexArray.cpp
+	"private/APIHandle.cpp"
+	"private/ByteBuffer.cpp"
+	"private/FrameBuffer.cpp"
+	"private/Program.cpp"
+	"private/rhiDefs.cpp"
+	"private/rhiDefs.h"
+	"private/Texture.cpp"
+	"private/utils.cpp"
+	"private/VertexArray.cpp"
 )
 
 set(PUBLIC_FILES
-	public/APIHandle.h
-	public/ByteBuffer.h
-	public/FrameBuffer.h
-	public/Program.h
-	public/rhiDefs.h
-	public/rhiDefs.h
-	public/Texture.h
-	public/utils.h
-	public/VertexArray.h
-	public/VertexBufferLayout.h
+	"public/APIHandle.h"
+	"public/ByteBuffer.h"
+	"public/FrameBuffer.h"
+	"public/Program.h"
+	"public/rhiDefs.h"
+	"public/rhiDefs.h"
+	"public/Texture.h"
+	"public/utils.h"
+	"public/VertexArray.h"
+	"public/VertexBufferLayout.h"
 )
 
 set(ALL_FILES

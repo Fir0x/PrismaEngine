@@ -1,11 +1,11 @@
 set(PRIVATE_FILES
-	private/meshUtilities.cpp
-	private/StaticMesh.cpp
+	"private/meshUtilities.cpp"
+	"private/StaticMesh.cpp"
 )
 
 set(PUBLIC_FILES
-	public/meshUtilities.h
-	public/StaticMesh.h
+	"public/meshUtilities.h"
+	"public/StaticMesh.h"
 )
 
 set(ALL_FILES

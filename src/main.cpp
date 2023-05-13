@@ -1,6 +1,5 @@
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
-//#include <imgui/imgui.h>
 #include <filesystem>
 
 #include "geometry/public/meshUtilities.h"
@@ -8,7 +7,7 @@
 #include "scene/public/SceneView.h"
 #include "RHI/public/utils.h"
 #include "RHI/public/FrameBuffer.h"
-//#include "rendering/public/GUIRenderer.h"
+#include "rendering/public/GUIRenderer.h"
 #include "rendering/public/Material.h"
 
 static struct Settings
@@ -81,7 +80,7 @@ int main(void)
 
         scene.addObject(planeObject);
 
-        //GUIRenderer guiRenderer(window);
+        GUIRenderer guiRenderer(window);
 
         auto colorTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
         auto normalTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
@@ -111,7 +110,7 @@ int main(void)
         spdlog::info("Main loop start now");
         while (!glfwWindowShouldClose(window))
         {
-            //processInput(window, guiRenderer);
+            processInput(window, guiRenderer);
 
             const glm::ivec2 windowSizes(settings.screen_width, settings.screen_height);
 
@@ -122,8 +121,8 @@ int main(void)
             finalColorBuffer.bind(true, false);
             sceneView.renderLights(windowSizes);
 
-            //guiRenderer.start();
-            //guiRenderer.finish();
+            guiRenderer.start();
+            guiRenderer.finish();
 
             finalColorBuffer.blit(false);
 

@@ -1,21 +1,21 @@
 set(PRIVATE_FILES
-	private/Camera.cpp
-	private/DirectionalLight.cpp
-	private/PointLight.cpp
-	private/Scene.cpp
-	private/SceneObject.cpp
-	private/SceneView.cpp
-	private/Transform.cpp
+	"private/Camera.cpp"
+	"private/DirectionalLight.cpp"
+	"private/PointLight.cpp"
+	"private/Scene.cpp"
+	"private/SceneObject.cpp"
+	"private/SceneView.cpp"
+	"private/Transform.cpp"
 )
 
 set(PUBLIC_FILES
-	public/Camera.h
-	public/DirectionalLight.h
-	public/PointLight.h
-	public/Scene.h
-	public/SceneObject.h
-	public/SceneView.h
-	public/Transform.h
+	"public/Camera.h"
+	"public/DirectionalLight.h"
+	"public/PointLight.h"
+	"public/Scene.h"
+	"public/SceneObject.h"
+	"public/SceneView.h"
+	"public/Transform.h"
 )
 
 set(ALL_FILES

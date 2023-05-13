@@ -14,7 +14,7 @@ target_link_libraries(PrismaEngine PUBLIC
 target_link_libraries(PrismaEngine PRIVATE
 	glew
 	spdlog
-	#imgui
+	imgui
 	geometry
 	input
 	scene

@@ -1,9 +1,9 @@
 set(PRIVATE_FILES
-	private/utils.cpp
+	"private/utils.cpp"
 )
 
 set(PUBLIC_FILES
-	public/utils.h
+	"public/utils.h"
 )
 
 set(ALL_FILES

@@ -1,9 +1,9 @@
 set(PRIVATE_FILES
-	private/inputManager.cpp
+	"private/inputManager.cpp"
 )
 
 set(PUBLIC_FILES
-	public/inputManager.h
+	"public/inputManager.h"
 )
 
 set(ALL_FILES
