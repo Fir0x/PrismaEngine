@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <spdlog/spdlog.h>
 
-#include "core/public/utils.h"
+#include "core/utils/public/utils.h"
 
 namespace PrismaEngine
 {

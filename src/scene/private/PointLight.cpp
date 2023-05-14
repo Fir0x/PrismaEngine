@@ -7,18 +7,18 @@
 namespace PrismaEngine
 {
 	PointLight::PointLight(const Material& material)
-		: m_position(glm::vec3(0.0f)), m_radius(1.0f),
-		m_color(glm::vec3(1.0f)), m_material(material)
+		: m_position(Vec3f(0.0f)), m_radius(1.0f),
+		m_color(Vec3f(1.0f)), m_material(material)
 	{
 	}
 
-	PointLight::PointLight(const glm::vec3& position, float radius, const glm::vec3& color, const Material& material)
+	PointLight::PointLight(const Vec3f& position, float radius, const Vec3f& color, const Material& material)
 		: m_position(position), m_radius(radius),
 		m_color(color), m_material(material)
 	{
 	}
 
-	void PointLight::setPosition(const glm::vec3& position)
+	void PointLight::setPosition(const Vec3f& position)
 	{
 		m_position = position;
 	}
@@ -28,12 +28,12 @@ namespace PrismaEngine
 		m_radius = radius;
 	}
 
-	void PointLight::setColor(const glm::vec3& color)
+	void PointLight::setColor(const Vec3f& color)
 	{
 		m_color = color;
 	}
 
-	const glm::vec3& PointLight::position() const
+	const Vec3f& PointLight::position() const
 	{
 		return m_position;
 	}
@@ -43,7 +43,7 @@ namespace PrismaEngine
 		return m_radius;
 	}
 
-	const glm::vec3& PointLight::color() const
+	const Vec3f& PointLight::color() const
 	{
 		return m_color;
 	}
@@ -137,7 +137,7 @@ namespace PrismaEngine
 	void PointLight::draw(unsigned int index) const
 	{
 		m_material.bind();
-		glm::mat4 modelMatrix = glm::scale(glm::translate(glm::mat4(1.0f), m_position), glm::vec3(m_radius));
+		glm::mat4 modelMatrix = glm::scale(glm::translate(glm::mat4(1.0f), m_position), Vec3f(m_radius));
 		m_material.setUniform("modelMatrix", modelMatrix);
 		m_material.setUniform("lightIndex", index);
 		auto ligthVolume = MeshUtilities::staticSphere(16, 8);

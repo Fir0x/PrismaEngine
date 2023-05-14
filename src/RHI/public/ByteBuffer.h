@@ -3,7 +3,7 @@
 #include "RHI/public/rhiDefs.h"
 #include "RHI/public/APIHandle.h"
 
-#include "core/public/utils.h"
+#include "core/utils/public/utils.h"
 
 namespace PrismaEngine
 {

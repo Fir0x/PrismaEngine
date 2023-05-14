@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/public/utils.h"
+#include "core/utils/public/utils.h"
 
 namespace PrismaEngine
 {

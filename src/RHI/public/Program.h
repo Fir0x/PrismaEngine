@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 
 #include "APIHandle.h"
+#include "core/maths/public/vec3f.h"
 
 namespace PrismaEngine
 {
@@ -81,7 +82,7 @@ namespace PrismaEngine
 		void setUniform(const char* name, unsigned int v0) const;
 		void setUniform(const char* name, float v0) const;
 		void setUniform(const char* name, float v0, float v1, float v2) const;
-		void setUniform(const char* name, const glm::vec3& v) const;
+		void setUniform(const char* name, const Vec3f& v) const;
 		void setUniform(const char* name, float v0, float v1, float v2, float v3) const;
 		void setUniform(const char* name, const glm::mat3& matrix, bool transpose = false) const;
 		void setUniform(const char* name, const glm::mat4& matrix, bool transpose = false) const;

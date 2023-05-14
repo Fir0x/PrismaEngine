@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "core/public/utils.h"
+#include "core/utils/public/utils.h"
 #include "RHI/public/utils.h"
 
 namespace PrismaEngine

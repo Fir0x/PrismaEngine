@@ -343,7 +343,7 @@ namespace PrismaEngine
 		glProgramUniform3f(m_handle.get(), location, v0, v1, v2);
 	}
 
-	void Program::setUniform(const char* name, const glm::vec3& v) const
+	void Program::setUniform(const char* name, const Vec3f& v) const
 	{
 		setUniform(name, v.x, v.y, v.z);
 	}

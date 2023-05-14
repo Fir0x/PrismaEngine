@@ -2,6 +2,8 @@
 #include <spdlog/spdlog.h>
 #include <filesystem>
 
+#include "core/maths/public/vec2i.h"
+#include "core/maths/public/vec3f.h"
 #include "geometry/public/meshUtilities.h"
 #include "input/public/inputManager.h"
 #include "scene/public/SceneView.h"
@@ -62,7 +64,7 @@ int main(void)
     {
         const float aspectRatio = (float)settings.screen_width / settings.screen_height;
         Scene scene;
-        SceneView sceneView(scene, glm::vec3(0.0f, 0.0f, 5.0f), aspectRatio);
+        SceneView sceneView(scene, Vec3f(0.0f, 0.0f, 5.0f), aspectRatio);
         linkCamera(&sceneView.camera());
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, screen_size_callback);
@@ -92,8 +94,8 @@ int main(void)
         directionalLightMat.setTexture(0, colorTexture);
         directionalLightMat.setTexture(1, normalTexture);
 
-        glm::vec3 sunDirection = glm::normalize(glm::vec3(0.8f, 0.1f, 0.3f));
-        glm::vec3 sunColor = glm::vec3(0.6f, 0.6f, 0.6f);
+        Vec3f sunDirection = glm::normalize(Vec3f(0.8f, 0.1f, 0.3f));
+        Vec3f sunColor = Vec3f(0.6f, 0.6f, 0.6f);
         scene.addLight(DirectionalLight(sunDirection, sunColor, directionalLightMat));
 
         auto pointLightProgram = Program::fromFiles("shaders/basic.vert", "shaders/lighting/deferred_pointLight.frag");
@@ -102,7 +104,7 @@ int main(void)
         pointLightMat.setTexture(1, normalTexture);
         pointLightMat.setTexture(2, depthTexture);
 
-        scene.addLight({ glm::vec3(0.0f, 1.3f, 0.0f), 1.0f, glm::vec3(1.0f), pointLightMat });
+        scene.addLight({ Vec3f(0.0f, 1.3f, 0.0f), 1.0f, Vec3f(1.0f), pointLightMat });
 
         auto finalColorTexture = std::make_shared<Texture>(settings.screen_width, settings.screen_height, Texture::TextureFormat::RGBA8_UNORM);
         Framebuffer finalColorBuffer(depthTexture.get(), std::array{ finalColorTexture.get() });
@@ -112,7 +114,7 @@ int main(void)
         {
             processInput(window, guiRenderer);
 
-            const glm::ivec2 windowSizes(settings.screen_width, settings.screen_height);
+            const Vec2i windowSizes(settings.screen_width, settings.screen_height);
 
             gBuffer.bind(true);
 

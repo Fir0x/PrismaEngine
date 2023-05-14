@@ -2,7 +2,7 @@
 
 #include "ByteBuffer.h"
 #include "VertexBufferLayout.h"
-#include "core/public/utils.h"
+#include "core/utils/public/utils.h"
 
 #include "APIHandle.h"
 

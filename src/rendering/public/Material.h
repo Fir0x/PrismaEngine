@@ -5,7 +5,7 @@
 #include "RHI/public/Program.h"
 #include "RHI/public/Texture.h"
 
-#include "core/public/utils.h"
+#include "core/utils/public/utils.h"
 
 namespace PrismaEngine
 {

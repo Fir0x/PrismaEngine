@@ -10,7 +10,7 @@ namespace PrismaEngine
 	{
 	}
 
-	SceneObject::SceneObject(const glm::vec3& pos, const MeshRenderer& renderer)
+	SceneObject::SceneObject(const Vec3f& pos, const MeshRenderer& renderer)
 		: m_transform(pos), m_renderer(renderer)
 	{
 	}

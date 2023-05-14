@@ -4,7 +4,8 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-#include "core/public/utils.h"
+#include "core/maths/public/vec2i.h"
+#include "core/utils/public/utils.h"
 #include "APIHandle.h"
 
 namespace PrismaEngine
@@ -27,7 +28,7 @@ namespace PrismaEngine
 		static std::shared_ptr<Texture> fromFile(const std::string& path, TextureFormat textureFormat);
 
 		unsigned int getHandle() const;
-		glm::ivec2 getSize() const;
+		Vec2i getSize() const;
 
 		void bind() const;
 		void unbind() const;

@@ -6,6 +6,7 @@
 #include "DirectionalLight.h"
 #include "PointLight.h"
 #include "SceneObject.h"
+#include "core/maths/public/vec2i.h"
 
 namespace PrismaEngine
 {
@@ -18,8 +19,8 @@ namespace PrismaEngine
 		size_t addLight(const DirectionalLight& light);
 		size_t addLight(const PointLight& light);
 
-		void drawGeometry(const Camera& camera, const glm::ivec2& windowSizes) const;
-		void drawLights(const Camera& camera, const glm::ivec2& windowSizes) const;
+		void drawGeometry(const Camera& camera, const Vec2i& windowSizes) const;
+		void drawLights(const Camera& camera, const Vec2i& windowSizes) const;
 
 	private:
 		std::vector<SceneObject> m_objects;

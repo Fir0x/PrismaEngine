@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include "core/maths/public/vec3f.h"
 
 namespace PrismaEngine
 {
@@ -8,9 +9,9 @@ namespace PrismaEngine
 	{
 	public:
 		Transform();
-		Transform(const glm::vec3& position);
+		Transform(const Vec3f& position);
 
-		void translate(const glm::vec3& translation);
+		void translate(const Vec3f& translation);
 		void rotate(float angleX, float angleY, float angleZ);
 		void scale(float scaleX, float scaleY, float scaleZ);
 
@@ -21,9 +22,9 @@ namespace PrismaEngine
 		void scale(float factor);
 
 		const glm::mat4& getMatrix() const;
-		const glm::vec3 getRight() const;
-		const glm::vec3 getUp() const;
-		const glm::vec3 getForward() const;
+		const Vec3f getRight() const;
+		const Vec3f getUp() const;
+		const Vec3f getForward() const;
 
 	private:
 		glm::mat4 m_transforms;

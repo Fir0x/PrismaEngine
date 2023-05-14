@@ -6,7 +6,7 @@
 #include <filesystem>
 #include <spdlog/spdlog.h>
 
-#include "core/public/utils.h"
+#include "core/utils/public/utils.h"
 
 namespace PrismaEngine
 {
@@ -95,9 +95,9 @@ namespace PrismaEngine
 		return m_handle.get();
 	}
 
-	glm::ivec2 Texture::getSize() const
+	Vec2i Texture::getSize() const
 	{
-		return glm::ivec2(m_width, m_height);
+		return Vec2i(m_width, m_height);
 	}
 
 	void Texture::bind() const

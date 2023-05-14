@@ -4,7 +4,7 @@
 
 namespace PrismaEngine
 {
-	DirectionalLight::DirectionalLight(const glm::vec3& direction, const glm::vec3& color, const Material& material)
+	DirectionalLight::DirectionalLight(const Vec3f& direction, const Vec3f& color, const Material& material)
 		: m_direction(glm::normalize(direction)), m_color(color), m_material(material)
 	{
 	}
@@ -12,7 +12,7 @@ namespace PrismaEngine
 	void DirectionalLight::draw(const glm::mat4& viewMatrix) const
 	{
 		m_material.bind();
-		const glm::vec3 viewspaceDirection = glm::normalize(glm::mat3(viewMatrix) * m_direction);
+		const Vec3f viewspaceDirection = glm::normalize(glm::mat3(viewMatrix) * m_direction);
 		m_material.setUniform("lightDirection", viewspaceDirection);
 		m_material.setUniform("lightColor", m_color);
 		drawTriangles(3);

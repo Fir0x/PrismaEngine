@@ -4,6 +4,7 @@
 
 #include "Camera.h"
 #include "Transform.h"
+#include "core/maths/public/vec3f.h"
 #include "rendering/public/MeshRenderer.h"
 
 namespace PrismaEngine
@@ -12,7 +13,7 @@ namespace PrismaEngine
 	{
 	public:
 		SceneObject(const MeshRenderer& renderer);
-		SceneObject(const glm::vec3& pos, const MeshRenderer& renderer);
+		SceneObject(const Vec3f& pos, const MeshRenderer& renderer);
 
 		Transform& transform();
 		void draw() const;

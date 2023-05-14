@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include "core/maths/public/vec3f.h"
+
 namespace PrismaEngine
 {
     static float lastFrameTime = 0;
@@ -17,7 +19,7 @@ namespace PrismaEngine
     void processInput(GLFWwindow* window, const GUIRenderer& guiRenderer)
     {
         static float speed = 2.5f;
-        static glm::vec3 worldUp(0.0f, 1.0f, 0.0f);
+        static Vec3f worldUp(0.0f, 1.0f, 0.0f);
 
         float currentFrameTime = (float)glfwGetTime();
         float deltaTime = currentFrameTime - lastFrameTime;
