@@ -4,5 +4,5 @@
 
 namespace PrismaEngine
 {
-	typedef glm::vec2 Vec2f;
+	typedef glm::mat4 Mat4f;
 }

@@ -2,4 +2,7 @@
 
 #include <glm/glm.hpp>
 
-typedef glm::vec4 Vec4f;
+namespace PrismaEngine
+{
+	typedef glm::vec4 Vec4f;
+}

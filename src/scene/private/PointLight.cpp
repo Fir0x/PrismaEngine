@@ -137,7 +137,7 @@ namespace PrismaEngine
 	void PointLight::draw(unsigned int index) const
 	{
 		m_material.bind();
-		glm::mat4 modelMatrix = glm::scale(glm::translate(glm::mat4(1.0f), m_position), Vec3f(m_radius));
+		Mat4f modelMatrix = scale(translate(Mat4f(1.0f), m_position), Vec3f(m_radius));
 		m_material.setUniform("modelMatrix", modelMatrix);
 		m_material.setUniform("lightIndex", index);
 		auto ligthVolume = MeshUtilities::staticSphere(16, 8);

@@ -6,6 +6,8 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
+#include "core/maths/public/matrix.h"
+
 namespace PrismaEngine
 {
 	static std::string glShader2Str(GLenum shaderType)
@@ -354,15 +356,15 @@ namespace PrismaEngine
 		glProgramUniform4f(m_handle.get(), location, v0, v1, v2, v3);
 	}
 
-	void Program::setUniform(const char* name, const glm::mat3& matrix, bool transpose) const
+	void Program::setUniform(const char* name, const Mat3f& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniformMatrix3fv(m_handle.get(), location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
+		glProgramUniformMatrix3fv(m_handle.get(), location, 1, transpose ? GL_TRUE : GL_FALSE, value_ptr(matrix));
 	}
 
-	void Program::setUniform(const char* name, const glm::mat4& matrix, bool transpose) const
+	void Program::setUniform(const char* name, const Mat4f& matrix, bool transpose) const
 	{
 		int location = getUniformLocation(name);
-		glProgramUniformMatrix4fv(m_handle.get(), location, 1, transpose ? GL_TRUE : GL_FALSE, glm::value_ptr(matrix));
+		glProgramUniformMatrix4fv(m_handle.get(), location, 1, transpose ? GL_TRUE : GL_FALSE, value_ptr(matrix));
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include "core/maths/public/mat4f.h"
 #include "core/maths/public/vec3f.h"
 
 namespace PrismaEngine
@@ -21,12 +22,12 @@ namespace PrismaEngine
 		*/
 		void scale(float factor);
 
-		const glm::mat4& getMatrix() const;
+		const Mat4f& getMatrix() const;
 		const Vec3f getRight() const;
 		const Vec3f getUp() const;
 		const Vec3f getForward() const;
 
 	private:
-		glm::mat4 m_transforms;
+		Mat4f m_transforms;
 	};
 }

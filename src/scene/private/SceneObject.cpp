@@ -15,9 +15,9 @@ namespace PrismaEngine
 	{
 	}
 
-	glm::mat3 SceneObject::processNormalMatrix(const glm::mat4& model, const glm::mat4& view) const
+	Mat3f SceneObject::processNormalMatrix(const Mat4f& model, const Mat4f& view) const
 	{
-		return glm::mat3(glm::transpose(glm::inverse(view * model)));
+		return Mat3f(transpose(inverse(view * model)));
 	}
 
 	Transform& SceneObject::transform()
@@ -27,7 +27,7 @@ namespace PrismaEngine
 
 	void SceneObject::draw() const
 	{
-		glm::mat4 model = m_transform.getMatrix();
+		Mat4f model = m_transform.getMatrix();
 		m_renderer.draw(model);
 	}
 }

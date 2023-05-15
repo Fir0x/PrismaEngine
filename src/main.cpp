@@ -2,6 +2,7 @@
 #include <spdlog/spdlog.h>
 #include <filesystem>
 
+#include "core/maths/public/vector.h"
 #include "core/maths/public/vec2i.h"
 #include "core/maths/public/vec3f.h"
 #include "geometry/public/meshUtilities.h"
@@ -94,7 +95,7 @@ int main(void)
         directionalLightMat.setTexture(0, colorTexture);
         directionalLightMat.setTexture(1, normalTexture);
 
-        Vec3f sunDirection = glm::normalize(Vec3f(0.8f, 0.1f, 0.3f));
+        Vec3f sunDirection = normalize(Vec3f(0.8f, 0.1f, 0.3f));
         Vec3f sunColor = Vec3f(0.6f, 0.6f, 0.6f);
         scene.addLight(DirectionalLight(sunDirection, sunColor, directionalLightMat));
 

@@ -5,6 +5,7 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
+#include "core/maths/public/vector.h"
 #include "core/maths/public/vec2f.h"
 #include "core/maths/public/vec3f.h"
 #include "core/maths/public/vec4f.h"
@@ -27,15 +28,15 @@ namespace PrismaEngine::MeshUtilities
 		tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
 		tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
 		tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-		tangent = glm::normalize(tangent);
+		tangent = normalize(tangent);
 
 		Vec3f bitangent;
 		bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
 		bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
 		bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
-		bitangent = glm::normalize(bitangent);
+		bitangent = normalize(bitangent);
 
-		float bitangentSign = glm::dot(glm::cross(tangent, bitangent), v1.normal);
+		float bitangentSign = dot(cross(tangent, bitangent), v1.normal);
 
 		return Vec4f(tangent, bitangentSign);
 	}

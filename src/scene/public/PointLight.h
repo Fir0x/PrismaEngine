@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 
+#include "core/maths/public/mat4f.h"
 #include "core/maths/public/vec3f.h"
 #include "rendering/public/Material.h"
 

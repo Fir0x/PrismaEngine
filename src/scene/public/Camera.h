@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
+#include "core/maths/public/mat4f.h"
 #include "core/maths/public/vec3f.h"
 
 namespace PrismaEngine
@@ -23,8 +24,8 @@ namespace PrismaEngine
 		Vec3f forward() const;
 		Vec3f position() const;
 
-		glm::mat4 viewMatrix() const;
-		glm::mat4 projectionMatrix() const;
+		Mat4f viewMatrix() const;
+		Mat4f projectionMatrix() const;
 
 		void translate(const Vec3f& translation);
 		void translate(float x, float y, float z);
@@ -39,14 +40,14 @@ namespace PrismaEngine
 		float m_pitch = 0;
 		float m_yaw = 0;
 
-		glm::mat4 m_viewMatrix;
-		glm::mat4 m_projMatrix;
+		Mat4f m_viewMatrix;
+		Mat4f m_projMatrix;
 
 		void addPitch(float angle);
 		void addYaw(float angle);
 
-		glm::mat4 buildProjection(float zNear, float fovYDegree, float aspectRatio);
-		void initialize(const glm::mat4& frustum, const Vec3f& position, float yaw,
+		Mat4f buildProjection(float zNear, float fovYDegree, float aspectRatio);
+		void initialize(const Mat4f& frustum, const Vec3f& position, float yaw,
 			float pitch);
 
 		void updateView();

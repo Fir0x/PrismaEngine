@@ -2,4 +2,7 @@
 
 #include <glm/glm.hpp>
 
-typedef glm::ivec2 Vec2i;
+namespace PrismaEngine
+{
+	typedef glm::ivec2 Vec2i;
+}
