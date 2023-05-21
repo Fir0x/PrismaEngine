@@ -44,6 +44,19 @@ FetchContent_Declare(
 	GIT_REPOSITORY https://github.com/nothings/stb
 )
 
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest
+  GIT_TAG v1.13.0
+)
+
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
 FetchContent_MakeAvailable(
 	glfw
 	glew
@@ -51,11 +64,8 @@ FetchContent_MakeAvailable(
 	imgui
 	spdlog
 	stb
+	googletest
 )
-
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_library(glew STATIC IMPORTED)
 set_property(TARGET glew PROPERTY
@@ -95,3 +105,4 @@ add_library(global_config INTERFACE)
 include_directories(global_config INTERFACE src)
 
 add_subdirectory(src)
+add_subdirectory(tests)
