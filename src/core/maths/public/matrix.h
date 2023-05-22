@@ -22,6 +22,11 @@ namespace PrismaEngine
 		return glm::inverse(m);
 	}
 
+	inline float determinant(const Mat4f& m)
+	{
+		return glm::determinant(m);
+	}
+
 	inline Mat4f translate(const Mat4f& m, const Vec3f& v)
 	{
 		return glm::translate(m, v);

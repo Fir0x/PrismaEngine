@@ -567,7 +567,127 @@ TEST(Matrix4fTest, Product)
 
 TEST(Matrix4fTest, Transpose)
 {
+	{
+		Vec4f x(1.0f, 0.0f, 0.0f, 0.0f);
+		Vec4f y(0.0f, 1.0f, 0.0f, 0.0f);
+		Vec4f z(0.0f, 0.0f, 1.0f, 0.0f);
+		Vec4f w(0.0f, 0.0f, 0.0f, 1.0f);
 
+		Mat4f m1(x, y, z, w);
+		Mat4f m2 = transpose(m1);
+
+		EXPECT_EQ(m2[0][0], 1.0f);
+		EXPECT_EQ(m2[0][1], 0.0f);
+		EXPECT_EQ(m2[0][2], 0.0f);
+		EXPECT_EQ(m2[0][3], 0.0f);
+
+		EXPECT_EQ(m2[1][0], 0.0f);
+		EXPECT_EQ(m2[1][1], 1.0f);
+		EXPECT_EQ(m2[1][2], 0.0f);
+		EXPECT_EQ(m2[1][3], 0.0f);
+
+		EXPECT_EQ(m2[2][0], 0.0f);
+		EXPECT_EQ(m2[2][1], 0.0f);
+		EXPECT_EQ(m2[2][2], 1.0f);
+		EXPECT_EQ(m2[2][3], 0.0f);
+
+		EXPECT_EQ(m2[3][0], 0.0f);
+		EXPECT_EQ(m2[3][1], 0.0f);
+		EXPECT_EQ(m2[3][2], 0.0f);
+		EXPECT_EQ(m2[3][3], 1.0f);
+	}
+
+	{
+		constexpr float x0 = 0.0f;
+		constexpr float x1 = 2.54f;
+		constexpr float x2 = -3.6f;
+		constexpr float x3 = 98.32f;
+		constexpr float y0 = -23.1f;
+		constexpr float y1 = -4.354f;
+		constexpr float y2 = -26.41f;
+		constexpr float y3 = 13.56f;
+		constexpr float z0 = 285.15f;
+		constexpr float z1 = -87.7f;
+		constexpr float z2 = 354.5f;
+		constexpr float z3 = 12.02f;
+		constexpr float w0 = 23.65f;
+		constexpr float w1 = -9.80f;
+		constexpr float w2 = 0.036f;
+		constexpr float w3 = -1.32f;
+
+		Vec4f x(x0, x1, x2, x3);
+		Vec4f y(y0, y1, y2, y3);
+		Vec4f z(z0, z1, z2, z3);
+		Vec4f w(w0, w1, w2, w3);
+
+		Mat4f m1(x, y, z, w);
+		Mat4f m2 = transpose(m1);
+
+		EXPECT_EQ(m2[0][0], x0);
+		EXPECT_EQ(m2[0][1], y0);
+		EXPECT_EQ(m2[0][2], z0);
+		EXPECT_EQ(m2[0][3], w0);
+
+		EXPECT_EQ(m2[1][0], x1);
+		EXPECT_EQ(m2[1][1], y1);
+		EXPECT_EQ(m2[1][2], z1);
+		EXPECT_EQ(m2[1][3], w1);
+
+		EXPECT_EQ(m2[2][0], x2);
+		EXPECT_EQ(m2[2][1], y2);
+		EXPECT_EQ(m2[2][2], z2);
+		EXPECT_EQ(m2[2][3], w2);
+
+		EXPECT_EQ(m2[3][0], x3);
+		EXPECT_EQ(m2[3][1], y3);
+		EXPECT_EQ(m2[3][2], z3);
+		EXPECT_EQ(m2[3][3], w3);
+	}
+}
+
+TEST(Matrix4fTest, Determinant)
+{
+	constexpr float x0 = 1.0f;
+	constexpr float x1 = 2.54f;
+	constexpr float x2 = -3.6f;
+	constexpr float x3 = 98.32f;
+	constexpr float y0 = -23.1f;
+	constexpr float y1 = -4.354f;
+	constexpr float y2 = -26.41f;
+	constexpr float y3 = 13.56f;
+	constexpr float z0 = 285.15f;
+	constexpr float z1 = -87.7f;
+	constexpr float z2 = 354.5f;
+	constexpr float z3 = 12.02f;
+	constexpr float w0 = 23.65f;
+	constexpr float w1 = -9.80f;
+	constexpr float w2 = 0.036f;
+	constexpr float w3 = -1.32f;
+
+	Vec4f x(x0, x1, x2, x3);
+	Vec4f y(y0, y1, y2, y3);
+	Vec4f z(z0, z1, z2, z3);
+	Vec4f w(w0, w1, w2, w3);
+
+	Mat4f m(x, y, z, w);
+
+	float det = determinant(m);
+
+	constexpr float subSubFactor01 = z0 * w1 - z1 * w0;
+	constexpr float subSubFactor12 = z1 * w2 - z2 * w1;
+	constexpr float subSubFactor23 = z2 * w3 - z3 * w2;
+	constexpr float subSubFactor02 = z0 * w2 - z2 * w0;
+	constexpr float subSubFactor13 = z1 * w3 - z3 * w1;
+	constexpr float subSubFactor03 = z0 * w3 - z3 * w0;
+
+	constexpr float subFactor0 = y1 * subSubFactor23 - y2 * subSubFactor13 + y3 * subSubFactor12;
+	constexpr float subFactor1 = y0 * subSubFactor23 - y2 * subSubFactor03 + y3 * subSubFactor02;
+	constexpr float subFactor2 = y0 * subSubFactor13 - y1 * subSubFactor03 + y3 * subSubFactor01;
+	constexpr float subFactor3 = y0 * subSubFactor12 - y1 * subSubFactor02 + y2 * subSubFactor01;
+
+	constexpr float detRef = x0 * subFactor0 - x1 * subFactor1 + x2 * subFactor2 - x3 * subFactor3;
+
+	EXPECT_EQ(det, detRef);
 }
 
 TEST(Matrix4fTest, Inverse)
