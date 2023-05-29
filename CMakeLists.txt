@@ -12,12 +12,14 @@ message(STATUS "Start dependencies configuration")
 if(MSVC)
     execute_process(
         COMMAND ping www.google.com -n 2
+		OUTPUT_QUIET
         ERROR_QUIET
         RESULT_VARIABLE NO_CONNECTION
     )
 else()
     execute_process(
         COMMAND ping www.google.com -c 2
+		OUTPUT_QUIET
         ERROR_QUIET
         RESULT_VARIABLE NO_CONNECTION
     )
