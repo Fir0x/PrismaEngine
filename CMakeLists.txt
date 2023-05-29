@@ -9,6 +9,27 @@ include(FetchContent)
 
 message(STATUS "Start dependencies configuration")
 
+if(MSVC)
+    execute_process(
+        COMMAND ping www.google.com -n 2
+        ERROR_QUIET
+        RESULT_VARIABLE NO_CONNECTION
+    )
+else()
+    execute_process(
+        COMMAND ping www.google.com -c 2
+        ERROR_QUIET
+        RESULT_VARIABLE NO_CONNECTION
+    )
+endif()
+
+if(NOT NO_CONNECTION EQUAL 0)
+    set(FETCHCONTENT_FULLY_DISCONNECTED ON)
+    message(WARNING "Fetch offline mode: requires already populated _deps")
+else()
+    set(FETCHCONTENT_FULLY_DISCONNECTED OFF)
+endif()
+
 FetchContent_Declare(
 	glfw
 	GIT_REPOSITORY https://github.com/glfw/glfw
