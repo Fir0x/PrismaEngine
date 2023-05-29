@@ -1,5 +1,5 @@
 set(PUBLIC_FILES
-	"public/vec2f.h"
+	"public/Vector2.h"
 	"public/vec3f.h"
 	"public/vec4f.h"
 	"public/vec2i.h"
@@ -11,6 +11,7 @@ set(PUBLIC_FILES
 )
 
 set(PRIVATE_FILES
+ 
 )
 
 add_library(core_maths INTERFACE ${PUBLIC_FILES} ${PRIVATE_FILES})
