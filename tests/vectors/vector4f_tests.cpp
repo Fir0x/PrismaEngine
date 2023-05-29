@@ -248,3 +248,39 @@ TEST(Vector4fTest, Dot)
 		EXPECT_EQ(dot(v1, v2), dot(v2, v1));
 	}
 }
+
+TEST(Vector4fTest, Equality)
+{
+	constexpr float x1 = 1.0f;
+	constexpr float y1 = -5.3f;
+	constexpr float z1 = 0.0f;
+	constexpr float w1 = -3.12f;
+	Vec4f v1(x1, y1, z1, w1);
+
+	constexpr float x2 = 7.21f;
+	constexpr float y2 = 4.29446f;
+	constexpr float z2 = -86.13f;
+	constexpr float w2 = 0.12f;
+	Vec4f v2(x2, y2, z2, w2);
+
+	EXPECT_TRUE(v1 == v1);
+	EXPECT_FALSE(v1 == v2);
+}
+
+TEST(Vector4fTest, Inequality)
+{
+	constexpr float x1 = 1.0f;
+	constexpr float y1 = -5.3f;
+	constexpr float z1 = 0.0f;
+	constexpr float w1 = -3.12f;
+	Vec4f v1(x1, y1, z1, w1);
+
+	constexpr float x2 = 7.21f;
+	constexpr float y2 = 4.29446f;
+	constexpr float z2 = -86.13f;
+	constexpr float w2 = 0.12f;
+	Vec4f v2(x2, y2, z2, w2);
+
+	EXPECT_FALSE(v1 != v1);
+	EXPECT_TRUE(v1 != v2);
+}

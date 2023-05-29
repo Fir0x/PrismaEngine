@@ -159,3 +159,31 @@ TEST(Vector2iTest, Magnitude)
 		EXPECT_EQ(result, expected);
 	}
 }
+
+TEST(Vector2iTest, Equality)
+{
+	constexpr int x1 = 1;
+	constexpr int y1 = -5;
+	Vec2i v1(x1, y1);
+
+	constexpr int x2 = 7;
+	constexpr int y2 = 4;
+	Vec2i v2(x2, y2);
+
+	EXPECT_TRUE(v1 == v1);
+	EXPECT_FALSE(v1 == v2);
+}
+
+TEST(Vector2iTest, Inequality)
+{
+	constexpr int x1 = 1;
+	constexpr int y1 = -5;
+	Vec2i v1(x1, y1);
+
+	constexpr int x2 = 7;
+	constexpr int y2 = 4;
+	Vec2i v2(x2, y2);
+
+	EXPECT_FALSE(v1 != v1);
+	EXPECT_TRUE(v1 != v2);
+}

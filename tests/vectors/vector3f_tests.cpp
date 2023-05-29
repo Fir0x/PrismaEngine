@@ -265,3 +265,35 @@ TEST(Vector3fTest, Cross)
 		}
 	}
 }
+
+TEST(Vector3fTest, Equality)
+{
+	constexpr float x1 = 1.0f;
+	constexpr float y1 = -5.3f;
+	constexpr float z1 = 0.0f;
+	Vec3f v1(x1, y1, z1);
+
+	constexpr float x2 = 7.21f;
+	constexpr float y2 = 4.29446f;
+	constexpr float z2 = -86.13f;
+	Vec3f v2(x2, y2, z2);
+
+	EXPECT_TRUE(v1 == v1);
+	EXPECT_FALSE(v1 == v2);
+}
+
+TEST(Vector3fTest, Inequality)
+{
+	constexpr float x1 = 1.0f;
+	constexpr float y1 = -5.3f;
+	constexpr float z1 = 0.0f;
+	Vec3f v1(x1, y1, z1);
+
+	constexpr float x2 = 7.21f;
+	constexpr float y2 = 4.29446f;
+	constexpr float z2 = -86.13f;
+	Vec3f v2(x2, y2, z2);
+
+	EXPECT_FALSE(v1 != v1);
+	EXPECT_TRUE(v1 != v2);
+}

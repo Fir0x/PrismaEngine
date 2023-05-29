@@ -194,3 +194,31 @@ TEST(Vector2fTest, Dot)
 		EXPECT_EQ(dot(v1, v2), dot(v2, v1));
 	}
 }
+
+TEST(Vector2fTest, Equality)
+{
+	constexpr float x1 = 1.0f;
+	constexpr float y1 = -5.3f;
+	Vec2f v1(x1, y1);
+
+	constexpr float x2 = 7.21f;
+	constexpr float y2 = 4.29446f;
+	Vec2f v2(x2, y2);
+
+	EXPECT_TRUE(v1 == v1);
+	EXPECT_FALSE(v1 == v2);
+}
+
+TEST(Vector2fTest, Inequality)
+{
+	constexpr float x1 = 1.0f;
+	constexpr float y1 = -5.3f;
+	Vec2f v1(x1, y1);
+
+	constexpr float x2 = 7.21f;
+	constexpr float y2 = 4.29446f;
+	Vec2f v2(x2, y2);
+
+	EXPECT_FALSE(v1 != v1);
+	EXPECT_TRUE(v1 != v2);
+}

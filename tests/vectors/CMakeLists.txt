@@ -1,9 +1,9 @@
 add_executable(
 	vector_tests
-	"vector3f_tests.cpp"
-	"vector2f_tests.cpp"
-	"vector4f_tests.cpp"
 	"vector2i_tests.cpp"
+	"vector2f_tests.cpp"
+	"vector3f_tests.cpp"
+	"vector4f_tests.cpp"
 )
 
 target_link_libraries(
