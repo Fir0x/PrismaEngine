@@ -2,7 +2,7 @@ add_executable(
 	vector_tests
 	"vector2i_tests.cpp"
 	"vector2f_tests.cpp"
-	#"vector3f_tests.cpp"
+	"vector3f_tests.cpp"
 	#"vector4f_tests.cpp"
 )
 

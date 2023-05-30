@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glm/glm.hpp>
-
 namespace PrismaEngine
 {
 	template<typename T>
@@ -60,7 +58,7 @@ namespace PrismaEngine
 			return std::sqrt(x * x + y * y);
 		}
 
-		float dot(const Vector2& other)
+		float dot(const Vector2& other) const
 		{
 			return x * other.x + y * other.y;
 		}

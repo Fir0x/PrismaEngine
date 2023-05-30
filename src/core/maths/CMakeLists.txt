@@ -1,6 +1,6 @@
 set(PUBLIC_FILES
 	"public/Vector2.h"
-	"public/vec3f.h"
+	"public/Vector3.h"
 	"public/vec4f.h"
 	"public/vec2i.h"
 	"public/mat3f.h"
