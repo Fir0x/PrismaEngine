@@ -26,7 +26,7 @@ namespace PrismaEngine
 		}
 
 		Vector3(const Vector2<T>& v)
-			: x(v.x), y(v.y), z(v.z)
+			: Vector3(v.x, v.y)
 		{
 		}
 
@@ -107,10 +107,9 @@ namespace PrismaEngine
 	template<typename T>
 	Vector3<T> operator*(const T& lhs, const Vector3<T>& rhs)
 	{
-		return Vector3<T>(lhs * rhs.x, lhs * rhs.y);
+		return Vector3<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
 	}
 
-	typedef Vector3<int> Vector3i;
 	typedef Vector3<float> Vector3f;
 	typedef Vector3<double> Vector3d;
 }

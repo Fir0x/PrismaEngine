@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "core/maths/public/Vector2.h"
-#include "core/maths/public/vector.h"
 
 using namespace PrismaEngine;
 
