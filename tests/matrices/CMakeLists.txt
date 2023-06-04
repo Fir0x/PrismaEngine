@@ -1,7 +1,7 @@
 add_executable(
 	matrix_tests
 	"matrix3f_tests.cpp"
-	#"matrix4f_tests.cpp"
+	"matrix4f_tests.cpp"
 )
 
 target_link_libraries(

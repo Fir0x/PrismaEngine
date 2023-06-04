@@ -1,768 +1,552 @@
 #include <gtest/gtest.h>
 
-#include "core/maths/public/mat4f.h"
-#include "core/maths/public/matrix.h"
-#include "core/maths/public/vec4f.h"
+#include "core/maths/public/Matrix4.h"
 
 using namespace PrismaEngine;
 
 #define EPSILON 1e-8
 
+constexpr float x10Ref = 1.0f;
+constexpr float x11Ref = 2.54f;
+constexpr float x12Ref = -3.6f;
+constexpr float x13Ref = 98.32f;
+constexpr float y10Ref = -23.1f;
+constexpr float y11Ref = -4.354f;
+constexpr float y12Ref = -26.41f;
+constexpr float y13Ref = 13.56f;
+constexpr float z10Ref = 285.15f;
+constexpr float z11Ref = -87.7f;
+constexpr float z12Ref = 354.5f;
+constexpr float z13Ref = 12.02f;
+constexpr float w10Ref = 23.65f;
+constexpr float w11Ref = -9.80f;
+constexpr float w12Ref = 0.036f;
+constexpr float w13Ref = -1.32f;
+
+constexpr float x20Ref = 64.52f;
+constexpr float x21Ref = -6.32f;
+constexpr float x22Ref = -2.64f;
+constexpr float x23Ref = 120.02f;
+constexpr float y20Ref = 4.6f;
+constexpr float y21Ref = 3.64f;
+constexpr float y22Ref = 12.345f;
+constexpr float y23Ref = 1.30f;
+constexpr float z20Ref = -893.15f;
+constexpr float z21Ref = 2.34f;
+constexpr float z22Ref = -72.2f;
+constexpr float z23Ref = -6.12f;
+constexpr float w20Ref = 2.354f;
+constexpr float w21Ref = 12.36f;
+constexpr float w22Ref = -5.31f;
+constexpr float w23Ref = -0.2156f;
+
+static Matrix4f buildM1Ref()
+{
+	Vector4f x(x10Ref, x11Ref, x12Ref, x13Ref);
+	Vector4f y(y10Ref, y11Ref, y12Ref, y13Ref);
+	Vector4f z(z10Ref, z11Ref, z12Ref, z13Ref);
+	Vector4f w(w10Ref, w11Ref, w12Ref, w13Ref);
+
+	return Matrix4f::fromPlane(x, y, z, w);
+}
+
+static Matrix4f buildM2Ref()
+{
+	Vector4f x(x20Ref, x21Ref, x22Ref, x23Ref);
+	Vector4f y(y20Ref, y21Ref, y22Ref, y23Ref);
+	Vector4f z(z20Ref, z21Ref, z22Ref, z23Ref);
+	Vector4f w(w20Ref, w21Ref, w22Ref, w23Ref);
+
+	return Matrix4f::fromPlane(x, y, z, w);
+}
+
 TEST(Matrix4fTest, ScalarInitialization)
 {
 	{
 		constexpr float val = 1.0f;
-		Mat4f m(val);
+		Matrix4f m(val);
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
-				EXPECT_EQ(m[i][j], i == j ? val : 0.0f);
+				EXPECT_EQ(m.data[i][j], i == j ? val : 0.0f);
 		}
 	}
 
 	{
 		constexpr float val = 2.36f;
-		Mat4f m(val);
+		Matrix4f m(val);
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
-				EXPECT_EQ(m[i][j], i == j ? val : 0.0f);
+				EXPECT_EQ(m.data[i][j], i == j ? val : 0.0f);
 		}
 	}
 
 
 	{
 		constexpr float val = -2.36f;
-		Mat4f m(val);
+		Matrix4f m(val);
 		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
-				EXPECT_EQ(m[i][j], i == j ? val : 0.0f);
+				EXPECT_EQ(m.data[i][j], i == j ? val : 0.0f);
 		}
 	}
-}
-
-TEST(Matrix4fTest, FullInitialization)
-{
-	constexpr float x0 = 0.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float x3 = 98.32f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float y3 = 13.56f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-	constexpr float z3 = 12.02f;
-	constexpr float w0 = 23.65f;
-	constexpr float w1 = -9.80f;
-	constexpr float w2 = 0.036f;
-	constexpr float w3 = -1.32f;
-
-	Mat4f m(x0, y0, z0, w0, x1, y1, z1, w1, x2, y2, z2, w2, x3, y3, z3, w3);
-
-	EXPECT_EQ(m[0][0], x0);
-	EXPECT_EQ(m[1][0], x1);
-	EXPECT_EQ(m[2][0], x2);
-	EXPECT_EQ(m[3][0], x3);
-
-	EXPECT_EQ(m[0][1], y0);
-	EXPECT_EQ(m[1][1], y1);
-	EXPECT_EQ(m[2][1], y2);
-	EXPECT_EQ(m[3][1], y3);
-
-	EXPECT_EQ(m[0][2], z0);
-	EXPECT_EQ(m[1][2], z1);
-	EXPECT_EQ(m[2][2], z2);
-	EXPECT_EQ(m[3][2], z3);
-
-	EXPECT_EQ(m[0][3], w0);
-	EXPECT_EQ(m[1][3], w1);
-	EXPECT_EQ(m[2][3], w2);
-	EXPECT_EQ(m[3][3], w3);
 }
 
 TEST(Matrix4fTest, Vector4Initialization)
 {
-	constexpr float x0 = 0.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float x3 = 98.32f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float y3 = 13.56f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-	constexpr float z3 = 12.02f;
-	constexpr float w0 = 23.65f;
-	constexpr float w1 = -9.80f;
-	constexpr float w2 = 0.036f;
-	constexpr float w3 = -1.32f;
+	Matrix4f m = buildM1Ref();
 
-	Vec4f x(x0, x1, x2, x3);
-	Vec4f y(y0, y1, y2, y3);
-	Vec4f z(z0, z1, z2, z3);
-	Vec4f w(w0, w1, w2, w3);
+	EXPECT_EQ(m.data[0][0], x10Ref);
+	EXPECT_EQ(m.data[1][0], x11Ref);
+	EXPECT_EQ(m.data[2][0], x12Ref);
+	EXPECT_EQ(m.data[3][0], x13Ref);
 
-	Mat4f m(x, y, z, w);
+	EXPECT_EQ(m.data[0][1], y10Ref);
+	EXPECT_EQ(m.data[1][1], y11Ref);
+	EXPECT_EQ(m.data[2][1], y12Ref);
+	EXPECT_EQ(m.data[3][1], y13Ref);
 
-	EXPECT_EQ(m[0][0], x0);
-	EXPECT_EQ(m[0][1], x1);
-	EXPECT_EQ(m[0][2], x2);
-	EXPECT_EQ(m[0][3], x3);
+	EXPECT_EQ(m.data[0][2], z10Ref);
+	EXPECT_EQ(m.data[1][2], z11Ref);
+	EXPECT_EQ(m.data[2][2], z12Ref);
+	EXPECT_EQ(m.data[3][2], z13Ref);
 
-	EXPECT_EQ(m[1][0], y0);
-	EXPECT_EQ(m[1][1], y1);
-	EXPECT_EQ(m[1][2], y2);
-	EXPECT_EQ(m[1][3], y3);
-
-	EXPECT_EQ(m[2][0], z0);
-	EXPECT_EQ(m[2][1], z1);
-	EXPECT_EQ(m[2][2], z2);
-	EXPECT_EQ(m[2][3], z3);
-
-	EXPECT_EQ(m[3][0], w0);
-	EXPECT_EQ(m[3][1], w1);
-	EXPECT_EQ(m[3][2], w2);
-	EXPECT_EQ(m[3][3], w3);
+	EXPECT_EQ(m.data[0][3], w10Ref);
+	EXPECT_EQ(m.data[1][3], w11Ref);
+	EXPECT_EQ(m.data[2][3], w12Ref);
+	EXPECT_EQ(m.data[3][3], w13Ref);
 }
 
 TEST(Matrix4fTest, ReferenceInitialization)
 {
-	constexpr float x0 = 0.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float x3 = 98.32f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float y3 = 13.56f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-	constexpr float z3 = 12.02f;
-	constexpr float w0 = 23.65f;
-	constexpr float w1 = -9.80f;
-	constexpr float w2 = 0.036f;
-	constexpr float w3 = -1.32f;
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2(m1);
 
-	Vec4f x(x0, x1, x2, x3);
-	Vec4f y(y0, y1, y2, y3);
-	Vec4f z(z0, z1, z2, z3);
-	Vec4f w(w0, w1, w2, w3);
+	EXPECT_EQ(m2.data[0][0], x10Ref);
+	EXPECT_EQ(m2.data[1][0], x11Ref);
+	EXPECT_EQ(m2.data[2][0], x12Ref);
+	EXPECT_EQ(m2.data[3][0], x13Ref);
 
-	Mat4f m1(x, y, z, w);
-	Mat4f m2(m1);
+	EXPECT_EQ(m2.data[0][1], y10Ref);
+	EXPECT_EQ(m2.data[1][1], y11Ref);
+	EXPECT_EQ(m2.data[2][1], y12Ref);
+	EXPECT_EQ(m2.data[3][1], y13Ref);
 
-	EXPECT_EQ(m2[0][0], x0);
-	EXPECT_EQ(m2[0][1], x1);
-	EXPECT_EQ(m2[0][2], x2);
-	EXPECT_EQ(m2[0][3], x3);
+	EXPECT_EQ(m2.data[0][2], z10Ref);
+	EXPECT_EQ(m2.data[1][2], z11Ref);
+	EXPECT_EQ(m2.data[2][2], z12Ref);
+	EXPECT_EQ(m2.data[3][2], z13Ref);
 
-	EXPECT_EQ(m2[1][0], y0);
-	EXPECT_EQ(m2[1][1], y1);
-	EXPECT_EQ(m2[1][2], y2);
-	EXPECT_EQ(m2[1][3], y3);
-
-	EXPECT_EQ(m2[2][0], z0);
-	EXPECT_EQ(m2[2][1], z1);
-	EXPECT_EQ(m2[2][2], z2);
-	EXPECT_EQ(m2[2][3], z3);
-
-	EXPECT_EQ(m2[3][0], w0);
-	EXPECT_EQ(m2[3][1], w1);
-	EXPECT_EQ(m2[3][2], w2);
-	EXPECT_EQ(m2[3][3], w3);
+	EXPECT_EQ(m2.data[0][3], w10Ref);
+	EXPECT_EQ(m2.data[1][3], w11Ref);
+	EXPECT_EQ(m2.data[2][3], w12Ref);
+	EXPECT_EQ(m2.data[3][3], w13Ref);
 }
 
-TEST(Matrix4fTest, Add)
+TEST(Matrix4fTest, Identity)
 {
-	constexpr float x10 = 0.0f;
-	constexpr float x11 = 2.54f;
-	constexpr float x12 = -3.6f;
-	constexpr float x13 = 98.32f;
-	constexpr float y10 = -23.1f;
-	constexpr float y11 = -4.354f;
-	constexpr float y12 = -26.41f;
-	constexpr float y13 = 13.56f;
-	constexpr float z10 = 285.15f;
-	constexpr float z11 = -87.7f;
-	constexpr float z12 = 354.5f;
-	constexpr float z13 = 12.02f;
-	constexpr float w10 = 23.65f;
-	constexpr float w11 = -9.80f;
-	constexpr float w12 = 0.036f;
-	constexpr float w13 = -1.32f;
+	Matrix4f identity = Matrix4f::identity();
 
-	Vec4f x1(x10, x11, x12, x13);
-	Vec4f y1(y10, y11, y12, y13);
-	Vec4f z1(z10, z11, z12, z13);
-	Vec4f w1(w10, w11, w12, w13);
+	EXPECT_EQ(identity.data[0][0], 1.0f);
+	EXPECT_EQ(identity.data[1][0], 0.0f);
+	EXPECT_EQ(identity.data[2][0], 0.0f);
+	EXPECT_EQ(identity.data[3][0], 0.0f);
 
-	Mat4f m1(x1, y1, z1, w1);
+	EXPECT_EQ(identity.data[0][1], 0.0f);
+	EXPECT_EQ(identity.data[1][1], 1.0f);
+	EXPECT_EQ(identity.data[2][1], 0.0f);
+	EXPECT_EQ(identity.data[3][1], 0.0f);
 
-	constexpr float x20 = 64.52f;
-	constexpr float x21 = -6.32f;
-	constexpr float x22 = -2.64f;
-	constexpr float x23 = 120.02f;
-	constexpr float y20 = 4.6f;
-	constexpr float y21 = 3.64f;
-	constexpr float y22 = 12.345f;
-	constexpr float y23 = 1.30f;
-	constexpr float z20 = -893.15f;
-	constexpr float z21 = 2.34f;
-	constexpr float z22 = -72.2f;
-	constexpr float z23 = -6.12f;
-	constexpr float w20 = 2.354f;
-	constexpr float w21 = 12.36f;
-	constexpr float w22 = -5.31f;
-	constexpr float w23 = -0.2156f;
+	EXPECT_EQ(identity.data[0][2], 0.0f);
+	EXPECT_EQ(identity.data[1][2], 0.0f);
+	EXPECT_EQ(identity.data[2][2], 1.0f);
+	EXPECT_EQ(identity.data[3][2], 0.0f);
 
-	Vec4f x2(x20, x21, x22, x23);
-	Vec4f y2(y20, y21, y22, y23);
-	Vec4f z2(z20, z21, z22, z23);
-	Vec4f w2(w20, w21, w22, w23);
-
-	Mat4f m2(x2, y2, z2, w2);
-
-	{
-		Mat4f m3 = m1 + m2;
-
-		EXPECT_EQ(m3[0][0], x10 + x20);
-		EXPECT_EQ(m3[0][1], x11 + x21);
-		EXPECT_EQ(m3[0][2], x12 + x22);
-		EXPECT_EQ(m3[0][3], x13 + x23);
-
-		EXPECT_EQ(m3[1][0], y10 + y20);
-		EXPECT_EQ(m3[1][1], y11 + y21);
-		EXPECT_EQ(m3[1][2], y12 + y22);
-		EXPECT_EQ(m3[1][3], y13 + y23);
-
-		EXPECT_EQ(m3[2][0], z10 + z20);
-		EXPECT_EQ(m3[2][1], z11 + z21);
-		EXPECT_EQ(m3[2][2], z12 + z22);
-		EXPECT_EQ(m3[2][3], z13 + z23);
-
-		EXPECT_EQ(m3[3][0], w10 + w20);
-		EXPECT_EQ(m3[3][1], w11 + w21);
-		EXPECT_EQ(m3[3][2], w12 + w22);
-		EXPECT_EQ(m3[3][3], w13 + w23);
-	}
-
-	{
-		Mat4f m3 = m2 + m1;
-
-		EXPECT_EQ(m3[0][0], x10 + x20);
-		EXPECT_EQ(m3[0][1], x11 + x21);
-		EXPECT_EQ(m3[0][2], x12 + x22);
-		EXPECT_EQ(m3[0][3], x13 + x23);
-
-		EXPECT_EQ(m3[1][0], y10 + y20);
-		EXPECT_EQ(m3[1][1], y11 + y21);
-		EXPECT_EQ(m3[1][2], y12 + y22);
-		EXPECT_EQ(m3[1][3], y13 + y23);
-
-		EXPECT_EQ(m3[2][0], z10 + z20);
-		EXPECT_EQ(m3[2][1], z11 + z21);
-		EXPECT_EQ(m3[2][2], z12 + z22);
-		EXPECT_EQ(m3[2][3], z13 + z23);
-
-		EXPECT_EQ(m3[3][0], w10 + w20);
-		EXPECT_EQ(m3[3][1], w11 + w21);
-		EXPECT_EQ(m3[3][2], w12 + w22);
-		EXPECT_EQ(m3[3][3], w13 + w23);
-	}
+	EXPECT_EQ(identity.data[0][3], 0.0f);
+	EXPECT_EQ(identity.data[1][3], 0.0f);
+	EXPECT_EQ(identity.data[2][3], 0.0f);
+	EXPECT_EQ(identity.data[3][3], 1.0f);
 }
 
-TEST(Matrix4fTest, Subtract)
+TEST(Matrix4fTest, AddBasic)
 {
-	constexpr float x10 = 0.0f;
-	constexpr float x11 = 2.54f;
-	constexpr float x12 = -3.6f;
-	constexpr float x13 = 98.32f;
-	constexpr float y10 = -23.1f;
-	constexpr float y11 = -4.354f;
-	constexpr float y12 = -26.41f;
-	constexpr float y13 = 13.56f;
-	constexpr float z10 = 285.15f;
-	constexpr float z11 = -87.7f;
-	constexpr float z12 = 354.5f;
-	constexpr float z13 = 12.02f;
-	constexpr float w10 = 23.65f;
-	constexpr float w11 = -9.80f;
-	constexpr float w12 = 0.036f;
-	constexpr float w13 = -1.32f;
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
 
-	Vec4f x1(x10, x11, x12, x13);
-	Vec4f y1(y10, y11, y12, y13);
-	Vec4f z1(z10, z11, z12, z13);
-	Vec4f w1(w10, w11, w12, w13);
+	Matrix4f m3 = m1 + m2;
 
-	Mat4f m1(x1, y1, z1, w1);
+	EXPECT_EQ(m3.data[0][0], x10Ref + x20Ref);
+	EXPECT_EQ(m3.data[1][0], x11Ref + x21Ref);
+	EXPECT_EQ(m3.data[2][0], x12Ref + x22Ref);
+	EXPECT_EQ(m3.data[3][0], x13Ref + x23Ref);
 
-	constexpr float x20 = 64.52f;
-	constexpr float x21 = -6.32f;
-	constexpr float x22 = -2.64f;
-	constexpr float x23 = 120.02f;
-	constexpr float y20 = 4.6f;
-	constexpr float y21 = 3.64f;
-	constexpr float y22 = 12.345f;
-	constexpr float y23 = 1.30f;
-	constexpr float z20 = -893.15f;
-	constexpr float z21 = 2.34f;
-	constexpr float z22 = -72.2f;
-	constexpr float z23 = -6.12f;
-	constexpr float w20 = 2.354f;
-	constexpr float w21 = 12.36f;
-	constexpr float w22 = -5.31f;
-	constexpr float w23 = -0.2156f;
+	EXPECT_EQ(m3.data[0][1], y10Ref + y20Ref);
+	EXPECT_EQ(m3.data[1][1], y11Ref + y21Ref);
+	EXPECT_EQ(m3.data[2][1], y12Ref + y22Ref);
+	EXPECT_EQ(m3.data[3][1], y13Ref + y23Ref);
 
-	Vec4f x2(x20, x21, x22, x23);
-	Vec4f y2(y20, y21, y22, y23);
-	Vec4f z2(z20, z21, z22, z23);
-	Vec4f w2(w20, w21, w22, w23);
+	EXPECT_EQ(m3.data[0][2], z10Ref + z20Ref);
+	EXPECT_EQ(m3.data[1][2], z11Ref + z21Ref);
+	EXPECT_EQ(m3.data[2][2], z12Ref + z22Ref);
+	EXPECT_EQ(m3.data[3][2], z13Ref + z23Ref);
 
-	Mat4f m2(x2, y2, z2, w2);
-
-	{
-		Mat4f m3 = m1 - m2;
-
-		EXPECT_EQ(m3[0][0], x10 - x20);
-		EXPECT_EQ(m3[0][1], x11 - x21);
-		EXPECT_EQ(m3[0][2], x12 - x22);
-		EXPECT_EQ(m3[0][3], x13 - x23);
-
-		EXPECT_EQ(m3[1][0], y10 - y20);
-		EXPECT_EQ(m3[1][1], y11 - y21);
-		EXPECT_EQ(m3[1][2], y12 - y22);
-		EXPECT_EQ(m3[1][3], y13 - y23);
-
-		EXPECT_EQ(m3[2][0], z10 - z20);
-		EXPECT_EQ(m3[2][1], z11 - z21);
-		EXPECT_EQ(m3[2][2], z12 - z22);
-		EXPECT_EQ(m3[2][3], z13 - z23);
-
-		EXPECT_EQ(m3[3][0], w10 - w20);
-		EXPECT_EQ(m3[3][1], w11 - w21);
-		EXPECT_EQ(m3[3][2], w12 - w22);
-		EXPECT_EQ(m3[3][3], w13 - w23);
-	}
-
-	{
-		Mat4f m3 = m2 - m1;
-
-		EXPECT_EQ(m3[0][0], x20 - x10);
-		EXPECT_EQ(m3[0][1], x21 - x11);
-		EXPECT_EQ(m3[0][2], x22 - x12);
-		EXPECT_EQ(m3[0][3], x23 - x13);
-
-		EXPECT_EQ(m3[1][0], y20 - y10);
-		EXPECT_EQ(m3[1][1], y21 - y11);
-		EXPECT_EQ(m3[1][2], y22 - y12);
-		EXPECT_EQ(m3[1][3], y23 - y13);
-
-		EXPECT_EQ(m3[2][0], z20 - z10);
-		EXPECT_EQ(m3[2][1], z21 - z11);
-		EXPECT_EQ(m3[2][2], z22 - z12);
-		EXPECT_EQ(m3[2][3], z23 - z13);
-
-		EXPECT_EQ(m3[3][0], w20 - w10);
-		EXPECT_EQ(m3[3][1], w21 - w11);
-		EXPECT_EQ(m3[3][2], w22 - w12);
-		EXPECT_EQ(m3[3][3], w23 - w13);
-	}
+	EXPECT_EQ(m3.data[0][3], w10Ref + w20Ref);
+	EXPECT_EQ(m3.data[1][3], w11Ref + w21Ref);
+	EXPECT_EQ(m3.data[2][3], w12Ref + w22Ref);
+	EXPECT_EQ(m3.data[3][3], w13Ref + w23Ref);
 }
 
-TEST(Matrix4fTest, Product)
+TEST(Matrix4fTest, AddCommutative)
 {
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
 
-	constexpr float x10 = 0.0f;
-	constexpr float x11 = 2.54f;
-	constexpr float x12 = -3.6f;
-	constexpr float x13 = 98.32f;
-	constexpr float y10 = -23.1f;
-	constexpr float y11 = -4.354f;
-	constexpr float y12 = -26.41f;
-	constexpr float y13 = 13.56f;
-	constexpr float z10 = 285.15f;
-	constexpr float z11 = -87.7f;
-	constexpr float z12 = 354.5f;
-	constexpr float z13 = 12.02f;
-	constexpr float w10 = 23.65f;
-	constexpr float w11 = -9.80f;
-	constexpr float w12 = 0.036f;
-	constexpr float w13 = -1.32f;
+	Matrix4f m3 = m2 + m1;
 
-	Vec4f x1(x10, x11, x12, x13);
-	Vec4f y1(y10, y11, y12, y13);
-	Vec4f z1(z10, z11, z12, z13);
-	Vec4f w1(w10, w11, w12, w13);
+	EXPECT_EQ(m3.data[0][0], x10Ref + x20Ref);
+	EXPECT_EQ(m3.data[1][0], x11Ref + x21Ref);
+	EXPECT_EQ(m3.data[2][0], x12Ref + x22Ref);
+	EXPECT_EQ(m3.data[3][0], x13Ref + x23Ref);
 
-	Mat4f m1(x1, y1, z1, w1);
+	EXPECT_EQ(m3.data[0][1], y10Ref + y20Ref);
+	EXPECT_EQ(m3.data[1][1], y11Ref + y21Ref);
+	EXPECT_EQ(m3.data[2][1], y12Ref + y22Ref);
+	EXPECT_EQ(m3.data[3][1], y13Ref + y23Ref);
 
-	{
-		Vec4f x2(1.0f, 0.0f, 0.0f, 0.0f);
-		Vec4f y2(0.0f, 1.0f, 0.0f, 0.0f);
-		Vec4f z2(0.0f, 0.0f, 1.0f, 0.0f);
-		Vec4f w2(0.0f, 0.0f, 0.0f, 1.0f);
+	EXPECT_EQ(m3.data[0][2], z10Ref + z20Ref);
+	EXPECT_EQ(m3.data[1][2], z11Ref + z21Ref);
+	EXPECT_EQ(m3.data[2][2], z12Ref + z22Ref);
+	EXPECT_EQ(m3.data[3][2], z13Ref + z23Ref);
 
-		Mat4f identity(x2, y2, z2, w2);
-
-		{
-			Mat4f m3 = m1 * identity;
-			EXPECT_EQ(m3[0][0], x10);
-			EXPECT_EQ(m3[0][1], x11);
-			EXPECT_EQ(m3[0][2], x12);
-			EXPECT_EQ(m3[0][3], x13);
-
-			EXPECT_EQ(m3[1][0], y10);
-			EXPECT_EQ(m3[1][1], y11);
-			EXPECT_EQ(m3[1][2], y12);
-			EXPECT_EQ(m3[1][3], y13);
-
-			EXPECT_EQ(m3[2][0], z10);
-			EXPECT_EQ(m3[2][1], z11);
-			EXPECT_EQ(m3[2][2], z12);
-			EXPECT_EQ(m3[2][3], z13);
-
-			EXPECT_EQ(m3[3][0], w10);
-			EXPECT_EQ(m3[3][1], w11);
-			EXPECT_EQ(m3[3][2], w12);
-			EXPECT_EQ(m3[3][3], w13);
-		}
-
-		{
-			Mat4f m3 = identity * m1;
-			EXPECT_EQ(m3[0][0], x10);
-			EXPECT_EQ(m3[0][1], x11);
-			EXPECT_EQ(m3[0][2], x12);
-			EXPECT_EQ(m3[0][3], x13);
-
-			EXPECT_EQ(m3[1][0], y10);
-			EXPECT_EQ(m3[1][1], y11);
-			EXPECT_EQ(m3[1][2], y12);
-			EXPECT_EQ(m3[1][3], y13);
-
-			EXPECT_EQ(m3[2][0], z10);
-			EXPECT_EQ(m3[2][1], z11);
-			EXPECT_EQ(m3[2][2], z12);
-			EXPECT_EQ(m3[2][3], z13);
-
-			EXPECT_EQ(m3[3][0], w10);
-			EXPECT_EQ(m3[3][1], w11);
-			EXPECT_EQ(m3[3][2], w12);
-			EXPECT_EQ(m3[3][3], w13);
-		}
-	}
-
-	{
-		constexpr float x20 = 64.52f;
-		constexpr float x21 = -6.32f;
-		constexpr float x22 = -2.64f;
-		constexpr float x23 = 120.02f;
-		constexpr float y20 = 4.6f;
-		constexpr float y21 = 3.64f;
-		constexpr float y22 = 12.345f;
-		constexpr float y23 = 1.30f;
-		constexpr float z20 = -893.15f;
-		constexpr float z21 = 2.34f;
-		constexpr float z22 = -72.2f;
-		constexpr float z23 = -6.12f;
-		constexpr float w20 = 2.354f;
-		constexpr float w21 = 12.36f;
-		constexpr float w22 = -5.31f;
-		constexpr float w23 = -0.2156f;
-
-		Vec4f x2(x20, x21, x22, x23);
-		Vec4f y2(y20, y21, y22, y23);
-		Vec4f z2(z20, z21, z22, z23);
-		Vec4f w2(w20, w21, w22, w23);
-
-		Mat4f m2(x2, y2, z2, w2);
-
-		{
-			Mat4f m3 = m1 * m2;
-			const float x30 = x10 * x20 + y10 * x21 + z10 * x22 + w10 * x23;
-			const float x31 = x11 * x20 + y11 * x21 + z11 * x22 + w11 * x23;
-			const float x32 = x12 * x20 + y12 * x21 + z12 * x22 + w12 * x23;
-			const float x33 = x13 * x20 + y13 * x21 + z13 * x22 + w13 * x23;
-			const float y30 = x10 * y20 + y10 * y21 + z10 * y22 + w10 * y23;
-			const float y31 = x11 * y20 + y11 * y21 + z11 * y22 + w11 * y23;
-			const float y32 = x12 * y20 + y12 * y21 + z12 * y22 + w12 * y23;
-			const float y33 = x13 * y20 + y13 * y21 + z13 * y22 + w13 * y23;
-			const float z30 = x10 * z20 + y10 * z21 + z10 * z22 + w10 * z23;
-			const float z31 = x11 * z20 + y11 * z21 + z11 * z22 + w11 * z23;
-			const float z32 = x12 * z20 + y12 * z21 + z12 * z22 + w12 * z23;
-			const float z33 = x13 * z20 + y13 * z21 + z13 * z22 + w13 * z23;
-			const float w30 = x10 * w20 + y10 * w21 + z10 * w22 + w10 * w23;
-			const float w31 = x11 * w20 + y11 * w21 + z11 * w22 + w11 * w23;
-			const float w32 = x12 * w20 + y12 * w21 + z12 * w22 + w12 * w23;
-			const float w33 = x13 * w20 + y13 * w21 + z13 * w22 + w13 * w23;
-
-			EXPECT_EQ(m3[0][0], x30);
-			EXPECT_EQ(m3[0][1], x31);
-			EXPECT_EQ(m3[0][2], x32);
-			EXPECT_EQ(m3[0][3], x33);
-
-			EXPECT_EQ(m3[1][0], y30);
-			EXPECT_EQ(m3[1][1], y31);
-			EXPECT_EQ(m3[1][2], y32);
-			EXPECT_EQ(m3[1][3], y33);
-
-			EXPECT_EQ(m3[2][0], z30);
-			EXPECT_EQ(m3[2][1], z31);
-			EXPECT_EQ(m3[2][2], z32);
-			EXPECT_EQ(m3[2][3], z33);
-
-			EXPECT_EQ(m3[3][0], w30);
-			EXPECT_EQ(m3[3][1], w31);
-			EXPECT_EQ(m3[3][2], w32);
-			EXPECT_EQ(m3[3][3], w33);
-		}
-
-
-		{
-			Mat4f m3 = m2 * m1;
-			const float x30 = x20 * x10 + y20 * x11 + z20 * x12 + w20 * x13;
-			const float x31 = x21 * x10 + y21 * x11 + z21 * x12 + w21 * x13;
-			const float x32 = x22 * x10 + y22 * x11 + z22 * x12 + w22 * x13;
-			const float x33 = x23 * x10 + y23 * x11 + z23 * x12 + w23 * x13;
-			const float y30 = x20 * y10 + y20 * y11 + z20 * y12 + w20 * y13;
-			const float y31 = x21 * y10 + y21 * y11 + z21 * y12 + w21 * y13;
-			const float y32 = x22 * y10 + y22 * y11 + z22 * y12 + w22 * y13;
-			const float y33 = x23 * y10 + y23 * y11 + z23 * y12 + w23 * y13;
-			const float z30 = x20 * z10 + y20 * z11 + z20 * z12 + w20 * z13;
-			const float z31 = x21 * z10 + y21 * z11 + z21 * z12 + w21 * z13;
-			const float z32 = x22 * z10 + y22 * z11 + z22 * z12 + w22 * z13;
-			const float z33 = x23 * z10 + y23 * z11 + z23 * z12 + w23 * z13;
-			const float w30 = x20 * w10 + y20 * w11 + z20 * w12 + w20 * w13;
-			const float w31 = x21 * w10 + y21 * w11 + z21 * w12 + w21 * w13;
-			const float w32 = x22 * w10 + y22 * w11 + z22 * w12 + w22 * w13;
-			const float w33 = x23 * w10 + y23 * w11 + z23 * w12 + w23 * w13;
-
-			EXPECT_EQ(m3[0][0], x30);
-			EXPECT_EQ(m3[0][1], x31);
-			EXPECT_EQ(m3[0][2], x32);
-			EXPECT_EQ(m3[0][3], x33);
-
-			EXPECT_EQ(m3[1][0], y30);
-			EXPECT_EQ(m3[1][1], y31);
-			EXPECT_EQ(m3[1][2], y32);
-			EXPECT_EQ(m3[1][3], y33);
-
-			EXPECT_EQ(m3[2][0], z30);
-			EXPECT_EQ(m3[2][1], z31);
-			EXPECT_EQ(m3[2][2], z32);
-			EXPECT_EQ(m3[2][3], z33);
-
-			EXPECT_EQ(m3[3][0], w30);
-			EXPECT_EQ(m3[3][1], w31);
-			EXPECT_EQ(m3[3][2], w32);
-			EXPECT_EQ(m3[3][3], w33);
-		}
-	}
+	EXPECT_EQ(m3.data[0][3], w10Ref + w20Ref);
+	EXPECT_EQ(m3.data[1][3], w11Ref + w21Ref);
+	EXPECT_EQ(m3.data[2][3], w12Ref + w22Ref);
+	EXPECT_EQ(m3.data[3][3], w13Ref + w23Ref);
 }
 
-TEST(Matrix4fTest, Transpose)
+TEST(Matrix4fTest, SubtractBasic)
 {
-	{
-		Vec4f x(1.0f, 0.0f, 0.0f, 0.0f);
-		Vec4f y(0.0f, 1.0f, 0.0f, 0.0f);
-		Vec4f z(0.0f, 0.0f, 1.0f, 0.0f);
-		Vec4f w(0.0f, 0.0f, 0.0f, 1.0f);
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
 
-		Mat4f m(x, y, z, w);
-		Mat4f mTransposed = transpose(m);
+	Matrix4f m3 = m1 - m2;
 
-		EXPECT_EQ(mTransposed[0][0], 1.0f);
-		EXPECT_EQ(mTransposed[0][1], 0.0f);
-		EXPECT_EQ(mTransposed[0][2], 0.0f);
-		EXPECT_EQ(mTransposed[0][3], 0.0f);
+	EXPECT_EQ(m3.data[0][0], x10Ref - x20Ref);
+	EXPECT_EQ(m3.data[1][0], x11Ref - x21Ref);
+	EXPECT_EQ(m3.data[2][0], x12Ref - x22Ref);
+	EXPECT_EQ(m3.data[3][0], x13Ref - x23Ref);
 
-		EXPECT_EQ(mTransposed[1][0], 0.0f);
-		EXPECT_EQ(mTransposed[1][1], 1.0f);
-		EXPECT_EQ(mTransposed[1][2], 0.0f);
-		EXPECT_EQ(mTransposed[1][3], 0.0f);
+	EXPECT_EQ(m3.data[0][1], y10Ref - y20Ref);
+	EXPECT_EQ(m3.data[1][1], y11Ref - y21Ref);
+	EXPECT_EQ(m3.data[2][1], y12Ref - y22Ref);
+	EXPECT_EQ(m3.data[3][1], y13Ref - y23Ref);
 
-		EXPECT_EQ(mTransposed[2][0], 0.0f);
-		EXPECT_EQ(mTransposed[2][1], 0.0f);
-		EXPECT_EQ(mTransposed[2][2], 1.0f);
-		EXPECT_EQ(mTransposed[2][3], 0.0f);
+	EXPECT_EQ(m3.data[0][2], z10Ref - z20Ref);
+	EXPECT_EQ(m3.data[1][2], z11Ref - z21Ref);
+	EXPECT_EQ(m3.data[2][2], z12Ref - z22Ref);
+	EXPECT_EQ(m3.data[3][2], z13Ref - z23Ref);
 
-		EXPECT_EQ(mTransposed[3][0], 0.0f);
-		EXPECT_EQ(mTransposed[3][1], 0.0f);
-		EXPECT_EQ(mTransposed[3][2], 0.0f);
-		EXPECT_EQ(mTransposed[3][3], 1.0f);
-	}
+	EXPECT_EQ(m3.data[0][3], w10Ref - w20Ref);
+	EXPECT_EQ(m3.data[1][3], w11Ref - w21Ref);
+	EXPECT_EQ(m3.data[2][3], w12Ref - w22Ref);
+	EXPECT_EQ(m3.data[3][3], w13Ref - w23Ref);
+}
 
-	{
-		constexpr float x0 = 0.0f;
-		constexpr float x1 = 2.54f;
-		constexpr float x2 = -3.6f;
-		constexpr float x3 = 98.32f;
-		constexpr float y0 = -23.1f;
-		constexpr float y1 = -4.354f;
-		constexpr float y2 = -26.41f;
-		constexpr float y3 = 13.56f;
-		constexpr float z0 = 285.15f;
-		constexpr float z1 = -87.7f;
-		constexpr float z2 = 354.5f;
-		constexpr float z3 = 12.02f;
-		constexpr float w0 = 23.65f;
-		constexpr float w1 = -9.80f;
-		constexpr float w2 = 0.036f;
-		constexpr float w3 = -1.32f;
+TEST(Matrix4fTest, SubtractNotCommutative)
+{
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
 
-		Vec4f x(x0, x1, x2, x3);
-		Vec4f y(y0, y1, y2, y3);
-		Vec4f z(z0, z1, z2, z3);
-		Vec4f w(w0, w1, w2, w3);
+	Matrix4f m3 = m2 - m1;
 
-		Mat4f m(x, y, z, w);
-		Mat4f mTransposed = transpose(m);
+	EXPECT_EQ(m3.data[0][0], x20Ref - x10Ref);
+	EXPECT_EQ(m3.data[1][0], x21Ref - x11Ref);
+	EXPECT_EQ(m3.data[2][0], x22Ref - x12Ref);
+	EXPECT_EQ(m3.data[3][0], x23Ref - x13Ref);
 
-		EXPECT_EQ(mTransposed[0][0], x0);
-		EXPECT_EQ(mTransposed[0][1], y0);
-		EXPECT_EQ(mTransposed[0][2], z0);
-		EXPECT_EQ(mTransposed[0][3], w0);
+	EXPECT_EQ(m3.data[0][1], y20Ref - y10Ref);
+	EXPECT_EQ(m3.data[1][1], y21Ref - y11Ref);
+	EXPECT_EQ(m3.data[2][1], y22Ref - y12Ref);
+	EXPECT_EQ(m3.data[3][1], y23Ref - y13Ref);
 
-		EXPECT_EQ(mTransposed[1][0], x1);
-		EXPECT_EQ(mTransposed[1][1], y1);
-		EXPECT_EQ(mTransposed[1][2], z1);
-		EXPECT_EQ(mTransposed[1][3], w1);
+	EXPECT_EQ(m3.data[0][2], z20Ref - z10Ref);
+	EXPECT_EQ(m3.data[1][2], z21Ref - z11Ref);
+	EXPECT_EQ(m3.data[2][2], z22Ref - z12Ref);
+	EXPECT_EQ(m3.data[3][2], z23Ref - z13Ref);
 
-		EXPECT_EQ(mTransposed[2][0], x2);
-		EXPECT_EQ(mTransposed[2][1], y2);
-		EXPECT_EQ(mTransposed[2][2], z2);
-		EXPECT_EQ(mTransposed[2][3], w2);
+	EXPECT_EQ(m3.data[0][3], w20Ref - w10Ref);
+	EXPECT_EQ(m3.data[1][3], w21Ref - w11Ref);
+	EXPECT_EQ(m3.data[2][3], w22Ref - w12Ref);
+	EXPECT_EQ(m3.data[3][3], w23Ref - w13Ref);
+}
 
-		EXPECT_EQ(mTransposed[3][0], x3);
-		EXPECT_EQ(mTransposed[3][1], y3);
-		EXPECT_EQ(mTransposed[3][2], z3);
-		EXPECT_EQ(mTransposed[3][3], w3);
-	}
+TEST(Matrix4fTest, ProductIdentity)
+{
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f identity = Matrix4f::identity();
+
+	Matrix4f m3 = m1 * identity;
+	EXPECT_EQ(m3.data[0][0], x10Ref);
+	EXPECT_EQ(m3.data[1][0], x11Ref);
+	EXPECT_EQ(m3.data[2][0], x12Ref);
+	EXPECT_EQ(m3.data[3][0], x13Ref);
+
+	EXPECT_EQ(m3.data[0][1], y10Ref);
+	EXPECT_EQ(m3.data[1][1], y11Ref);
+	EXPECT_EQ(m3.data[2][1], y12Ref);
+	EXPECT_EQ(m3.data[3][1], y13Ref);
+
+	EXPECT_EQ(m3.data[0][2], z10Ref);
+	EXPECT_EQ(m3.data[1][2], z11Ref);
+	EXPECT_EQ(m3.data[2][2], z12Ref);
+	EXPECT_EQ(m3.data[3][2], z13Ref);
+
+	EXPECT_EQ(m3.data[0][3], w10Ref);
+	EXPECT_EQ(m3.data[1][3], w11Ref);
+	EXPECT_EQ(m3.data[2][3], w12Ref);
+	EXPECT_EQ(m3.data[3][3], w13Ref);
+}
+
+TEST(Matrix4fTest, ProductBasic)
+{
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
+
+	Matrix4f m3 = m1 * m2;
+	const float x30 = x10Ref * x20Ref + y10Ref * x21Ref + z10Ref * x22Ref + w10Ref * x23Ref;
+	const float x31 = x11Ref * x20Ref + y11Ref * x21Ref + z11Ref * x22Ref + w11Ref * x23Ref;
+	const float x32 = x12Ref * x20Ref + y12Ref * x21Ref + z12Ref * x22Ref + w12Ref * x23Ref;
+	const float x33 = x13Ref * x20Ref + y13Ref * x21Ref + z13Ref * x22Ref + w13Ref * x23Ref;
+	const float y30 = x10Ref * y20Ref + y10Ref * y21Ref + z10Ref * y22Ref + w10Ref * y23Ref;
+	const float y31 = x11Ref * y20Ref + y11Ref * y21Ref + z11Ref * y22Ref + w11Ref * y23Ref;
+	const float y32 = x12Ref * y20Ref + y12Ref * y21Ref + z12Ref * y22Ref + w12Ref * y23Ref;
+	const float y33 = x13Ref * y20Ref + y13Ref * y21Ref + z13Ref * y22Ref + w13Ref * y23Ref;
+	const float z30 = x10Ref * z20Ref + y10Ref * z21Ref + z10Ref * z22Ref + w10Ref * z23Ref;
+	const float z31 = x11Ref * z20Ref + y11Ref * z21Ref + z11Ref * z22Ref + w11Ref * z23Ref;
+	const float z32 = x12Ref * z20Ref + y12Ref * z21Ref + z12Ref * z22Ref + w12Ref * z23Ref;
+	const float z33 = x13Ref * z20Ref + y13Ref * z21Ref + z13Ref * z22Ref + w13Ref * z23Ref;
+	const float w30 = x10Ref * w20Ref + y10Ref * w21Ref + z10Ref * w22Ref + w10Ref * w23Ref;
+	const float w31 = x11Ref * w20Ref + y11Ref * w21Ref + z11Ref * w22Ref + w11Ref * w23Ref;
+	const float w32 = x12Ref * w20Ref + y12Ref * w21Ref + z12Ref * w22Ref + w12Ref * w23Ref;
+	const float w33 = x13Ref * w20Ref + y13Ref * w21Ref + z13Ref * w22Ref + w13Ref * w23Ref;
+
+	EXPECT_EQ(m3.data[0][0], x30);
+	EXPECT_EQ(m3.data[1][0], x31);
+	EXPECT_EQ(m3.data[2][0], x32);
+	EXPECT_EQ(m3.data[3][0], x33);
+
+	EXPECT_EQ(m3.data[0][1], y30);
+	EXPECT_EQ(m3.data[1][1], y31);
+	EXPECT_EQ(m3.data[2][1], y32);
+	EXPECT_EQ(m3.data[3][1], y33);
+
+	EXPECT_EQ(m3.data[0][2], z30);
+	EXPECT_EQ(m3.data[1][2], z31);
+	EXPECT_EQ(m3.data[2][2], z32);
+	EXPECT_EQ(m3.data[3][2], z33);
+
+	EXPECT_EQ(m3.data[0][3], w30);
+	EXPECT_EQ(m3.data[1][3], w31);
+	EXPECT_EQ(m3.data[2][3], w32);
+	EXPECT_EQ(m3.data[3][3], w33);
+}
+
+TEST(Matrix4fTest, ProductNotCommutative)
+{
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
+
+	Matrix4f m3 = m2 * m1;
+	const float x30 = x20Ref * x10Ref + y20Ref * x11Ref + z20Ref * x12Ref + w20Ref * x13Ref;
+	const float x31 = x21Ref * x10Ref + y21Ref * x11Ref + z21Ref * x12Ref + w21Ref * x13Ref;
+	const float x32 = x22Ref * x10Ref + y22Ref * x11Ref + z22Ref * x12Ref + w22Ref * x13Ref;
+	const float x33 = x23Ref * x10Ref + y23Ref * x11Ref + z23Ref * x12Ref + w23Ref * x13Ref;
+	const float y30 = x20Ref * y10Ref + y20Ref * y11Ref + z20Ref * y12Ref + w20Ref * y13Ref;
+	const float y31 = x21Ref * y10Ref + y21Ref * y11Ref + z21Ref * y12Ref + w21Ref * y13Ref;
+	const float y32 = x22Ref * y10Ref + y22Ref * y11Ref + z22Ref * y12Ref + w22Ref * y13Ref;
+	const float y33 = x23Ref * y10Ref + y23Ref * y11Ref + z23Ref * y12Ref + w23Ref * y13Ref;
+	const float z30 = x20Ref * z10Ref + y20Ref * z11Ref + z20Ref * z12Ref + w20Ref * z13Ref;
+	const float z31 = x21Ref * z10Ref + y21Ref * z11Ref + z21Ref * z12Ref + w21Ref * z13Ref;
+	const float z32 = x22Ref * z10Ref + y22Ref * z11Ref + z22Ref * z12Ref + w22Ref * z13Ref;
+	const float z33 = x23Ref * z10Ref + y23Ref * z11Ref + z23Ref * z12Ref + w23Ref * z13Ref;
+	const float w30 = x20Ref * w10Ref + y20Ref * w11Ref + z20Ref * w12Ref + w20Ref * w13Ref;
+	const float w31 = x21Ref * w10Ref + y21Ref * w11Ref + z21Ref * w12Ref + w21Ref * w13Ref;
+	const float w32 = x22Ref * w10Ref + y22Ref * w11Ref + z22Ref * w12Ref + w22Ref * w13Ref;
+	const float w33 = x23Ref * w10Ref + y23Ref * w11Ref + z23Ref * w12Ref + w23Ref * w13Ref;
+
+	EXPECT_EQ(m3.data[0][0], x30);
+	EXPECT_EQ(m3.data[1][0], x31);
+	EXPECT_EQ(m3.data[2][0], x32);
+	EXPECT_EQ(m3.data[3][0], x33);
+
+	EXPECT_EQ(m3.data[0][1], y30);
+	EXPECT_EQ(m3.data[1][1], y31);
+	EXPECT_EQ(m3.data[2][1], y32);
+	EXPECT_EQ(m3.data[3][1], y33);
+
+	EXPECT_EQ(m3.data[0][2], z30);
+	EXPECT_EQ(m3.data[1][2], z31);
+	EXPECT_EQ(m3.data[2][2], z32);
+	EXPECT_EQ(m3.data[3][2], z33);
+
+	EXPECT_EQ(m3.data[0][3], w30);
+	EXPECT_EQ(m3.data[1][3], w31);
+	EXPECT_EQ(m3.data[2][3], w32);
+	EXPECT_EQ(m3.data[3][3], w33);
+}
+
+TEST(Matrix4fTest, TransposeIdentity)
+{
+	Matrix4f identity = Matrix4f::identity();
+	Matrix4f mTransposed = identity.transpose();
+
+	EXPECT_EQ(mTransposed.data[0][0], 1.0f);
+	EXPECT_EQ(mTransposed.data[1][0], 0.0f);
+	EXPECT_EQ(mTransposed.data[2][0], 0.0f);
+	EXPECT_EQ(mTransposed.data[3][0], 0.0f);
+
+	EXPECT_EQ(mTransposed.data[0][1], 0.0f);
+	EXPECT_EQ(mTransposed.data[1][1], 1.0f);
+	EXPECT_EQ(mTransposed.data[2][1], 0.0f);
+	EXPECT_EQ(mTransposed.data[3][1], 0.0f);
+
+	EXPECT_EQ(mTransposed.data[0][2], 0.0f);
+	EXPECT_EQ(mTransposed.data[1][2], 0.0f);
+	EXPECT_EQ(mTransposed.data[2][2], 1.0f);
+	EXPECT_EQ(mTransposed.data[3][2], 0.0f);
+
+	EXPECT_EQ(mTransposed.data[0][3], 0.0f);
+	EXPECT_EQ(mTransposed.data[1][3], 0.0f);
+	EXPECT_EQ(mTransposed.data[2][3], 0.0f);
+	EXPECT_EQ(mTransposed.data[3][3], 1.0f);
+}
+
+TEST(Matrix4fTest, TransposeBasic)
+{
+	Matrix4f m = buildM1Ref();
+	Matrix4f mTransposed = m.transpose();
+
+	EXPECT_EQ(mTransposed.data[0][0], x10Ref);
+	EXPECT_EQ(mTransposed.data[1][0], y10Ref);
+	EXPECT_EQ(mTransposed.data[2][0], z10Ref);
+	EXPECT_EQ(mTransposed.data[3][0], w10Ref);
+
+	EXPECT_EQ(mTransposed.data[0][1], x11Ref);
+	EXPECT_EQ(mTransposed.data[1][1], y11Ref);
+	EXPECT_EQ(mTransposed.data[2][1], z11Ref);
+	EXPECT_EQ(mTransposed.data[3][1], w11Ref);
+
+	EXPECT_EQ(mTransposed.data[0][2], x12Ref);
+	EXPECT_EQ(mTransposed.data[1][2], y12Ref);
+	EXPECT_EQ(mTransposed.data[2][2], z12Ref);
+	EXPECT_EQ(mTransposed.data[3][2], w12Ref);
+
+	EXPECT_EQ(mTransposed.data[0][3], x13Ref);
+	EXPECT_EQ(mTransposed.data[1][3], y13Ref);
+	EXPECT_EQ(mTransposed.data[2][3], z13Ref);
+	EXPECT_EQ(mTransposed.data[3][3], w13Ref);
 }
 
 TEST(Matrix4fTest, Determinant)
 {
-	constexpr float x0 = 1.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float x3 = 98.32f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float y3 = 13.56f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-	constexpr float z3 = 12.02f;
-	constexpr float w0 = 23.65f;
-	constexpr float w1 = -9.80f;
-	constexpr float w2 = 0.036f;
-	constexpr float w3 = -1.32f;
+	Matrix4f m = buildM1Ref();
 
-	Vec4f x(x0, x1, x2, x3);
-	Vec4f y(y0, y1, y2, y3);
-	Vec4f z(z0, z1, z2, z3);
-	Vec4f w(w0, w1, w2, w3);
+	float det = m.determinant();
 
-	Mat4f m(x, y, z, w);
+	constexpr float subSubFactor01 = z10Ref * w11Ref - z11Ref * w10Ref;
+	constexpr float subSubFactor12 = z11Ref * w12Ref - z12Ref * w11Ref;
+	constexpr float subSubFactor23 = z12Ref * w13Ref - z13Ref * w12Ref;
+	constexpr float subSubFactor02 = z10Ref * w12Ref - z12Ref * w10Ref;
+	constexpr float subSubFactor13 = z11Ref * w13Ref - z13Ref * w11Ref;
+	constexpr float subSubFactor03 = z10Ref * w13Ref - z13Ref * w10Ref;
 
-	float det = determinant(m);
+	constexpr float subFactor0 = y11Ref * subSubFactor23 - y12Ref * subSubFactor13 + y13Ref * subSubFactor12;
+	constexpr float subFactor1 = y10Ref * subSubFactor23 - y12Ref * subSubFactor03 + y13Ref * subSubFactor02;
+	constexpr float subFactor2 = y10Ref * subSubFactor13 - y11Ref * subSubFactor03 + y13Ref * subSubFactor01;
+	constexpr float subFactor3 = y10Ref * subSubFactor12 - y11Ref * subSubFactor02 + y12Ref * subSubFactor01;
 
-	constexpr float subSubFactor01 = z0 * w1 - z1 * w0;
-	constexpr float subSubFactor12 = z1 * w2 - z2 * w1;
-	constexpr float subSubFactor23 = z2 * w3 - z3 * w2;
-	constexpr float subSubFactor02 = z0 * w2 - z2 * w0;
-	constexpr float subSubFactor13 = z1 * w3 - z3 * w1;
-	constexpr float subSubFactor03 = z0 * w3 - z3 * w0;
-
-	constexpr float subFactor0 = y1 * subSubFactor23 - y2 * subSubFactor13 + y3 * subSubFactor12;
-	constexpr float subFactor1 = y0 * subSubFactor23 - y2 * subSubFactor03 + y3 * subSubFactor02;
-	constexpr float subFactor2 = y0 * subSubFactor13 - y1 * subSubFactor03 + y3 * subSubFactor01;
-	constexpr float subFactor3 = y0 * subSubFactor12 - y1 * subSubFactor02 + y2 * subSubFactor01;
-
-	constexpr float detRef = x0 * subFactor0 - x1 * subFactor1 + x2 * subFactor2 - x3 * subFactor3;
+	constexpr float detRef = x10Ref * subFactor0 - x11Ref * subFactor1 + x12Ref * subFactor2 - x13Ref * subFactor3;
 
 	EXPECT_EQ(det, detRef);
 }
 
-TEST(Matrix4fTest, Inverse)
+TEST(Matrix4fTest, InverseIdentity)
 {
-	constexpr float x0 = 1.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float x3 = 98.32f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float y3 = 13.56f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-	constexpr float z3 = 12.02f;
-	constexpr float w0 = 23.65f;
-	constexpr float w1 = -9.80f;
-	constexpr float w2 = 0.036f;
-	constexpr float w3 = -1.32f;
+	Matrix4f identity = Matrix4f::identity();
+	Matrix4f mInverted = identity.inverse();
 
-	Vec4f x(x0, x1, x2, x3);
-	Vec4f y(y0, y1, y2, y3);
-	Vec4f z(z0, z1, z2, z3);
-	Vec4f w(w0, w1, w2, w3);
+	EXPECT_EQ(mInverted.data[0][0], 1.0f);
+	EXPECT_EQ(mInverted.data[1][0], 0.0f);
+	EXPECT_EQ(mInverted.data[2][0], 0.0f);
+	EXPECT_EQ(mInverted.data[3][0], 0.0f);
 
-	Mat4f m(x, y, z, w);
+	EXPECT_EQ(mInverted.data[0][1], 0.0f);
+	EXPECT_EQ(mInverted.data[1][1], 1.0f);
+	EXPECT_EQ(mInverted.data[2][1], 0.0f);
+	EXPECT_EQ(mInverted.data[3][1], 0.0f);
 
-	Mat4f mInverted = inverse(m);
+	EXPECT_EQ(mInverted.data[0][2], 0.0f);
+	EXPECT_EQ(mInverted.data[1][2], 0.0f);
+	EXPECT_EQ(mInverted.data[2][2], 1.0f);
+	EXPECT_EQ(mInverted.data[3][2], 0.0f);
+
+	EXPECT_EQ(mInverted.data[0][3], 0.0f);
+	EXPECT_EQ(mInverted.data[1][3], 0.0f);
+	EXPECT_EQ(mInverted.data[2][3], 0.0f);
+	EXPECT_EQ(mInverted.data[3][3], 1.0f);
+}
+
+TEST(Matrix4fTest, InverseBasic)
+{
+	Matrix4f m = buildM1Ref();
+
+	Matrix4f mInverted = m.inverse();
 
 	// Naming: coef<column><coef id>
-	constexpr float coef01 = y2 * z3 - z2 * y3;
-	constexpr float coef02 = y2 * w3 - w2 * y3;
-	constexpr float coef03 = z2 * w3 - w2 * z3;
-	constexpr float coef04 = x2 * z3 - z2 * x3;
-	constexpr float coef05 = x2 * w3 - w2 * x3;
-	constexpr float coef06 = x2 * y3 - y2 * x3;
+	constexpr float coef01 = y12Ref * z13Ref - z12Ref * y13Ref;
+	constexpr float coef02 = y12Ref * w13Ref - w12Ref * y13Ref;
+	constexpr float coef03 = z12Ref * w13Ref - w12Ref * z13Ref;
+	constexpr float coef04 = x12Ref * z13Ref - z12Ref * x13Ref;
+	constexpr float coef05 = x12Ref * w13Ref - w12Ref * x13Ref;
+	constexpr float coef06 = x12Ref * y13Ref - y12Ref * x13Ref;
 
-	constexpr float coef21 = y1 * z3 - z1 * y3;
-	constexpr float coef22 = y1 * w3 - w1 * y3;
-	constexpr float coef23 = z1 * w3 - w1 * z3;
-	constexpr float coef24 = x1 * z3 - z1 * x3;
-	constexpr float coef25 = x1 * w3 - w1 * x3;
-	constexpr float coef26 = x1 * y3 - y1 * x3;
+	constexpr float coef21 = y11Ref * z13Ref - z11Ref * y13Ref;
+	constexpr float coef22 = y11Ref * w13Ref - w11Ref * y13Ref;
+	constexpr float coef23 = z11Ref * w13Ref - w11Ref * z13Ref;
+	constexpr float coef24 = x11Ref * z13Ref - z11Ref * x13Ref;
+	constexpr float coef25 = x11Ref * w13Ref - w11Ref * x13Ref;
+	constexpr float coef26 = x11Ref * y13Ref - y11Ref * x13Ref;
 
-	constexpr float coef31 = y1 * z2 - z1 * y2;
-	constexpr float coef32 = y1 * w2 - w1 * y2;
-	constexpr float coef33 = z1 * w2 - w1 * z2;
-	constexpr float coef34 = x1 * z2 - z1 * x2;
-	constexpr float coef35 = x1 * w2 - w1 * x2;
-	constexpr float coef36 = x1 * y2 - y1 * x2;
+	constexpr float coef31 = y11Ref * z12Ref - z11Ref * y12Ref;
+	constexpr float coef32 = y11Ref * w12Ref - w11Ref * y12Ref;
+	constexpr float coef33 = z11Ref * w12Ref - w11Ref * z12Ref;
+	constexpr float coef34 = x11Ref * z12Ref - z11Ref * x12Ref;
+	constexpr float coef35 = x11Ref * w12Ref - w11Ref * x12Ref;
+	constexpr float coef36 = x11Ref * y12Ref - y11Ref * x12Ref;
 
-	constexpr float adjugateX0 = +(y1 * coef03 - z1 * coef02 + w1 * coef01);
-	constexpr float adjugateX1 = -(x1 * coef03 - z1 * coef05 + w1 * coef04);
-	constexpr float adjugateX2 = +(x1 * coef02 - y1 * coef05 + w1 * coef06);
-	constexpr float adjugateX3 = -(x1 * coef01 - y1 * coef04 + z1 * coef06);
+	constexpr float adjugateX0 = +(y11Ref * coef03 - z11Ref * coef02 + w11Ref * coef01);
+	constexpr float adjugateX1 = -(x11Ref * coef03 - z11Ref * coef05 + w11Ref * coef04);
+	constexpr float adjugateX2 = +(x11Ref * coef02 - y11Ref * coef05 + w11Ref * coef06);
+	constexpr float adjugateX3 = -(x11Ref * coef01 - y11Ref * coef04 + z11Ref * coef06);
 
-	constexpr float adjugateY0 = -(y0 * coef03 - z0 * coef02 + w0 * coef01);
-	constexpr float adjugateY1 = +(x0 * coef03 - z0 * coef05 + w0 * coef04);
-	constexpr float adjugateY2 = -(x0 * coef02 - y0 * coef05 + w0 * coef06);
-	constexpr float adjugateY3 = +(x0 * coef01 - y0 * coef04 + z0 * coef06);
+	constexpr float adjugateY0 = -(y10Ref * coef03 - z10Ref * coef02 + w10Ref * coef01);
+	constexpr float adjugateY1 = +(x10Ref * coef03 - z10Ref * coef05 + w10Ref * coef04);
+	constexpr float adjugateY2 = -(x10Ref * coef02 - y10Ref * coef05 + w10Ref * coef06);
+	constexpr float adjugateY3 = +(x10Ref * coef01 - y10Ref * coef04 + z10Ref * coef06);
 
-	constexpr float adjugateZ0 = +(y0 * coef23 - z0 * coef22 + w0 * coef21);
-	constexpr float adjugateZ1 = -(x0 * coef23 - z0 * coef25 + w0 * coef24);
-	constexpr float adjugateZ2 = +(x0 * coef22 - y0 * coef25 + w0 * coef26);
-	constexpr float adjugateZ3 = -(x0 * coef21 - y0 * coef24 + z0 * coef26);
+	constexpr float adjugateZ0 = +(y10Ref * coef23 - z10Ref * coef22 + w10Ref * coef21);
+	constexpr float adjugateZ1 = -(x10Ref * coef23 - z10Ref * coef25 + w10Ref * coef24);
+	constexpr float adjugateZ2 = +(x10Ref * coef22 - y10Ref * coef25 + w10Ref * coef26);
+	constexpr float adjugateZ3 = -(x10Ref * coef21 - y10Ref * coef24 + z10Ref * coef26);
 
-	constexpr float adjugateW0 = -(y0 * coef33 - z0 * coef32 + w0 * coef31);
-	constexpr float adjugateW1 = +(x0 * coef33 - z0 * coef35 + w0 * coef34);
-	constexpr float adjugateW2 = -(x0 * coef32 - y0 * coef35 + w0 * coef36);
-	constexpr float adjugateW3 = +(x0 * coef31 - y0 * coef34 + z0 * coef36);
+	constexpr float adjugateW0 = -(y10Ref * coef33 - z10Ref * coef32 + w10Ref * coef31);
+	constexpr float adjugateW1 = +(x10Ref * coef33 - z10Ref * coef35 + w10Ref * coef34);
+	constexpr float adjugateW2 = -(x10Ref * coef32 - y10Ref * coef35 + w10Ref * coef36);
+	constexpr float adjugateW3 = +(x10Ref * coef31 - y10Ref * coef34 + z10Ref * coef36);
 
-	constexpr float determinant = x0 * adjugateX0 + y0 * adjugateX1 + z0 * adjugateX2 + w0 * adjugateX3;
+	constexpr float determinant = x10Ref * adjugateX0 + y10Ref * adjugateX1 + z10Ref * adjugateX2 + w10Ref * adjugateX3;
 	constexpr float oneOverDeterminant = 1.0f / determinant;
 
 	constexpr float inverseX0 = oneOverDeterminant * adjugateX0;
@@ -782,179 +566,89 @@ TEST(Matrix4fTest, Inverse)
 	constexpr float inverseW2 = oneOverDeterminant * adjugateW2;
 	constexpr float inverseW3 = oneOverDeterminant * adjugateW3;
 
-	EXPECT_NEAR(mInverted[0][0], inverseX0, EPSILON);
-	EXPECT_NEAR(mInverted[0][1], inverseX1, EPSILON);
-	EXPECT_NEAR(mInverted[0][2], inverseX2, EPSILON);
-	EXPECT_NEAR(mInverted[0][3], inverseX3, EPSILON);
+	EXPECT_NEAR(mInverted.data[0][0], inverseX0, EPSILON);
+	EXPECT_NEAR(mInverted.data[1][0], inverseX1, EPSILON);
+	EXPECT_NEAR(mInverted.data[2][0], inverseX2, EPSILON);
+	EXPECT_NEAR(mInverted.data[3][0], inverseX3, EPSILON);
 
-	EXPECT_NEAR(mInverted[1][0], inverseY0, EPSILON);
-	EXPECT_NEAR(mInverted[1][1], inverseY1, EPSILON);
-	EXPECT_NEAR(mInverted[1][2], inverseY2, EPSILON);
-	EXPECT_NEAR(mInverted[1][3], inverseY3, EPSILON);
+	EXPECT_NEAR(mInverted.data[0][1], inverseY0, EPSILON);
+	EXPECT_NEAR(mInverted.data[1][1], inverseY1, EPSILON);
+	EXPECT_NEAR(mInverted.data[2][1], inverseY2, EPSILON);
+	EXPECT_NEAR(mInverted.data[3][1], inverseY3, EPSILON);
 
-	EXPECT_NEAR(mInverted[2][0], inverseZ0, EPSILON);
-	EXPECT_NEAR(mInverted[2][1], inverseZ1, EPSILON);
-	EXPECT_NEAR(mInverted[2][2], inverseZ2, EPSILON);
-	EXPECT_NEAR(mInverted[2][3], inverseZ3, EPSILON);
+	EXPECT_NEAR(mInverted.data[0][2], inverseZ0, EPSILON);
+	EXPECT_NEAR(mInverted.data[1][2], inverseZ1, EPSILON);
+	EXPECT_NEAR(mInverted.data[2][2], inverseZ2, EPSILON);
+	EXPECT_NEAR(mInverted.data[3][2], inverseZ3, EPSILON);
 
-	EXPECT_NEAR(mInverted[3][0], inverseW0, EPSILON);
-	EXPECT_NEAR(mInverted[3][1], inverseW1, EPSILON);
-	EXPECT_NEAR(mInverted[3][2], inverseW2, EPSILON);
-	EXPECT_NEAR(mInverted[3][3], inverseW3, EPSILON);
+	EXPECT_NEAR(mInverted.data[0][3], inverseW0, EPSILON);
+	EXPECT_NEAR(mInverted.data[1][3], inverseW1, EPSILON);
+	EXPECT_NEAR(mInverted.data[2][3], inverseW2, EPSILON);
+	EXPECT_NEAR(mInverted.data[3][3], inverseW3, EPSILON);
 }
 
 TEST(Matrix4fTest, RowAccess)
 {
-	constexpr float x0 = 1.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float x3 = 98.32f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float y3 = 13.56f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-	constexpr float z3 = 12.02f;
-	constexpr float w0 = 23.65f;
-	constexpr float w1 = -9.80f;
-	constexpr float w2 = 0.036f;
-	constexpr float w3 = -1.32f;
+	Matrix4f m = buildM1Ref();
 
-	Vec4f x(x0, x1, x2, x3);
-	Vec4f y(y0, y1, y2, y3);
-	Vec4f z(z0, z1, z2, z3);
-	Vec4f w(w0, w1, w2, w3);
+	Vector4f r0 = m.getRow(0);
+	EXPECT_EQ(r0.x, x10Ref);
+	EXPECT_EQ(r0.y, y10Ref);
+	EXPECT_EQ(r0.z, z10Ref);
+	EXPECT_EQ(r0.w, w10Ref);
 
-	Mat4f m(x, y, z, w);
+	Vector4f r1 = m.getRow(1);
+	EXPECT_EQ(r1.x, x11Ref);
+	EXPECT_EQ(r1.y, y11Ref);
+	EXPECT_EQ(r1.z, z11Ref);
+	EXPECT_EQ(r1.w, w11Ref);
 
-	Vec4f r0 = row(m, 0);
-	EXPECT_EQ(r0[0], x0);
-	EXPECT_EQ(r0[1], y0);
-	EXPECT_EQ(r0[2], z0);
-	EXPECT_EQ(r0[3], w0);
+	Vector4f r2 = m.getRow(2);
+	EXPECT_EQ(r2.x, x12Ref);
+	EXPECT_EQ(r2.y, y12Ref);
+	EXPECT_EQ(r2.z, z12Ref);
+	EXPECT_EQ(r2.w, w12Ref);
 
-	Vec4f r1 = row(m, 1);
-	EXPECT_EQ(r1[0], x1);
-	EXPECT_EQ(r1[1], y1);
-	EXPECT_EQ(r1[2], z1);
-	EXPECT_EQ(r1[3], w1);
-
-	Vec4f r2 = row(m, 2);
-	EXPECT_EQ(r2[0], x2);
-	EXPECT_EQ(r2[1], y2);
-	EXPECT_EQ(r2[2], z2);
-	EXPECT_EQ(r2[3], w2);
-
-	Vec4f r3 = row(m, 3);
-	EXPECT_EQ(r3[0], x3);
-	EXPECT_EQ(r3[1], y3);
-	EXPECT_EQ(r3[2], z3);
-	EXPECT_EQ(r3[3], w3);
+	Vector4f r3 = m.getRow(3);
+	EXPECT_EQ(r3.x, x13Ref);
+	EXPECT_EQ(r3.y, y13Ref);
+	EXPECT_EQ(r3.z, z13Ref);
+	EXPECT_EQ(r3.w, w13Ref);
 }
 
 TEST(Matrix4fTest, ColumnAccess)
 {
+	Matrix4f m = buildM1Ref();
 
-	constexpr float x0 = 1.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float x3 = 98.32f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float y3 = 13.56f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-	constexpr float z3 = 12.02f;
-	constexpr float w0 = 23.65f;
-	constexpr float w1 = -9.80f;
-	constexpr float w2 = 0.036f;
-	constexpr float w3 = -1.32f;
+	Vector4f c0 = m.getColumn(0);
+	EXPECT_EQ(c0.x, x10Ref);
+	EXPECT_EQ(c0.y, x11Ref);
+	EXPECT_EQ(c0.z, x12Ref);
+	EXPECT_EQ(c0.w, x13Ref);
 
-	Vec4f x(x0, x1, x2, x3);
-	Vec4f y(y0, y1, y2, y3);
-	Vec4f z(z0, z1, z2, z3);
-	Vec4f w(w0, w1, w2, w3);
+	Vector4f c1 = m.getColumn(1);
+	EXPECT_EQ(c1.x, y10Ref);
+	EXPECT_EQ(c1.y, y11Ref);
+	EXPECT_EQ(c1.z, y12Ref);
+	EXPECT_EQ(c1.w, y13Ref);
 
-	Mat4f m(x, y, z, w);
+	Vector4f c2 = m.getColumn(2);
+	EXPECT_EQ(c2.x, z10Ref);
+	EXPECT_EQ(c2.y, z11Ref);
+	EXPECT_EQ(c2.z, z12Ref);
+	EXPECT_EQ(c2.w, z13Ref);
 
-	Vec4f c0 = column(m, 0);
-	EXPECT_EQ(c0[0], x0);
-	EXPECT_EQ(c0[1], x1);
-	EXPECT_EQ(c0[2], x2);
-	EXPECT_EQ(c0[3], x3);
-
-	Vec4f c1 = column(m, 1);
-	EXPECT_EQ(c1[0], y0);
-	EXPECT_EQ(c1[1], y1);
-	EXPECT_EQ(c1[2], y2);
-	EXPECT_EQ(c1[3], y3);
-
-	Vec4f c2 = column(m, 2);
-	EXPECT_EQ(c2[0], z0);
-	EXPECT_EQ(c2[1], z1);
-	EXPECT_EQ(c2[2], z2);
-	EXPECT_EQ(c2[3], z3);
-
-	Vec4f c3 = column(m, 3);
-	EXPECT_EQ(c3[0], w0);
-	EXPECT_EQ(c3[1], w1);
-	EXPECT_EQ(c3[2], w2);
-	EXPECT_EQ(c3[3], w3);
+	Vector4f c3 = m.getColumn(3);
+	EXPECT_EQ(c3.x, w10Ref);
+	EXPECT_EQ(c3.y, w11Ref);
+	EXPECT_EQ(c3.z, w12Ref);
+	EXPECT_EQ(c3.w, w13Ref);
 }
 
 TEST(Matrix4fTest, Equality)
 {
-	constexpr float x10 = 0.0f;
-	constexpr float x11 = 2.54f;
-	constexpr float x12 = -3.6f;
-	constexpr float x13 = 98.32f;
-	constexpr float y10 = -23.1f;
-	constexpr float y11 = -4.354f;
-	constexpr float y12 = -26.41f;
-	constexpr float y13 = 13.56f;
-	constexpr float z10 = 285.15f;
-	constexpr float z11 = -87.7f;
-	constexpr float z12 = 354.5f;
-	constexpr float z13 = 12.02f;
-	constexpr float w10 = 23.65f;
-	constexpr float w11 = -9.80f;
-	constexpr float w12 = 0.036f;
-	constexpr float w13 = -1.32f;
-
-	Vec4f x1(x10, x11, x12, x13);
-	Vec4f y1(y10, y11, y12, y13);
-	Vec4f z1(z10, z11, z12, z13);
-	Vec4f w1(w10, w11, w12, w13);
-
-	Mat4f m1(x1, y1, z1, w1);
-
-	constexpr float x20 = 64.52f;
-	constexpr float x21 = -6.32f;
-	constexpr float x22 = -2.64f;
-	constexpr float x23 = 120.02f;
-	constexpr float y20 = 4.6f;
-	constexpr float y21 = 3.64f;
-	constexpr float y22 = 12.345f;
-	constexpr float y23 = 1.30f;
-	constexpr float z20 = -893.15f;
-	constexpr float z21 = 2.34f;
-	constexpr float z22 = -72.2f;
-	constexpr float z23 = -6.12f;
-	constexpr float w20 = 2.354f;
-	constexpr float w21 = 12.36f;
-	constexpr float w22 = -5.31f;
-	constexpr float w23 = -0.2156f;
-
-	Vec4f x2(x20, x21, x22, x23);
-	Vec4f y2(y20, y21, y22, y23);
-	Vec4f z2(z20, z21, z22, z23);
-	Vec4f w2(w20, w21, w22, w23);
-
-	Mat4f m2(x2, y2, z2, w2);
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
 
 	EXPECT_TRUE(m1 == m1);
 	EXPECT_FALSE(m1 == m2);
@@ -962,53 +656,8 @@ TEST(Matrix4fTest, Equality)
 
 TEST(Matrix4fTest, Inequality)
 {
-	constexpr float x10 = 0.0f;
-	constexpr float x11 = 2.54f;
-	constexpr float x12 = -3.6f;
-	constexpr float x13 = 98.32f;
-	constexpr float y10 = -23.1f;
-	constexpr float y11 = -4.354f;
-	constexpr float y12 = -26.41f;
-	constexpr float y13 = 13.56f;
-	constexpr float z10 = 285.15f;
-	constexpr float z11 = -87.7f;
-	constexpr float z12 = 354.5f;
-	constexpr float z13 = 12.02f;
-	constexpr float w10 = 23.65f;
-	constexpr float w11 = -9.80f;
-	constexpr float w12 = 0.036f;
-	constexpr float w13 = -1.32f;
-
-	Vec4f x1(x10, x11, x12, x13);
-	Vec4f y1(y10, y11, y12, y13);
-	Vec4f z1(z10, z11, z12, z13);
-	Vec4f w1(w10, w11, w12, w13);
-
-	Mat4f m1(x1, y1, z1, w1);
-
-	constexpr float x20 = 64.52f;
-	constexpr float x21 = -6.32f;
-	constexpr float x22 = -2.64f;
-	constexpr float x23 = 120.02f;
-	constexpr float y20 = 4.6f;
-	constexpr float y21 = 3.64f;
-	constexpr float y22 = 12.345f;
-	constexpr float y23 = 1.30f;
-	constexpr float z20 = -893.15f;
-	constexpr float z21 = 2.34f;
-	constexpr float z22 = -72.2f;
-	constexpr float z23 = -6.12f;
-	constexpr float w20 = 2.354f;
-	constexpr float w21 = 12.36f;
-	constexpr float w22 = -5.31f;
-	constexpr float w23 = -0.2156f;
-
-	Vec4f x2(x20, x21, x22, x23);
-	Vec4f y2(y20, y21, y22, y23);
-	Vec4f z2(z20, z21, z22, z23);
-	Vec4f w2(w20, w21, w22, w23);
-
-	Mat4f m2(x2, y2, z2, w2);
+	Matrix4f m1 = buildM1Ref();
+	Matrix4f m2 = buildM2Ref();
 
 	EXPECT_FALSE(m1 != m1);
 	EXPECT_TRUE(m1 != m2);

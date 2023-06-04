@@ -66,6 +66,14 @@ namespace PrismaEngine
 			return Vector4<T>(x / rhs.x, y / rhs.y, z / rhs.z, w / rhs.w);
 		}
 
+		void operator+=(const Vector4<T>& rhs)
+		{
+			x += rhs.x;
+			y += rhs.y;
+			z += rhs.z;
+			w += rhs.w;
+		}
+
 		bool operator==(const Vector4& rhs) const
 		{
 			return x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w;

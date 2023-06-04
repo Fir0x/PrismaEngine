@@ -4,7 +4,7 @@
 
 using namespace PrismaEngine;
 
-constexpr float x10Ref = 0.0f;
+constexpr float x10Ref = 1.0f;
 constexpr float x11Ref = 2.54f;
 constexpr float x12Ref = -3.6f;
 constexpr float y10Ref = -23.1f;
@@ -111,6 +111,23 @@ TEST(Matrix3fTest, ReferenceInitialization)
 	EXPECT_EQ(m2.getValue(2, 2), z12Ref);
 }
 
+TEST(Matrix3fTest, Identity)
+{
+	Matrix3f identity = Matrix3f::identity();
+
+	EXPECT_EQ(identity.data[0][0], 1.0f);
+	EXPECT_EQ(identity.data[1][0], 0.0f);
+	EXPECT_EQ(identity.data[2][0], 0.0f);
+
+	EXPECT_EQ(identity.data[0][1], 0.0f);
+	EXPECT_EQ(identity.data[1][1], 1.0f);
+	EXPECT_EQ(identity.data[2][1], 0.0f);
+
+	EXPECT_EQ(identity.data[0][2], 0.0f);
+	EXPECT_EQ(identity.data[1][2], 0.0f);
+	EXPECT_EQ(identity.data[2][2], 1.0f);
+}
+
 TEST(Matrix3fTest, AddBasic)
 {
 	Matrix3f m1 = buildM1Ref();
@@ -177,7 +194,7 @@ TEST(Matrix3fTest, SubtractBasic)
 	}
 }
 
-TEST(Matrix3fTest, SubtractCommutative)
+TEST(Matrix3fTest, SubtractNotCommutative)
 {
 	Matrix3f m1 = buildM1Ref();
 	Matrix3f m2 = buildM2Ref();
@@ -247,7 +264,7 @@ TEST(Matrix3fTest, ProductBasic)
 	EXPECT_EQ(m3.getValue(2, 2), z32);
 }
 
-TEST(Matrix3fTest, ProductCommutative)
+TEST(Matrix3fTest, ProductNotCommutative)
 {
 	Matrix3f m1 = buildM1Ref();
 	Matrix3f m2 = buildM2Ref();
@@ -328,7 +345,25 @@ TEST(Matrix3fTest, Determinant)
 	EXPECT_NEAR(det, detRef, epsilon);
 }
 
-TEST(Matrix3fTest, Inverse)
+TEST(Matrix3fTest, InverseIdentity)
+{
+	Matrix3f identity = Matrix3f::identity();
+	Matrix3f mInverted = identity.inverse();
+
+	EXPECT_EQ(mInverted.data[0][0], 1.0f);
+	EXPECT_EQ(mInverted.data[1][0], 0.0f);
+	EXPECT_EQ(mInverted.data[2][0], 0.0f);
+
+	EXPECT_EQ(mInverted.data[0][1], 0.0f);
+	EXPECT_EQ(mInverted.data[1][1], 1.0f);
+	EXPECT_EQ(mInverted.data[2][1], 0.0f);
+
+	EXPECT_EQ(mInverted.data[0][2], 0.0f);
+	EXPECT_EQ(mInverted.data[1][2], 0.0f);
+	EXPECT_EQ(mInverted.data[2][2], 1.0f);
+}
+
+TEST(Matrix3fTest, InverseBasic)
 {
 	Matrix3f m = buildM1Ref();
 
