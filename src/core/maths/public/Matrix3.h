@@ -84,19 +84,19 @@ namespace PrismaEngine
 
 		Matrix3<T> inverse() const
 		{
-			T adjugateX0 = +(data[1][1] * data[2][2] - data[2][1] * data[1][2]);
-			T adjugateX1 = -(data[0][1] * data[2][2] - data[2][1] * data[0][2]);
-			T adjugateX2 = +(data[0][1] * data[1][2] - data[1][1] * data[0][2]);
+			T adjugateX0 = +(data[1][1] * data[2][2] - data[1][2] * data[2][1]);
+			T adjugateX1 = -(data[1][0] * data[2][2] - data[1][2] * data[2][0]);
+			T adjugateX2 = +(data[1][0] * data[2][1] - data[1][1] * data[2][0]);
 
-			T adjugateY0 = -(data[1][0] * data[2][2] - data[2][0] * data[1][2]);
-			T adjugateY1 = +(data[0][0] * data[2][2] - data[2][0] * data[0][2]);
-			T adjugateY2 = -(data[0][0] * data[1][2] - data[1][0] * data[0][2]);
+			T adjugateY0 = -(data[0][1] * data[2][2] - data[0][2] * data[2][1]);
+			T adjugateY1 = +(data[0][0] * data[2][2] - data[0][2] * data[2][0]);
+			T adjugateY2 = -(data[0][0] * data[2][1] - data[0][1] * data[2][0]);
 
-			T adjugateZ0 = +(data[1][0] * data[2][1] - data[2][0] * data[1][1]);
-			T adjugateZ1 = -(data[0][0] * data[2][1] - data[2][0] * data[0][1]);
-			T adjugateZ2 = +(data[0][0] * data[1][1] - data[1][0] * data[0][1]);
+			T adjugateZ0 = +(data[0][1] * data[1][2] - data[0][2] * data[1][1]);
+			T adjugateZ1 = -(data[0][0] * data[1][2] - data[0][2] * data[1][0]);
+			T adjugateZ2 = +(data[0][0] * data[1][1] - data[0][1] * data[1][0]);
 
-			T determinant = data[0][0] * adjugateX0 + data[1][0] * adjugateX1 + data[2][0] * adjugateX2;
+			T determinant = data[0][0] * adjugateX0 + data[0][1] * adjugateX1 + data[0][2] * adjugateX2;
 			T oneOverDeterminant = static_cast<T>(1) / determinant;
 
 			Vector3<T> inverseX = oneOverDeterminant * Vector3<T>(adjugateX0, adjugateX1, adjugateX2);
