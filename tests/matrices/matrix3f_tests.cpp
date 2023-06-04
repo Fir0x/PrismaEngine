@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/maths/public/mat3f.h"
-#include "core/maths/public/matrix.h"
-#include "core/maths/public/vec3f.h"
+#include "core/maths/public/Matrix3.h"
 
 using namespace PrismaEngine;
 
@@ -10,37 +8,37 @@ TEST(Matrix3fTest, ScalarInitialization)
 {
 	{
 		constexpr float val = 1.0f;
-		Mat3f m(val);
-		for (int i = 0; i < 3; i++)
+		Matrix3f m(val);
+		for (int row = 0; row < 3; row++)
 		{
-			for (int j = 0; j < 3; j++)
-				EXPECT_EQ(m[i][j], i == j ? val : 0.0f);
+			for (int column = 0; column < 3; column++)
+				EXPECT_EQ(m.getValue(row, column), row == column ? val : 0.0f);
 		}
 	}
 
 	{
 		constexpr float val = 2.36f;
-		Mat3f m(val);
-		for (int i = 0; i < 3; i++)
+		Matrix3f m(val);
+		for (int row = 0; row < 3; row++)
 		{
-			for (int j = 0; j < 3; j++)
-				EXPECT_EQ(m[i][j], i == j ? val : 0.0f);
+			for (int column = 0; column < 3; column++)
+				EXPECT_EQ(m.getValue(row, column), row == column ? val : 0.0f);
 		}
 	}
 
 
 	{
 		constexpr float val = -2.36f;
-		Mat3f m(val);
-		for (int i = 0; i < 3; i++)
+		Matrix3f m(val);
+		for (int row = 0; row < 3; row++)
 		{
-			for (int j = 0; j < 3; j++)
-				EXPECT_EQ(m[i][j], i == j ? val : 0.0f);
+			for (int column = 0; column < 3; column++)
+				EXPECT_EQ(m.getValue(row, column), row == column ? val : 0.0f);
 		}
 	}
 }
 
-TEST(Matrix3fTest, FullInitialization)
+TEST(Matrix3fTest, PlaneInitialization)
 {
 	constexpr float x0 = 0.0f;
 	constexpr float x1 = 2.54f;
@@ -52,50 +50,23 @@ TEST(Matrix3fTest, FullInitialization)
 	constexpr float z1 = -87.7f;
 	constexpr float z2 = 354.5f;
 
-	Mat3f m(x0, y0, z0, x1, y1, z1, x2, y2, z2);
+	Vector3f x(x0, x1, x2);
+	Vector3f y(y0, y1, y2);
+	Vector3f z(z0, z1, z2);
 
-	EXPECT_EQ(m[0][0], x0);
-	EXPECT_EQ(m[1][0], x1);
-	EXPECT_EQ(m[2][0], x2);
+	Matrix3f m = Matrix3f::fromPlane(x, y, z);
 
-	EXPECT_EQ(m[0][1], y0);
-	EXPECT_EQ(m[1][1], y1);
-	EXPECT_EQ(m[2][1], y2);
+	EXPECT_EQ(m.getValue(0, 0), x0);
+	EXPECT_EQ(m.getValue(1, 0), x1);
+	EXPECT_EQ(m.getValue(2, 0), x2);
 
-	EXPECT_EQ(m[0][2], z0);
-	EXPECT_EQ(m[1][2], z1);
-	EXPECT_EQ(m[2][2], z2);
-}
+	EXPECT_EQ(m.getValue(0, 1), y0);
+	EXPECT_EQ(m.getValue(1, 1), y1);
+	EXPECT_EQ(m.getValue(2, 1), y2);
 
-TEST(Matrix3fTest, Vector4Initialization)
-{
-	constexpr float x0 = 0.0f;
-	constexpr float x1 = 2.54f;
-	constexpr float x2 = -3.6f;
-	constexpr float y0 = -23.1f;
-	constexpr float y1 = -4.354f;
-	constexpr float y2 = -26.41f;
-	constexpr float z0 = 285.15f;
-	constexpr float z1 = -87.7f;
-	constexpr float z2 = 354.5f;
-
-	Vec3f x(x0, x1, x2);
-	Vec3f y(y0, y1, y2);
-	Vec3f z(z0, z1, z2);
-
-	Mat3f m(x, y, z);
-
-	EXPECT_EQ(m[0][0], x0);
-	EXPECT_EQ(m[0][1], x1);
-	EXPECT_EQ(m[0][2], x2);
-
-	EXPECT_EQ(m[1][0], y0);
-	EXPECT_EQ(m[1][1], y1);
-	EXPECT_EQ(m[1][2], y2);
-
-	EXPECT_EQ(m[2][0], z0);
-	EXPECT_EQ(m[2][1], z1);
-	EXPECT_EQ(m[2][2], z2);
+	EXPECT_EQ(m.getValue(0, 2), z0);
+	EXPECT_EQ(m.getValue(1, 2), z1);
+	EXPECT_EQ(m.getValue(2, 2), z2);
 }
 
 TEST(Matrix3fTest, ReferenceInitialization)
@@ -110,24 +81,24 @@ TEST(Matrix3fTest, ReferenceInitialization)
 	constexpr float z1 = -87.7f;
 	constexpr float z2 = 354.5f;
 
-	Vec3f x(x0, x1, x2);
-	Vec3f y(y0, y1, y2);
-	Vec3f z(z0, z1, z2);
+	Vector3f x(x0, x1, x2);
+	Vector3f y(y0, y1, y2);
+	Vector3f z(z0, z1, z2);
 
-	Mat3f m1(x, y, z);
-	Mat3f m2(m1);
+	Matrix3f m1 = Matrix3f::fromPlane(x, y, z);
+	Matrix3f m2(m1);
 
-	EXPECT_EQ(m2[0][0], x0);
-	EXPECT_EQ(m2[0][1], x1);
-	EXPECT_EQ(m2[0][2], x2);
+	EXPECT_EQ(m2.getValue(0, 0), x0);
+	EXPECT_EQ(m2.getValue(1, 0), x1);
+	EXPECT_EQ(m2.getValue(2, 0), x2);
 
-	EXPECT_EQ(m2[1][0], y0);
-	EXPECT_EQ(m2[1][1], y1);
-	EXPECT_EQ(m2[1][2], y2);
+	EXPECT_EQ(m2.getValue(0, 1), y0);
+	EXPECT_EQ(m2.getValue(1, 1), y1);
+	EXPECT_EQ(m2.getValue(2, 1), y2);
 
-	EXPECT_EQ(m2[2][0], z0);
-	EXPECT_EQ(m2[2][1], z1);
-	EXPECT_EQ(m2[2][2], z2);
+	EXPECT_EQ(m2.getValue(0, 2), z0);
+	EXPECT_EQ(m2.getValue(1, 2), z1);
+	EXPECT_EQ(m2.getValue(2, 2), z2);
 }
 
 TEST(Matrix3fTest, Add)
@@ -142,11 +113,11 @@ TEST(Matrix3fTest, Add)
 	constexpr float z11 = -87.7f;
 	constexpr float z12 = 354.5f;
 
-	Vec3f x1(x10, x11, x12);
-	Vec3f y1(y10, y11, y12);
-	Vec3f z1(z10, z11, z12);
+	Vector3f x1(x10, x11, x12);
+	Vector3f y1(y10, y11, y12);
+	Vector3f z1(z10, z11, z12);
 
-	Mat3f m1(x1, y1, z1);
+	Matrix3f m1 = Matrix3f::fromPlane(x1, y1, z1);
 
 	constexpr float x20 = 64.52f;
 	constexpr float x21 = -6.32f;
@@ -158,42 +129,42 @@ TEST(Matrix3fTest, Add)
 	constexpr float z21 = 2.34f;
 	constexpr float z22 = -72.2f;
 
-	Vec3f x2(x20, x21, x22);
-	Vec3f y2(y20, y21, y22);
-	Vec3f z2(z20, z21, z22);
+	Vector3f x2(x20, x21, x22);
+	Vector3f y2(y20, y21, y22);
+	Vector3f z2(z20, z21, z22);
 
-	Mat3f m2(x2, y2, z2);
+	Matrix3f m2 = Matrix3f::fromPlane(x2, y2, z2);
 
 	{
-		Mat3f m3 = m1 + m2;
+		Matrix3f m3 = m1 + m2;
 
-		EXPECT_EQ(m3[0][0], x10 + x20);
-		EXPECT_EQ(m3[0][1], x11 + x21);
-		EXPECT_EQ(m3[0][2], x12 + x22);
+		EXPECT_EQ(m3.getValue(0, 0), x10 + x20);
+		EXPECT_EQ(m3.getValue(1, 0), x11 + x21);
+		EXPECT_EQ(m3.getValue(2, 0), x12 + x22);
 
-		EXPECT_EQ(m3[1][0], y10 + y20);
-		EXPECT_EQ(m3[1][1], y11 + y21);
-		EXPECT_EQ(m3[1][2], y12 + y22);
+		EXPECT_EQ(m3.getValue(0, 1), y10 + y20);
+		EXPECT_EQ(m3.getValue(1, 1), y11 + y21);
+		EXPECT_EQ(m3.getValue(2, 1), y12 + y22);
 
-		EXPECT_EQ(m3[2][0], z10 + z20);
-		EXPECT_EQ(m3[2][1], z11 + z21);
-		EXPECT_EQ(m3[2][2], z12 + z22);
+		EXPECT_EQ(m3.getValue(0, 2), z10 + z20);
+		EXPECT_EQ(m3.getValue(1, 2), z11 + z21);
+		EXPECT_EQ(m3.getValue(2, 2), z12 + z22);
 	}
 
 	{
-		Mat3f m3 = m2 + m1;
+		Matrix3f m3 = m2 + m1;
 
-		EXPECT_EQ(m3[0][0], x10 + x20);
-		EXPECT_EQ(m3[0][1], x11 + x21);
-		EXPECT_EQ(m3[0][2], x12 + x22);
+		EXPECT_EQ(m3.getValue(0, 0), x10 + x20);
+		EXPECT_EQ(m3.getValue(1, 0), x11 + x21);
+		EXPECT_EQ(m3.getValue(2, 0), x12 + x22);
 
-		EXPECT_EQ(m3[1][0], y10 + y20);
-		EXPECT_EQ(m3[1][1], y11 + y21);
-		EXPECT_EQ(m3[1][2], y12 + y22);
+		EXPECT_EQ(m3.getValue(0, 1), y10 + y20);
+		EXPECT_EQ(m3.getValue(1, 1), y11 + y21);
+		EXPECT_EQ(m3.getValue(2, 1), y12 + y22);
 
-		EXPECT_EQ(m3[2][0], z10 + z20);
-		EXPECT_EQ(m3[2][1], z11 + z21);
-		EXPECT_EQ(m3[2][2], z12 + z22);
+		EXPECT_EQ(m3.getValue(0, 2), z10 + z20);
+		EXPECT_EQ(m3.getValue(1, 2), z11 + z21);
+		EXPECT_EQ(m3.getValue(2, 2), z12 + z22);
 	}
 }
 
@@ -209,11 +180,11 @@ TEST(Matrix3fTest, Subtract)
 	constexpr float z11 = -87.7f;
 	constexpr float z12 = 354.5f;
 
-	Vec3f x1(x10, x11, x12);
-	Vec3f y1(y10, y11, y12);
-	Vec3f z1(z10, z11, z12);
+	Vector3f x1(x10, x11, x12);
+	Vector3f y1(y10, y11, y12);
+	Vector3f z1(z10, z11, z12);
 
-	Mat3f m1(x1, y1, z1);
+	Matrix3f m1 = Matrix3f::fromPlane(x1, y1, z1);
 
 	constexpr float x20 = 64.52f;
 	constexpr float x21 = -6.32f;
@@ -225,42 +196,42 @@ TEST(Matrix3fTest, Subtract)
 	constexpr float z21 = 2.34f;
 	constexpr float z22 = -72.2f;
 
-	Vec3f x2(x20, x21, x22);
-	Vec3f y2(y20, y21, y22);
-	Vec3f z2(z20, z21, z22);
+	Vector3f x2(x20, x21, x22);
+	Vector3f y2(y20, y21, y22);
+	Vector3f z2(z20, z21, z22);
 
-	Mat3f m2(x2, y2, z2);
+	Matrix3f m2 = Matrix3f::fromPlane(x2, y2, z2);
 
 	{
-		Mat3f m3 = m1 - m2;
+		Matrix3f m3 = m1 - m2;
 
-		EXPECT_EQ(m3[0][0], x10 - x20);
-		EXPECT_EQ(m3[0][1], x11 - x21);
-		EXPECT_EQ(m3[0][2], x12 - x22);
+		EXPECT_EQ(m3.getValue(0, 0), x10 - x20);
+		EXPECT_EQ(m3.getValue(1, 0), x11 - x21);
+		EXPECT_EQ(m3.getValue(2, 0), x12 - x22);
 
-		EXPECT_EQ(m3[1][0], y10 - y20);
-		EXPECT_EQ(m3[1][1], y11 - y21);
-		EXPECT_EQ(m3[1][2], y12 - y22);
+		EXPECT_EQ(m3.getValue(0, 1), y10 - y20);
+		EXPECT_EQ(m3.getValue(1, 1), y11 - y21);
+		EXPECT_EQ(m3.getValue(2, 1), y12 - y22);
 
-		EXPECT_EQ(m3[2][0], z10 - z20);
-		EXPECT_EQ(m3[2][1], z11 - z21);
-		EXPECT_EQ(m3[2][2], z12 - z22);
+		EXPECT_EQ(m3.getValue(0, 2), z10 - z20);
+		EXPECT_EQ(m3.getValue(1, 2), z11 - z21);
+		EXPECT_EQ(m3.getValue(2, 2), z12 - z22);
 	}
 
 	{
-		Mat3f m3 = m2 - m1;
+		Matrix3f m3 = m2 - m1;
 
-		EXPECT_EQ(m3[0][0], x20 - x10);
-		EXPECT_EQ(m3[0][1], x21 - x11);
-		EXPECT_EQ(m3[0][2], x22 - x12);
+		EXPECT_EQ(m3.getValue(0, 0), x20 - x10);
+		EXPECT_EQ(m3.getValue(1, 0), x21 - x11);
+		EXPECT_EQ(m3.getValue(2, 0), x22 - x12);
 
-		EXPECT_EQ(m3[1][0], y20 - y10);
-		EXPECT_EQ(m3[1][1], y21 - y11);
-		EXPECT_EQ(m3[1][2], y22 - y12);
+		EXPECT_EQ(m3.getValue(0, 1), y20 - y10);
+		EXPECT_EQ(m3.getValue(1, 1), y21 - y11);
+		EXPECT_EQ(m3.getValue(2, 1), y22 - y12);
 
-		EXPECT_EQ(m3[2][0], z20 - z10);
-		EXPECT_EQ(m3[2][1], z21 - z11);
-		EXPECT_EQ(m3[2][2], z22 - z12);
+		EXPECT_EQ(m3.getValue(0, 2), z20 - z10);
+		EXPECT_EQ(m3.getValue(1, 2), z21 - z11);
+		EXPECT_EQ(m3.getValue(2, 2), z22 - z12);
 	}
 }
 
@@ -277,47 +248,43 @@ TEST(Matrix3fTest, Product)
 	constexpr float z11 = -87.7f;
 	constexpr float z12 = 354.5f;
 
-	Vec3f x1(x10, x11, x12);
-	Vec3f y1(y10, y11, y12);
-	Vec3f z1(z10, z11, z12);
+	Vector3f x1(x10, x11, x12);
+	Vector3f y1(y10, y11, y12);
+	Vector3f z1(z10, z11, z12);
 
-	Mat3f m1(x1, y1, z1);
+	Matrix3f m1 = Matrix3f::fromPlane(x1, y1, z1);
 
 	{
-		Vec3f x2(1.0f, 0.0f, 0.0f);
-		Vec3f y2(0.0f, 1.0f, 0.0f);
-		Vec3f z2(0.0f, 0.0f, 1.0f);
-
-		Mat3f identity(x2, y2, z2);
+		Matrix3f identity = Matrix3f::identity();
 
 		{
-			Mat3f m3 = m1 * identity;
-			EXPECT_EQ(m3[0][0], x10);
-			EXPECT_EQ(m3[0][1], x11);
-			EXPECT_EQ(m3[0][2], x12);
+			Matrix3f m3 = m1 * identity;
+			EXPECT_EQ(m3.getValue(0, 0), x10);
+			EXPECT_EQ(m3.getValue(1, 0), x11);
+			EXPECT_EQ(m3.getValue(2, 0), x12);
 
-			EXPECT_EQ(m3[1][0], y10);
-			EXPECT_EQ(m3[1][1], y11);
-			EXPECT_EQ(m3[1][2], y12);
+			EXPECT_EQ(m3.getValue(0, 1), y10);
+			EXPECT_EQ(m3.getValue(1, 1), y11);
+			EXPECT_EQ(m3.getValue(2, 1), y12);
 
-			EXPECT_EQ(m3[2][0], z10);
-			EXPECT_EQ(m3[2][1], z11);
-			EXPECT_EQ(m3[2][2], z12);
+			EXPECT_EQ(m3.getValue(0, 2), z10);
+			EXPECT_EQ(m3.getValue(1, 2), z11);
+			EXPECT_EQ(m3.getValue(2, 2), z12);
 		}
 
 		{
-			Mat3f m3 = identity * m1;
-			EXPECT_EQ(m3[0][0], x10);
-			EXPECT_EQ(m3[0][1], x11);
-			EXPECT_EQ(m3[0][2], x12);
+			Matrix3f m3 = identity * m1;
+			EXPECT_EQ(m3.getValue(0, 0), x10);
+			EXPECT_EQ(m3.getValue(1, 0), x11);
+			EXPECT_EQ(m3.getValue(2, 0), x12);
 
-			EXPECT_EQ(m3[1][0], y10);
-			EXPECT_EQ(m3[1][1], y11);
-			EXPECT_EQ(m3[1][2], y12);
+			EXPECT_EQ(m3.getValue(0, 1), y10);
+			EXPECT_EQ(m3.getValue(1, 1), y11);
+			EXPECT_EQ(m3.getValue(2, 1), y12);
 
-			EXPECT_EQ(m3[2][0], z10);
-			EXPECT_EQ(m3[2][1], z11);
-			EXPECT_EQ(m3[2][2], z12);
+			EXPECT_EQ(m3.getValue(0, 2), z10);
+			EXPECT_EQ(m3.getValue(1, 2), z11);
+			EXPECT_EQ(m3.getValue(2, 2), z12);
 		}
 	}
 
@@ -332,14 +299,14 @@ TEST(Matrix3fTest, Product)
 		constexpr float z21 = 2.34f;
 		constexpr float z22 = -72.2f;
 
-		Vec3f x2(x20, x21, x22);
-		Vec3f y2(y20, y21, y22);
-		Vec3f z2(z20, z21, z22);
+		Vector3f x2(x20, x21, x22);
+		Vector3f y2(y20, y21, y22);
+		Vector3f z2(z20, z21, z22);
 
-		Mat3f m2(x2, y2, z2);
+		Matrix3f m2 = Matrix3f::fromPlane(x2, y2, z2);
 
 		{
-			Mat3f m3 = m1 * m2;
+			Matrix3f m3 = m1 * m2;
 			const float x30 = x10 * x20 + y10 * x21 + z10 * x22;
 			const float x31 = x11 * x20 + y11 * x21 + z11 * x22;
 			const float x32 = x12 * x20 + y12 * x21 + z12 * x22;
@@ -350,22 +317,22 @@ TEST(Matrix3fTest, Product)
 			const float z31 = x11 * z20 + y11 * z21 + z11 * z22;
 			const float z32 = x12 * z20 + y12 * z21 + z12 * z22;
 
-			EXPECT_EQ(m3[0][0], x30);
-			EXPECT_EQ(m3[0][1], x31);
-			EXPECT_EQ(m3[0][2], x32);
+			EXPECT_EQ(m3.getValue(0, 0), x30);
+			EXPECT_EQ(m3.getValue(1, 0), x31);
+			EXPECT_EQ(m3.getValue(2, 0), x32);
 
-			EXPECT_EQ(m3[1][0], y30);
-			EXPECT_EQ(m3[1][1], y31);
-			EXPECT_EQ(m3[1][2], y32);
+			EXPECT_EQ(m3.getValue(0, 1), y30);
+			EXPECT_EQ(m3.getValue(1, 1), y31);
+			EXPECT_EQ(m3.getValue(2, 1), y32);
 
-			EXPECT_EQ(m3[2][0], z30);
-			EXPECT_EQ(m3[2][1], z31);
-			EXPECT_EQ(m3[2][2], z32);
+			EXPECT_EQ(m3.getValue(0, 2), z30);
+			EXPECT_EQ(m3.getValue(1, 2), z31);
+			EXPECT_EQ(m3.getValue(2, 2), z32);
 		}
 
 
 		{
-			Mat3f m3 = m2 * m1;
+			Matrix3f m3 = m2 * m1;
 			const float x30 = x20 * x10 + y20 * x11 + z20 * x12;
 			const float x31 = x21 * x10 + y21 * x11 + z21 * x12;
 			const float x32 = x22 * x10 + y22 * x11 + z22 * x12;
@@ -376,17 +343,17 @@ TEST(Matrix3fTest, Product)
 			const float z31 = x21 * z10 + y21 * z11 + z21 * z12;
 			const float z32 = x22 * z10 + y22 * z11 + z22 * z12;
 
-			EXPECT_EQ(m3[0][0], x30);
-			EXPECT_EQ(m3[0][1], x31);
-			EXPECT_EQ(m3[0][2], x32);
+			EXPECT_EQ(m3.getValue(0, 0), x30);
+			EXPECT_EQ(m3.getValue(1, 0), x31);
+			EXPECT_EQ(m3.getValue(2, 0), x32);
 
-			EXPECT_EQ(m3[1][0], y30);
-			EXPECT_EQ(m3[1][1], y31);
-			EXPECT_EQ(m3[1][2], y32);
+			EXPECT_EQ(m3.getValue(0, 1), y30);
+			EXPECT_EQ(m3.getValue(1, 1), y31);
+			EXPECT_EQ(m3.getValue(2, 1), y32);
 
-			EXPECT_EQ(m3[2][0], z30);
-			EXPECT_EQ(m3[2][1], z31);
-			EXPECT_EQ(m3[2][2], z32);
+			EXPECT_EQ(m3.getValue(0, 2), z30);
+			EXPECT_EQ(m3.getValue(1, 2), z31);
+			EXPECT_EQ(m3.getValue(2, 2), z32);
 		}
 	}
 }
@@ -394,24 +361,24 @@ TEST(Matrix3fTest, Product)
 TEST(Matrix3fTest, Transpose)
 {
 	{
-		Vec3f x(1.0f, 0.0f, 0.0f);
-		Vec3f y(0.0f, 1.0f, 0.0f);
-		Vec3f z(0.0f, 0.0f, 1.0f);
+		Vector3f x(1.0f, 0.0f, 0.0f);
+		Vector3f y(0.0f, 1.0f, 0.0f);
+		Vector3f z(0.0f, 0.0f, 1.0f);
 
-		Mat3f m(x, y, z);
-		Mat3f mTransposed = transpose(m);
+		Matrix3f m = Matrix3f::fromPlane(x, y, z);
+		Matrix3f mTransposed = m.transpose();
 
-		EXPECT_EQ(mTransposed[0][0], 1.0f);
-		EXPECT_EQ(mTransposed[0][1], 0.0f);
-		EXPECT_EQ(mTransposed[0][2], 0.0f);
+		EXPECT_EQ(mTransposed.getValue(0, 0), 1.0f);
+		EXPECT_EQ(mTransposed.getValue(1, 0), 0.0f);
+		EXPECT_EQ(mTransposed.getValue(2, 0), 0.0f);
 
-		EXPECT_EQ(mTransposed[1][0], 0.0f);
-		EXPECT_EQ(mTransposed[1][1], 1.0f);
-		EXPECT_EQ(mTransposed[1][2], 0.0f);
+		EXPECT_EQ(mTransposed.getValue(0, 1), 0.0f);
+		EXPECT_EQ(mTransposed.getValue(1, 1), 1.0f);
+		EXPECT_EQ(mTransposed.getValue(2, 1), 0.0f);
 
-		EXPECT_EQ(mTransposed[2][0], 0.0f);
-		EXPECT_EQ(mTransposed[2][1], 0.0f);
-		EXPECT_EQ(mTransposed[2][2], 1.0f);
+		EXPECT_EQ(mTransposed.getValue(0, 2), 0.0f);
+		EXPECT_EQ(mTransposed.getValue(1, 2), 0.0f);
+		EXPECT_EQ(mTransposed.getValue(2, 2), 1.0f);
 	}
 
 	{
@@ -425,24 +392,24 @@ TEST(Matrix3fTest, Transpose)
 		constexpr float z1 = -87.7f;
 		constexpr float z2 = 354.5f;
 
-		Vec3f x(x0, x1, x2);
-		Vec3f y(y0, y1, y2);
-		Vec3f z(z0, z1, z2);
+		Vector3f x(x0, x1, x2);
+		Vector3f y(y0, y1, y2);
+		Vector3f z(z0, z1, z2);
 
-		Mat3f m(x, y, z);
-		Mat3f mTransposed = transpose(m);
+		Matrix3f m = Matrix3f::fromPlane(x, y, z);
+		Matrix3f mTransposed = m.transpose();
 
-		EXPECT_EQ(mTransposed[0][0], x0);
-		EXPECT_EQ(mTransposed[0][1], y0);
-		EXPECT_EQ(mTransposed[0][2], z0);
+		EXPECT_EQ(mTransposed.getValue(0, 0), x0);
+		EXPECT_EQ(mTransposed.getValue(1, 0), y0);
+		EXPECT_EQ(mTransposed.getValue(2, 0), z0);
 
-		EXPECT_EQ(mTransposed[1][0], x1);
-		EXPECT_EQ(mTransposed[1][1], y1);
-		EXPECT_EQ(mTransposed[1][2], z1);
+		EXPECT_EQ(mTransposed.getValue(0, 1), x1);
+		EXPECT_EQ(mTransposed.getValue(1, 1), y1);
+		EXPECT_EQ(mTransposed.getValue(2, 1), z1);
 
-		EXPECT_EQ(mTransposed[2][0], x2);
-		EXPECT_EQ(mTransposed[2][1], y2);
-		EXPECT_EQ(mTransposed[2][2], z2);
+		EXPECT_EQ(mTransposed.getValue(0, 2), x2);
+		EXPECT_EQ(mTransposed.getValue(1, 2), y2);
+		EXPECT_EQ(mTransposed.getValue(2, 2), z2);
 	}
 }
 
@@ -458,13 +425,13 @@ TEST(Matrix3fTest, Determinant)
 	constexpr float z1 = -87.7f;
 	constexpr float z2 = 354.5f;
 
-	Vec3f x(x0, x1, x2);
-	Vec3f y(y0, y1, y2);
-	Vec3f z(z0, z1, z2);
+	Vector3f x(x0, x1, x2);
+	Vector3f y(y0, y1, y2);
+	Vector3f z(z0, z1, z2);
 
-	Mat3f m(x, y, z);
+	Matrix3f m = Matrix3f::fromPlane(x, y, z);
 
-	float det = determinant(m);
+	float det = m.determinant();
 	constexpr float factor1 = y0 * z1 - y1 * z0;
 	constexpr float factor2 = y0 * z2 - y2 * z0;
 	constexpr float factor3 = y1 * z2 - z1 * y2;
@@ -488,13 +455,13 @@ TEST(Matrix3fTest, Inverse)
 	constexpr float z1 = -87.7f;
 	constexpr float z2 = 354.5f;
 
-	Vec3f x(x0, x1, x2);
-	Vec3f y(y0, y1, y2);
-	Vec3f z(z0, z1, z2);
+	Vector3f x(x0, x1, x2);
+	Vector3f y(y0, y1, y2);
+	Vector3f z(z0, z1, z2);
 
-	Mat3f m(x, y, z);
+	Matrix3f m = Matrix3f::fromPlane(x, y, z);
 
-	Mat3f mInverted = inverse(m);
+	Matrix3f mInverted = m.inverse();
 
 	constexpr float adjugateX0 = +(y1 * z2 - z1 * y2);
 	constexpr float adjugateX1 = -(x1 * z2 - z1 * x2);
@@ -525,17 +492,17 @@ TEST(Matrix3fTest, Inverse)
 
 	constexpr float epsilon = 1e-8;
 
-	EXPECT_NEAR(mInverted[0][0], inverseX0, epsilon);
-	EXPECT_NEAR(mInverted[0][1], inverseX1, epsilon);
-	EXPECT_NEAR(mInverted[0][2], inverseX2, epsilon);
+	EXPECT_NEAR(mInverted.getValue(0, 0), inverseX0, epsilon);
+	EXPECT_NEAR(mInverted.getValue(1, 0), inverseX1, epsilon);
+	EXPECT_NEAR(mInverted.getValue(2, 0), inverseX2, epsilon);
 
-	EXPECT_NEAR(mInverted[1][0], inverseY0, epsilon);
-	EXPECT_NEAR(mInverted[1][1], inverseY1, epsilon);
-	EXPECT_NEAR(mInverted[1][2], inverseY2, epsilon);
+	EXPECT_NEAR(mInverted.getValue(0, 1), inverseY0, epsilon);
+	EXPECT_NEAR(mInverted.getValue(1, 1), inverseY1, epsilon);
+	EXPECT_NEAR(mInverted.getValue(2, 1), inverseY2, epsilon);
 
-	EXPECT_NEAR(mInverted[2][0], inverseZ0, epsilon);
-	EXPECT_NEAR(mInverted[2][1], inverseZ1, epsilon);
-	EXPECT_NEAR(mInverted[2][2], inverseZ2, epsilon);
+	EXPECT_NEAR(mInverted.getValue(0, 2), inverseZ0, epsilon);
+	EXPECT_NEAR(mInverted.getValue(1, 2), inverseZ1, epsilon);
+	EXPECT_NEAR(mInverted.getValue(2, 2), inverseZ2, epsilon);
 }
 
 TEST(Matrix3fTest, RowAccess)
@@ -550,26 +517,26 @@ TEST(Matrix3fTest, RowAccess)
 	constexpr float z1 = -87.7f;
 	constexpr float z2 = 354.5f;
 
-	Vec3f x(x0, x1, x2);
-	Vec3f y(y0, y1, y2);
-	Vec3f z(z0, z1, z2);
+	Vector3f x(x0, x1, x2);
+	Vector3f y(y0, y1, y2);
+	Vector3f z(z0, z1, z2);
 
-	Mat3f m(x, y, z);
+	Matrix3f m = Matrix3f::fromPlane(x, y, z);
 
-	Vec3f r0 = row(m, 0);
-	EXPECT_EQ(r0[0], x0);
-	EXPECT_EQ(r0[1], y0);
-	EXPECT_EQ(r0[2], z0);
+	Vector3f r0 = m.getRow(0);
+	EXPECT_EQ(r0.x, x0);
+	EXPECT_EQ(r0.y, y0);
+	EXPECT_EQ(r0.z, z0);
 
-	Vec3f r1 = row(m, 1);
-	EXPECT_EQ(r1[0], x1);
-	EXPECT_EQ(r1[1], y1);
-	EXPECT_EQ(r1[2], z1);
+	Vector3f r1 = m.getRow(1);
+	EXPECT_EQ(r1.x, x1);
+	EXPECT_EQ(r1.y, y1);
+	EXPECT_EQ(r1.z, z1);
 
-	Vec3f r2 = row(m, 2);
-	EXPECT_EQ(r2[0], x2);
-	EXPECT_EQ(r2[1], y2);
-	EXPECT_EQ(r2[2], z2);
+	Vector3f r2 = m.getRow(2);
+	EXPECT_EQ(r2.x, x2);
+	EXPECT_EQ(r2.y, y2);
+	EXPECT_EQ(r2.z, z2);
 }
 
 TEST(Matrix3fTest, ColumnAccess)
@@ -585,26 +552,26 @@ TEST(Matrix3fTest, ColumnAccess)
 	constexpr float z1 = -87.7f;
 	constexpr float z2 = 354.5f;
 
-	Vec3f x(x0, x1, x2);
-	Vec3f y(y0, y1, y2);
-	Vec3f z(z0, z1, z2);
+	Vector3f x(x0, x1, x2);
+	Vector3f y(y0, y1, y2);
+	Vector3f z(z0, z1, z2);
 
-	Mat3f m(x, y, z);
+	Matrix3f m = Matrix3f::fromPlane(x, y, z);
 
-	Vec3f c0 = column(m, 0);
-	EXPECT_EQ(c0[0], x0);
-	EXPECT_EQ(c0[1], x1);
-	EXPECT_EQ(c0[2], x2);
+	Vector3f c0 = m.getColumn(0);
+	EXPECT_EQ(c0.x, x0);
+	EXPECT_EQ(c0.y, x1);
+	EXPECT_EQ(c0.z, x2);
 
-	Vec3f c1 = column(m, 1);
-	EXPECT_EQ(c1[0], y0);
-	EXPECT_EQ(c1[1], y1);
-	EXPECT_EQ(c1[2], y2);
+	Vector3f c1 = m.getColumn(1);
+	EXPECT_EQ(c1.x, y0);
+	EXPECT_EQ(c1.y, y1);
+	EXPECT_EQ(c1.z, y2);
 
-	Vec3f c2 = column(m, 2);
-	EXPECT_EQ(c2[0], z0);
-	EXPECT_EQ(c2[1], z1);
-	EXPECT_EQ(c2[2], z2);
+	Vector3f c2 = m.getColumn(2);
+	EXPECT_EQ(c2.x, z0);
+	EXPECT_EQ(c2.y, z1);
+	EXPECT_EQ(c2.z, z2);
 }
 
 TEST(Matrix3fTest, Equality)
@@ -619,11 +586,11 @@ TEST(Matrix3fTest, Equality)
 	constexpr float z11 = -87.7f;
 	constexpr float z12 = 354.5f;
 
-	Vec3f x1(x10, x11, x12);
-	Vec3f y1(y10, y11, y12);
-	Vec3f z1(z10, z11, z12);
+	Vector3f x1(x10, x11, x12);
+	Vector3f y1(y10, y11, y12);
+	Vector3f z1(z10, z11, z12);
 
-	Mat3f m1(x1, y1, z1);
+	Matrix3f m1 = Matrix3f::fromPlane(x1, y1, z1);
 
 	constexpr float x20 = 64.52f;
 	constexpr float x21 = -6.32f;
@@ -635,11 +602,11 @@ TEST(Matrix3fTest, Equality)
 	constexpr float z21 = 2.34f;
 	constexpr float z22 = -72.2f;
 
-	Vec3f x2(x20, x21, x22);
-	Vec3f y2(y20, y21, y22);
-	Vec3f z2(z20, z21, z22);
+	Vector3f x2(x20, x21, x22);
+	Vector3f y2(y20, y21, y22);
+	Vector3f z2(z20, z21, z22);
 
-	Mat3f m2(x2, y2, z2);
+	Matrix3f m2(x2, y2, z2);
 
 	EXPECT_TRUE(m1 == m1);
 	EXPECT_FALSE(m1 == m2);
@@ -657,11 +624,11 @@ TEST(Matrix3fTest, Inequality)
 	constexpr float z11 = -87.7f;
 	constexpr float z12 = 354.5f;
 
-	Vec3f x1(x10, x11, x12);
-	Vec3f y1(y10, y11, y12);
-	Vec3f z1(z10, z11, z12);
+	Vector3f x1(x10, x11, x12);
+	Vector3f y1(y10, y11, y12);
+	Vector3f z1(z10, z11, z12);
 
-	Mat3f m1(x1, y1, z1);
+	Matrix3f m1 = Matrix3f::fromPlane(x1, y1, z1);
 
 	constexpr float x20 = 64.52f;
 	constexpr float x21 = -6.32f;
@@ -673,11 +640,11 @@ TEST(Matrix3fTest, Inequality)
 	constexpr float z21 = 2.34f;
 	constexpr float z22 = -72.2f;
 
-	Vec3f x2(x20, x21, x22);
-	Vec3f y2(y20, y21, y22);
-	Vec3f z2(z20, z21, z22);
+	Vector3f x2(x20, x21, x22);
+	Vector3f y2(y20, y21, y22);
+	Vector3f z2(z20, z21, z22);
 
-	Mat3f m2(x2, y2, z2);
+	Matrix3f m2 = Matrix3f::fromPlane(x2, y2, z2);
 
 	EXPECT_FALSE(m1 != m1);
 	EXPECT_TRUE(m1 != m2);

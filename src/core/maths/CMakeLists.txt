@@ -2,9 +2,7 @@ set(PUBLIC_FILES
 	"public/Vector2.h"
 	"public/Vector3.h"
 	"public/Vector4.h"
-	"public/mat3f.h"
-	"public/mat4f.h"
-	"public/matrix.h"
+	"public/Matrix3.h"
 	"public/utils.h"
 )
 

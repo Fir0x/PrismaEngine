@@ -30,6 +30,13 @@ namespace PrismaEngine
 		{
 		}
 
+		Vector3(const T* data)
+		{
+			x = data[0];
+			y = data[1];
+			z = data[2];
+		}
+
 		Vector3<T> operator+(const Vector3& rhs) const
 		{
 			return Vector3<T>(x + rhs.x, y + rhs.y, z + rhs.z);
