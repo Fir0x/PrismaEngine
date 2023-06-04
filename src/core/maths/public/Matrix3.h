@@ -79,7 +79,7 @@ namespace PrismaEngine
 			Vector3<T> y(data[1][0], data[1][1], data[1][2]);
 			Vector3<T> z(data[2][0], data[2][1], data[2][2]);
 			
-			return Matrix3<T>(x, y, z);
+			return fromPlane(x, y, z);
 		}
 
 		Matrix3<T> inverse() const
@@ -113,7 +113,8 @@ namespace PrismaEngine
 
 		Vector3<T> getRow(int index) const
 		{
-			return data[index];
+			const T* row = data[index];
+			return Vector3<T>(row[0], row[1], row[2]);
 		}
 
 		const T& getValue(int row, int column) const
@@ -146,10 +147,17 @@ namespace PrismaEngine
 
 		Matrix3<T> operator*(const Matrix3<T>& rhs) const
 		{
-			Vector3<T> rhsRowAcummulation = rhs.getRow(0) + rhs.getRow(1) + rhs.getRow(2);
-			Vector3<T> row0 = getRow(0) * rhsRowAcummulation;
-			Vector3<T> row1 = getRow(1) * rhsRowAcummulation;
-			Vector3<T> row2 = getRow(2) * rhsRowAcummulation;
+			Vector3<T> row0 = Vector3<T>(data[0][0]) * rhs.getRow(0);
+			row0 += Vector3<T>(data[0][1]) * rhs.getRow(1);
+			row0 += Vector3<T>(data[0][2]) * rhs.getRow(2);
+
+			Vector3<T> row1 = Vector3<T>(data[1][0]) * rhs.getRow(0);
+			row1 += Vector3<T>(data[1][1]) * rhs.getRow(1);
+			row1 += Vector3<T>(data[1][2]) * rhs.getRow(2);
+
+			Vector3<T> row2 = Vector3<T>(data[2][0]) * rhs.getRow(0);
+			row2 += Vector3<T>(data[2][1]) * rhs.getRow(1);
+			row2 += Vector3<T>(data[2][2]) * rhs.getRow(2);
 
 			return Matrix3<T>(row0, row1, row2);
 		}

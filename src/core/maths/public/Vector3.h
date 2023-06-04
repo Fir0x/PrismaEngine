@@ -37,17 +37,17 @@ namespace PrismaEngine
 			z = data[2];
 		}
 
-		Vector3<T> operator+(const Vector3& rhs) const
+		Vector3<T> operator+(const Vector3<T>& rhs) const
 		{
 			return Vector3<T>(x + rhs.x, y + rhs.y, z + rhs.z);
 		}
 
-		Vector3<T> operator-(const Vector3& rhs) const
+		Vector3<T> operator-(const Vector3<T>& rhs) const
 		{
 			return Vector3<T>(x - rhs.x, y - rhs.y, z - rhs.z);
 		}
 
-		Vector3<T> operator*(const Vector3& rhs) const
+		Vector3<T> operator*(const Vector3<T>& rhs) const
 		{
 			return Vector3<T>(x * rhs.x, y * rhs.y, z * rhs.z);
 		}
@@ -57,9 +57,16 @@ namespace PrismaEngine
 			return Vector3<T>(x * rhs, y * rhs, z * rhs);
 		}
 
-		Vector3<T> operator/(const Vector3& rhs) const
+		Vector3<T> operator/(const Vector3<T>& rhs) const
 		{
 			return Vector3<T>(x / rhs.x, y / rhs.y, z / rhs.z);
+		}
+
+		void operator+=(const Vector3<T>& rhs)
+		{
+			x += rhs.x;
+			y += rhs.y;
+			z += rhs.z;
 		}
 
 		bool operator==(const Vector3& rhs) const
