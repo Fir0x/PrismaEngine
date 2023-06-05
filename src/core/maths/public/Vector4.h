@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 #include "Vector2.h"
 #include "Vector3.h"
 
@@ -92,6 +94,11 @@ namespace PrismaEngine
 		float magnitude() const
 		{
 			return std::sqrt(x * x + y * y + z * z + w * w);
+		}
+
+		Vector4<T> normalize() const
+		{
+			return *this / magnitude();
 		}
 
 		float dot(const Vector4& other) const
