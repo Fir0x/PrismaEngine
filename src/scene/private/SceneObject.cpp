@@ -10,14 +10,14 @@ namespace PrismaEngine
 	{
 	}
 
-	SceneObject::SceneObject(const Vec3f& pos, const MeshRenderer& renderer)
+	SceneObject::SceneObject(const Vector3f& pos, const MeshRenderer& renderer)
 		: m_transform(pos), m_renderer(renderer)
 	{
 	}
 
-	Mat3f SceneObject::processNormalMatrix(const Mat4f& model, const Mat4f& view) const
+	Matrix3f SceneObject::processNormalMatrix(const Matrix4f& model, const Matrix4f& view) const
 	{
-		return Mat3f(transpose(inverse(view * model)));
+		return (view * model).inverse().transpose().toMatrix3();
 	}
 
 	Transform& SceneObject::transform()
@@ -27,7 +27,7 @@ namespace PrismaEngine
 
 	void SceneObject::draw() const
 	{
-		Mat4f model = m_transform.getMatrix();
+		Matrix4f model = m_transform.getMatrix();
 		m_renderer.draw(model);
 	}
 }

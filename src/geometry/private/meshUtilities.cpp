@@ -5,40 +5,38 @@
 #include <spdlog/spdlog.h>
 #include <sstream>
 
-#include "core/maths/public/vector.h"
-#include "core/maths/public/vec2f.h"
-#include "core/maths/public/vec3f.h"
-#include "core/maths/public/vec4f.h"
+#include "core/maths/public/Vector2.h"
+#include "core/maths/public/Vector3.h"
+#include "core/maths/public/Vector4.h"
+#include "core/maths/public/utils.h"
 
 namespace PrismaEngine::MeshUtilities
 {
-#define DEG2RAD 0.017453292519943295
-
-	static Vec4f processTangentData(const StaticMesh::Vertex& v1, const StaticMesh::Vertex& v2,
+	static Vector4f processTangentData(const StaticMesh::Vertex& v1, const StaticMesh::Vertex& v2,
 										const StaticMesh::Vertex& v3)
 	{
-		Vec3f edge1 = v2.position - v1.position;
-		Vec3f edge2 = v3.position - v1.position;
-		Vec2f deltaUV1 = v2.uvs - v1.uvs;
-		Vec2f deltaUV2 = v3.uvs - v1.uvs;
+		Vector3f edge1 = v2.position - v1.position;
+		Vector3f edge2 = v3.position - v1.position;
+		Vector2f deltaUV1 = v2.uvs - v1.uvs;
+		Vector2f deltaUV2 = v3.uvs - v1.uvs;
 		
 		float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
 
-		Vec3f tangent;
+		Vector3f tangent;
 		tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
 		tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
 		tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
-		tangent = normalize(tangent);
+		tangent = tangent.normalize();
 
-		Vec3f bitangent;
+		Vector3f bitangent;
 		bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
 		bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
 		bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
-		bitangent = normalize(bitangent);
+		bitangent = bitangent.normalize();
 
-		float bitangentSign = dot(cross(tangent, bitangent), v1.normal);
+		float bitangentSign = tangent.cross(bitangent).dot(v1.normal);
 
-		return Vec4f(tangent, bitangentSign);
+		return Vector4f(tangent, bitangentSign);
 	}
 
 	std::shared_ptr<StaticMesh> staticPlane()
@@ -46,13 +44,13 @@ namespace PrismaEngine::MeshUtilities
 		std::vector<StaticMesh::Vertex> vertices;
 		std::vector<unsigned int> indices;
 
-		Vec3f normal(0.0f, 1.0f, 0.0f);
+		Vector3f normal(0.0f, 1.0f, 0.0f);
 		StaticMesh::Vertex bottomLeft = { { -0.5f, 0.0f, 0.5f }, normal, { 0.0f, 0.0f } };
 		StaticMesh::Vertex bottomRight = { { 0.5f, 0.0f, 0.5f }, normal, { 1.0f, 0.0f } };
 		StaticMesh::Vertex topLeft = { { -0.5f, 0.0f, -0.5f }, normal, { 0.0f, 1.0f } };
 		StaticMesh::Vertex topRight = { { 0.5f, 0.0f, -0.5f }, normal, { 1.0f, 1.0f } };
 
-		Vec4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
+		Vector4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
 		bottomLeft.tangentData = tangentData;
 		bottomRight.tangentData = tangentData;
 		topLeft.tangentData = tangentData;
@@ -80,13 +78,13 @@ namespace PrismaEngine::MeshUtilities
 
 		{
 			// Front face
-			Vec3f normal(0.0f, 0.0f, 1.0f);
+			Vector3f normal(0.0f, 0.0f, 1.0f);
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.0f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.0f } };
 			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, 0.5f }, normal, { 0.0f, 0.33333f } };
 			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 
-			Vec4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			Vector4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
 			bottomLeft.tangentData = tangentData;
 			bottomRight.tangentData = tangentData;
 			topLeft.tangentData = tangentData;
@@ -107,13 +105,13 @@ namespace PrismaEngine::MeshUtilities
 
 		{
 			// Left face
-			Vec3f normal(-1.0f, 0.0f, 0.0f);
+			Vector3f normal(-1.0f, 0.0f, 0.0f);
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.33333f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 			StaticMesh::Vertex topLeft = { { -0.5f, 0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
 			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
 
-			Vec4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			Vector4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
 			bottomLeft.tangentData = tangentData;
 			bottomRight.tangentData = tangentData;
 			topLeft.tangentData = tangentData;
@@ -135,13 +133,13 @@ namespace PrismaEngine::MeshUtilities
 
 		{
 			// Back face
-			Vec3f normal(0.0f, 0.0f, -1.0f);
+			Vector3f normal(0.0f, 0.0f, -1.0f);
 			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, -0.5f }, normal, { 0.0f, 0.66666f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.66666f } };
 			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.0f, 1.0f } };
 			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, -0.5f }, normal, { 0.33333f, 1.0f } };
 
-			Vec4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			Vector4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
 			bottomLeft.tangentData = tangentData;
 			bottomRight.tangentData = tangentData;
 			topLeft.tangentData = tangentData;
@@ -163,13 +161,13 @@ namespace PrismaEngine::MeshUtilities
 
 		{
 			// Right face
-			Vec3f normal(1.0f, 0.0f, 0.0f);
+			Vector3f normal(1.0f, 0.0f, 0.0f);
 			StaticMesh::Vertex bottomLeft = { { 0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.33333f } };
 			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.33333f, 0.66666f } };
 			StaticMesh::Vertex topRight = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.66666f } };
 
-			Vec4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			Vector4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
 			bottomLeft.tangentData = tangentData;
 			bottomRight.tangentData = tangentData;
 			topLeft.tangentData = tangentData;
@@ -191,13 +189,13 @@ namespace PrismaEngine::MeshUtilities
 
 		{
 			// Bottom face
-			Vec3f normal(0.0f, -1.0f, 0.0f);
+			Vector3f normal(0.0f, -1.0f, 0.0f);
 			StaticMesh::Vertex bottomLeft = { { -0.5f, -0.5f, -0.5f }, normal, { 0.33333f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { 0.5f, -0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
 			StaticMesh::Vertex topLeft = { { -0.5f, -0.5f, 0.5f }, normal, { 0.33333f, 0.33333f } };
 			StaticMesh::Vertex topRight = { { 0.5f, -0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
 
-			Vec4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			Vector4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
 			bottomLeft.tangentData = tangentData;
 			bottomRight.tangentData = tangentData;
 			topLeft.tangentData = tangentData;
@@ -219,13 +217,13 @@ namespace PrismaEngine::MeshUtilities
 
 		{
 			// Top face
-			Vec3f normal(0.0f, 1.0f, 0.0f);
+			Vector3f normal(0.0f, 1.0f, 0.0f);
 			StaticMesh::Vertex bottomLeft = { { 0.5f, 0.5f, -0.5f }, normal, { 0.66666f, 0.0f } };
 			StaticMesh::Vertex bottomRight = { { -0.5f, 0.5f, -0.5f }, normal, { 1.0f, 0.0f } };
 			StaticMesh::Vertex topLeft = { { 0.5f, 0.5f, 0.5f }, normal, { 0.66666f, 0.33333f } };
 			StaticMesh::Vertex topRight = { { -0.5f, 0.5f, 0.5f }, normal, { 1.0f, 0.33333f } };
 
-			Vec4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
+			Vector4f tangentData = processTangentData(bottomLeft, topRight, topLeft);
 			bottomLeft.tangentData = tangentData;
 			bottomRight.tangentData = tangentData;
 			topLeft.tangentData = tangentData;
@@ -267,7 +265,7 @@ namespace PrismaEngine::MeshUtilities
 
 		// South pole
 		{
-			Vec3f position(0.0f, -1.0f, 0.0f);
+			Vector3f position(0.0f, -1.0f, 0.0f);
 			float u = horizontalUVShift / 2.0f;
 			for (unsigned int segment = 0; segment < segmentCount; segment++)
 			{
@@ -285,10 +283,10 @@ namespace PrismaEngine::MeshUtilities
 		{
 			const float phi = 180.0f - shiftPhi;
 
-			const float y = cos(phi * DEG2RAD);
+			const float y = cos(degreesToRadians(phi));
 			const float v = verticalUVShift;
 			{
-				const float x = sin(phi * DEG2RAD);
+				const float x = sin(degreesToRadians(phi));
 				const float z = 0.0f;
 
 				StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { 0.0f , v } };
@@ -298,8 +296,8 @@ namespace PrismaEngine::MeshUtilities
 			for (unsigned int segment = 1; segment <= segmentCount; segment++)
 			{
 				const float theta = 360.0f - segment * shiftTheta;
-				const float x = sin(phi * DEG2RAD) * cos(theta * DEG2RAD);
-				const float z = sin(phi * DEG2RAD) * sin(theta * DEG2RAD);
+				const float x = sin(degreesToRadians(phi)) * cos(degreesToRadians(theta));
+				const float z = sin(degreesToRadians(phi)) * sin(degreesToRadians(theta));
 				const float u = segment * horizontalUVShift;
 
 				StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { u, v } };
@@ -322,10 +320,10 @@ namespace PrismaEngine::MeshUtilities
 
 			for (unsigned int ring = 1; ring < ringCount - 1; ring++)
 			{
-				const float y = cos(phi * DEG2RAD);
+				const float y = cos(degreesToRadians(phi));
 				const float v = (ring + 1) * verticalUVShift;
 				{
-					const float x = sin(phi * DEG2RAD);
+					const float x = sin(degreesToRadians(phi));
 					const float z = 0.0f;
 
 					StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { 0.0f , v } };
@@ -335,8 +333,8 @@ namespace PrismaEngine::MeshUtilities
 				for (unsigned int segment = 1; segment <= segmentCount; segment++)
 				{
 					const float theta = 360.0f - segment * shiftTheta;
-					const float x = sin(phi * DEG2RAD) * cos(theta * DEG2RAD);
-					const float z = sin(phi * DEG2RAD) * sin(theta * DEG2RAD);
+					const float x = sin(degreesToRadians(phi)) * cos(degreesToRadians(theta));
+					const float z = sin(degreesToRadians(phi)) * sin(degreesToRadians(theta));
 					const float u = segment * horizontalUVShift;
 
 					StaticMesh::Vertex vertex = { { x, y, z}, {x, y, z}, { u, v } };
@@ -363,7 +361,7 @@ namespace PrismaEngine::MeshUtilities
 
 		// North pole + top ring
 		{
-			Vec3f position(0.0f, 1.0f, 0.0f);
+			Vector3f position(0.0f, 1.0f, 0.0f);
 			float u = horizontalUVShift / 2.0f;
 			for (unsigned int segment = 0; segment < segmentCount; segment++)
 			{
@@ -395,9 +393,9 @@ namespace PrismaEngine::MeshUtilities
 		{
 			bool secondMesh = false;
 
-			std::vector<Vec3f> vertices;
-			std::vector<Vec3f> normals;
-			std::vector<Vec2f> uvs;
+			std::vector<Vector3f> vertices;
+			std::vector<Vector3f> normals;
+			std::vector<Vector2f> uvs;
 
 			std::vector<StaticMesh::Vertex> mesh_vertices;
 			std::vector<unsigned int> mesh_indices;
@@ -468,9 +466,9 @@ namespace PrismaEngine::MeshUtilities
 
 						if (indexMapper.find(vInfo) == indexMapper.end())
 						{
-							Vec3f v = vertices.at(vertIdx);
-							Vec3f n = normals.at(normIdx);
-							Vec2f uv = uvs.at(uvIdx);
+							Vector3f v = vertices.at(vertIdx);
+							Vector3f n = normals.at(normIdx);
+							Vector2f uv = uvs.at(uvIdx);
 
 							mesh_vertices.push_back({ v, n, uv });
 							int vertexIndex = int(mesh_vertices.size()) - 1;

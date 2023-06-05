@@ -4,7 +4,7 @@
 #include <memory>
 #include <glm/vec2.hpp>
 
-#include "core/maths/public/vec2i.h"
+#include "core/maths/public/Vector2.h"
 #include "core/utils/public/utils.h"
 #include "Texture.h"
 #include "APIHandle.h"
@@ -32,7 +32,7 @@ namespace PrismaEngine
 		Framebuffer(Texture* depth, Texture** renderTargets, size_t targetsCount);
 
 		GLHandle m_handle;
-		Vec2i m_size;
+		Vector2i m_size;
 
 	};
 }

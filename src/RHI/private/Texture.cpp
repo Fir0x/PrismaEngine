@@ -95,9 +95,9 @@ namespace PrismaEngine
 		return m_handle.get();
 	}
 
-	Vec2i Texture::getSize() const
+	Vector2i Texture::getSize() const
 	{
-		return Vec2i(m_width, m_height);
+		return Vector2i(m_width, m_height);
 	}
 
 	void Texture::bind() const

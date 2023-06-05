@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "core/maths/public/vec3f.h"
+#include "core/maths/public/Vector3.h"
 
 namespace PrismaEngine
 {
@@ -19,7 +19,7 @@ namespace PrismaEngine
     void processInput(GLFWwindow* window, const GUIRenderer& guiRenderer)
     {
         static float speed = 2.5f;
-        static Vec3f worldUp(0.0f, 1.0f, 0.0f);
+        static Vector3f worldUp(0.0f, 1.0f, 0.0f);
 
         float currentFrameTime = (float)glfwGetTime();
         float deltaTime = currentFrameTime - lastFrameTime;

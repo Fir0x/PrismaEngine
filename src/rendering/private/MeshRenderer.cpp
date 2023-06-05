@@ -7,7 +7,7 @@ namespace PrismaEngine
 	{
 	}
 
-	void MeshRenderer::draw(const Mat4f& model) const
+	void MeshRenderer::draw(const Matrix4f& model) const
 	{
 		m_material.setUniform("modelMatrix", model);
 		m_material.bind();

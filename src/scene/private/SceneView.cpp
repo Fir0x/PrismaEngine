@@ -7,12 +7,12 @@ namespace PrismaEngine
 	{
 	}
 
-	SceneView::SceneView(const Scene& scene, const Vec3f& cameraPosition)
+	SceneView::SceneView(const Scene& scene, const Vector3f& cameraPosition)
 		: m_scene(scene), m_camera(cameraPosition)
 	{
 	}
 
-	SceneView::SceneView(const Scene& scene, const Vec3f& cameraPosition, float aspectRatio)
+	SceneView::SceneView(const Scene& scene, const Vector3f& cameraPosition, float aspectRatio)
 		: m_scene(scene), m_camera(cameraPosition, aspectRatio)
 	{
 	}
@@ -22,12 +22,12 @@ namespace PrismaEngine
 		return m_camera;
 	}
 
-	void SceneView::renderGeometry(const Vec2i& windowSizes) const
+	void SceneView::renderGeometry(const Vector2i& windowSizes) const
 	{
 		m_scene.drawGeometry(m_camera, windowSizes);
 	}
 
-	void SceneView::renderLights(const Vec2i& windowSizes) const
+	void SceneView::renderLights(const Vector2i& windowSizes) const
 	{
 		m_scene.drawLights(m_camera, windowSizes);
 	}

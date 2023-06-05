@@ -31,7 +31,7 @@ namespace PrismaEngine
         for (size_t i = 0; i != targetsCount; ++i) {
             glNamedFramebufferTexture(m_handle.get(), GLenum(GL_COLOR_ATTACHMENT0 + i), renderTargets[i]->getHandle(), 0);
 
-            Vec2i targetSize = renderTargets[i]->getSize();
+            Vector2i targetSize = renderTargets[i]->getSize();
             if (targetSize.x < m_size.x)
                 m_size.x = targetSize.x;
             if (targetSize.y < m_size.y)

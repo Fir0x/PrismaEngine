@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 
-#include "core/maths/public/vec2f.h"
-#include "core/maths/public/vec3f.h"
-#include "core/maths/public/vec4f.h"
+#include "core/maths/public/Vector2.h"
+#include "core/maths/public/Vector3.h"
+#include "core/maths/public/Vector4.h"
 #include "RHI/public/TypedBuffer.h"
 #include "RHI/public/VertexArray.h"
 
@@ -18,10 +18,10 @@ namespace PrismaEngine
 	public:
 		struct Vertex
 		{
-			Vec3f position;
-			Vec3f normal;
-			Vec2f uvs;
-			Vec4f tangentData; // Tangent vector + bitangent sign
+			Vector3f position;
+			Vector3f normal;
+			Vector2f uvs;
+			Vector4f tangentData; // Tangent vector + bitangent sign
 		};
 
 		StaticMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);

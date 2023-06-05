@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Matrix3.h"
 #include "Vector4.h"
 
 namespace PrismaEngine
@@ -32,6 +33,32 @@ namespace PrismaEngine
 			data[3][2] = static_cast<T>(0);
 			data[3][3] = x;
 		}
+		
+		Matrix4(const T& x0, const T& y0, const T& z0, const T& w0,
+				const T& x1, const T& y1, const T& z1, const T& w1,
+				const T& x2, const T& y2, const T& z2, const T& w2,
+				const T& x3, const T& y3, const T& z3, const T& w3)
+		{
+			data[0][0] = x0;
+			data[0][1] = y0;
+			data[0][2] = z0;
+			data[0][3] = w0;
+
+			data[1][0] = x1;
+			data[1][1] = y1;
+			data[1][2] = z1;
+			data[1][3] = w1;
+
+			data[2][0] = x2;
+			data[2][1] = y2;
+			data[2][2] = z2;
+			data[2][3] = w2;
+
+			data[3][0] = x3;
+			data[3][1] = y3;
+			data[3][2] = z3;
+			data[3][3] = w3;
+		}
 
 		Matrix4(const Vector4<T>& row0, const Vector4<T>& row1, const Vector4<T>& row2, const Vector4<T>& row3)
 		{
@@ -54,6 +81,29 @@ namespace PrismaEngine
 			data[3][1] = row3.y;
 			data[3][2] = row3.z;
 			data[3][3] = row3.w;
+		}
+
+		Matrix4(const Matrix3<T>& m)
+		{
+			data[0][0] = m.data[0][0];
+			data[0][1] = m.data[0][1];
+			data[0][2] = m.data[0][2];
+			data[0][3] = m.data[0][3];
+
+			data[1][0] = m.data[1][0];
+			data[1][1] = m.data[1][1];
+			data[1][2] = m.data[1][2];
+			data[1][3] = m.data[1][3];
+
+			data[2][0] = m.data[2][0];
+			data[2][1] = m.data[2][1];
+			data[2][2] = m.data[2][2];
+			data[2][3] = m.data[2][3];
+
+			data[3][0] = static_cast<T>(0);
+			data[3][1] = static_cast<T>(0);
+			data[3][2] = static_cast<T>(0);
+			data[3][3] = static_cast<T>(1);
 		}
 
 		static Matrix4<T> fromPlane(const Vector4<T>& xPlane, const Vector4<T>& yPlane,
@@ -80,6 +130,28 @@ namespace PrismaEngine
 			result.data[3][1] = yPlane.w;
 			result.data[3][2] = zPlane.w;
 			result.data[3][3] = wPlane.w;
+
+			return result;
+		}
+
+		Matrix3<T> toMatrix3() const
+		{
+			Matrix3<T> result;
+
+			result.data[0][0] = data[0][0];
+			result.data[0][1] = data[0][1];
+			result.data[0][2] = data[0][2];
+			result.data[0][3] = data[0][3];
+
+			result.data[1][0] = data[1][0];
+			result.data[1][1] = data[1][1];
+			result.data[1][2] = data[1][2];
+			result.data[1][3] = data[1][3];
+
+			result.data[2][0] = data[2][0];
+			result.data[2][1] = data[2][1];
+			result.data[2][2] = data[2][2];
+			result.data[2][3] = data[2][3];
 
 			return result;
 		}
@@ -179,6 +251,11 @@ namespace PrismaEngine
 		{
 			const T* row = data[index];
 			return Vector4<T>(row[0], row[1], row[2], row[3]);
+		}
+
+		const T* getRawData() const
+		{
+			return &(data[0][0]);
 		}
 
 		const T& getValue(int row, int column) const

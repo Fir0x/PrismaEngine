@@ -3,8 +3,8 @@
 #include "Camera.h"
 #include "Scene.h"
 
-#include "core/maths/public/vec2i.h"
-#include "core/maths/public/vec3f.h"
+#include "core/maths/public/Vector2.h"
+#include "core/maths/public/Vector3.h"
 
 namespace PrismaEngine
 {
@@ -12,13 +12,13 @@ namespace PrismaEngine
 	{
 	public:
 		SceneView(const Scene& scene);
-		SceneView(const Scene& scene, const Vec3f& cameraPosition);
-		SceneView(const Scene& scene, const Vec3f& cameraPosition, float aspectRatio);
+		SceneView(const Scene& scene, const Vector3f& cameraPosition);
+		SceneView(const Scene& scene, const Vector3f& cameraPosition, float aspectRatio);
 
 		Camera& camera();
 
-		void renderGeometry(const Vec2i& windowSizes) const;
-		void renderLights(const Vec2i& windowSizes) const;
+		void renderGeometry(const Vector2i& windowSizes) const;
+		void renderLights(const Vector2i& windowSizes) const;
 
 	private:
 		const Scene& m_scene;

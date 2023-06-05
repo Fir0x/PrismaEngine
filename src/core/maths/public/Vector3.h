@@ -69,6 +69,13 @@ namespace PrismaEngine
 			z += rhs.z;
 		}
 
+		void operator-=(const Vector3<T>& rhs)
+		{
+			x -= rhs.x;
+			y -= rhs.y;
+			z -= rhs.z;
+		}
+
 		bool operator==(const Vector3& rhs) const
 		{
 			return x == rhs.x && y == rhs.y && z == rhs.z;
@@ -82,6 +89,11 @@ namespace PrismaEngine
 		float magnitude() const
 		{
 			return std::sqrt(x * x + y * y + z * z);
+		}
+
+		Vector3<T> normalize() const
+		{
+			return *this / magnitude();
 		}
 
 		float dot(const Vector3& other) const
@@ -122,6 +134,12 @@ namespace PrismaEngine
 	Vector3<T> operator*(const T& lhs, const Vector3<T>& rhs)
 	{
 		return Vector3<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+	}
+
+	template<typename T>
+	Vector3<T> operator-(const Vector3<T>& rhs)
+	{
+		return Vector3<T>(-rhs.x, -rhs.y, -rhs.z);
 	}
 
 	typedef Vector3<float> Vector3f;

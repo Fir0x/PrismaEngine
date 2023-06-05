@@ -1,8 +1,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "core/maths/public/mat4f.h"
-#include "core/maths/public/vec3f.h"
+#include "core/maths/public/Matrix4.h"
+#include "core/maths/public/Vector3.h"
 
 namespace PrismaEngine
 {
@@ -10,9 +10,9 @@ namespace PrismaEngine
 	{
 	public:
 		Transform();
-		Transform(const Vec3f& position);
+		Transform(const Vector3f& position);
 
-		void translate(const Vec3f& translation);
+		void translate(const Vector3f& translation);
 		void rotate(float angleX, float angleY, float angleZ);
 		void scale(float scaleX, float scaleY, float scaleZ);
 
@@ -22,12 +22,12 @@ namespace PrismaEngine
 		*/
 		void scale(float factor);
 
-		const Mat4f& getMatrix() const;
-		const Vec3f getRight() const;
-		const Vec3f getUp() const;
-		const Vec3f getForward() const;
+		const Matrix4f& getMatrix() const;
+		const Vector3f getRight() const;
+		const Vector3f getUp() const;
+		const Vector3f getForward() const;
 
 	private:
-		Mat4f m_transforms;
+		Matrix4f m_transforms;
 	};
 }

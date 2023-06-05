@@ -41,6 +41,11 @@ namespace PrismaEngine
 		{
 		}
 
+		Vector4(const Vector3<T>& v, const T& w)
+			: Vector4(v.x, v.y, v.z, w)
+		{
+		}
+
 		Vector4<T> operator+(const Vector4& rhs) const
 		{
 			return Vector4<T>(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w);
@@ -94,6 +99,11 @@ namespace PrismaEngine
 			return x * other.x + y * other.y + z * other.z + w * other.w;
 		}
 
+		operator Vector3<T>() const
+		{
+			return Vector3<T>(x, y, z);
+		}
+
 	public:
 		union
 		{
@@ -124,6 +134,12 @@ namespace PrismaEngine
 	Vector4<T> operator*(const T& lhs, const Vector4<T>& rhs)
 	{
 		return Vector4<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
+	}
+
+	template<typename T>
+	Vector4<T> operator-(const Vector4<T>& rhs)
+	{
+		return Vector4<T>(-rhs.x, -rhs.y, -rhs.z, -rhs.w);
 	}
 
 	typedef Vector4<float> Vector4f;

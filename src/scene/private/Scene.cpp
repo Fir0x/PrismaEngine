@@ -1,6 +1,6 @@
 #include "../public/Scene.h"
 
-#include "core/maths/public/vec4f.h"
+#include "core/maths/public/Vector4.h"
 #include "RHI/public/TypedBuffer.h"
 #include "rendering/public/shaderDefs.h"
 
@@ -29,7 +29,7 @@ namespace PrismaEngine
 		return m_pointLights.size() - 1;
 	}
 
-	void Scene::drawGeometry(const Camera& camera, const Vec2i& windowSizes) const
+	void Scene::drawGeometry(const Camera& camera, const Vector2i& windowSizes) const
 	{
 		ShaderDefs::FrameContext context;
 		context.camera.viewMatrix = camera.viewMatrix();
@@ -44,7 +44,7 @@ namespace PrismaEngine
 			obj.draw();
 	}
 
-	void Scene::drawLights(const Camera& camera, const Vec2i& windowSizes) const
+	void Scene::drawLights(const Camera& camera, const Vector2i& windowSizes) const
 	{
 		ShaderDefs::FrameContext context;
 		size_t test = sizeof(ShaderDefs::FrameContext);
@@ -63,7 +63,7 @@ namespace PrismaEngine
 		for (const auto& light : m_pointLights)
 		{
 			ShaderDefs::PointLight mappedLight;
-			mappedLight.position = camera.viewMatrix() * Vec4f(light.position(), 1.0f);
+			mappedLight.position = camera.viewMatrix() * Vector4f(light.position(), 1.0f);
 			mappedLight.radius = light.radius();
 			mappedLight.color = light.color();
 			light.coefficients(mappedLight.linear, mappedLight.quadratic);

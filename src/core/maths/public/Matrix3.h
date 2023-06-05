@@ -117,6 +117,11 @@ namespace PrismaEngine
 			return Vector3<T>(row[0], row[1], row[2]);
 		}
 
+		const T* getRawData() const
+		{
+			return &(data[0][0]);
+		}
+
 		const T& getValue(int row, int column) const
 		{
 			return data[row][column];

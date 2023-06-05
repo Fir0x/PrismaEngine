@@ -8,9 +8,9 @@
 #include <glm/glm.hpp>
 
 #include "APIHandle.h"
-#include "core/maths/public/mat3f.h"
-#include "core/maths/public/mat4f.h"
-#include "core/maths/public/vec3f.h"
+#include "core/maths/public/Matrix3.h"
+#include "core/maths/public/Matrix4.h"
+#include "core/maths/public/Vector3.h"
 
 namespace PrismaEngine
 {
@@ -84,10 +84,10 @@ namespace PrismaEngine
 		void setUniform(const char* name, unsigned int v0) const;
 		void setUniform(const char* name, float v0) const;
 		void setUniform(const char* name, float v0, float v1, float v2) const;
-		void setUniform(const char* name, const Vec3f& v) const;
+		void setUniform(const char* name, const Vector3f& v) const;
 		void setUniform(const char* name, float v0, float v1, float v2, float v3) const;
-		void setUniform(const char* name, const Mat3f& matrix, bool transpose = false) const;
-		void setUniform(const char* name, const Mat4f& matrix, bool transpose = false) const;
+		void setUniform(const char* name, const Matrix3f& matrix, bool transpose = false) const;
+		void setUniform(const char* name, const Matrix4f& matrix, bool transpose = false) const;
 
 	private:
 		GLHandle m_handle;
