@@ -1,11 +1,12 @@
 #pragma once
 
-#include <glm/vec3.hpp>
-#include <glm/mat4x4.hpp>
+#include "core/maths/public/Vector3.h"
+#include "core/maths/public/Matrix4.h"
 
 namespace PrismaEngine::ShaderDefs
 {
-	using namespace glm;
+	using vec3 = Vector3f;
+	using mat4 = Matrix4f;
 
 #include "../shaders/defines/structs.glsl"
 }
