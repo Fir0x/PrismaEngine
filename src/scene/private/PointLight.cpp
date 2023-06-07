@@ -2,6 +2,7 @@
 
 #include <glm/ext.hpp>
 
+#include "scene/public/Transform.h"
 #include "geometry/public/meshUtilities.h"
 
 namespace PrismaEngine
@@ -137,8 +138,9 @@ namespace PrismaEngine
 	void PointLight::draw(unsigned int index) const
 	{
 		m_material.bind();
-		Matrix4f modelMatrix = scale(translate(Matrix4f(1.0f), m_position), Vector3f(m_radius));
-		m_material.setUniform("modelMatrix", modelMatrix);
+		Transform modelTransform(m_position);
+		modelTransform.scale(m_radius);
+		m_material.setUniform("modelMatrix", modelTransform.getMatrix());
 		m_material.setUniform("lightIndex", index);
 		auto ligthVolume = MeshUtilities::staticSphere(16, 8);
 		ligthVolume->draw();

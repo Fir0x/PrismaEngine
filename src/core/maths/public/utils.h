@@ -2,6 +2,8 @@
 
 #define PRISMA_PI 3.14159265358979323846
 
+#include <cmath>
+
 namespace PrismaEngine
 {
 	inline float degreesToRadians(float x)
@@ -26,5 +28,25 @@ namespace PrismaEngine
 	{
 		constexpr double ratio = 180.0f / static_cast<double>(PRISMA_PI);
 		return x * ratio;
+	}
+
+	/**
+	 * @brief 
+	 * @param x Angle in radians
+	 * @return 
+	*/
+	inline float sin(float x)
+	{
+		return std::sin(x);
+	}
+
+	/**
+	 * @brief
+	 * @param x Angle in radians
+	 * @return
+	*/
+	inline float cos(float x)
+	{
+		return std::cos(x);
 	}
 }
