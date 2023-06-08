@@ -1,7 +1,5 @@
 #include "../public/Camera.h"
 
-#include <glm/ext.hpp>
-
 #include "core/maths/public/utils.h"
 
 namespace PrismaEngine
@@ -44,66 +42,41 @@ namespace PrismaEngine
 		m_pitch = pitch;
 		m_worldUp = Vector3f(0.0f, 1.0f, 0.0f);
 		m_projMatrix = frustum;
-
-		Vector3f forward;
-		forward.x = cos(degreesToRadians(m_yaw)) * cos(degreesToRadians(m_pitch));
-		forward.y = sin(degreesToRadians(m_pitch));
-		forward.z = sin(degreesToRadians(m_yaw)) * cos(degreesToRadians(m_pitch));
-		forward = forward.normalize();
-
-		m_viewMatrix = lookAt(pos, pos + forward, m_worldUp);
 	}
 
 	Vector3f Camera::right() const
 	{
-		return m_viewMatrix.getRow(0);
+		return m_transform.getRight();
 	}
 
 	Vector3f Camera::up() const
 	{
-		return m_viewMatrix.getRow(1);
+		return m_transform.getUp();
 	}
 
 	Vector3f Camera::forward() const
 	{
-		return -m_viewMatrix.getRow(2);
+		return m_transform.getForward();
 	}
 
-	Matrix4f Camera::viewMatrix() const
+	const Matrix4f& Camera::viewMatrix() const
 	{
-		return m_viewMatrix;
+		return m_transform.getMatrix();
 	}
 
-	Matrix4f Camera::projectionMatrix() const
+	const Matrix4f& Camera::projectionMatrix() const
 	{
 		return m_projMatrix;
 	}
 
 	Vector3f Camera::position() const
 	{
-		Vector3f pos(0.0f);
-		for (int i = 0; i < 3; i++)
-			pos -= Vector3f(m_viewMatrix.data[0][i], m_viewMatrix.data[1][i], m_viewMatrix.data[2][i]) * m_viewMatrix.data[3][i];
-
-		return pos;
-	}
-
-	void Camera::updateView()
-	{
-		Vector3f forward;
-		forward.x = cos(degreesToRadians(m_yaw)) * cos(degreesToRadians(m_pitch));
-		forward.y = sin(degreesToRadians(m_pitch));
-		forward.z = sin(degreesToRadians(m_yaw)) * cos(degreesToRadians(m_pitch));
-		forward = forward.normalize();
-
-		Vector3f position = this->position();
-		m_viewMatrix = lookAt(position, position + forward, m_worldUp);
+		return m_transform.getPosition();
 	}
 
 	void Camera::translate(const Vector3f& translation)
 	{
-		Vector3f position = this->position() + translation;
-		m_viewMatrix = lookAt(position, position + forward(), m_worldUp);
+		m_transform.translate(translation);
 	}
 
 	void Camera::translate(float x, float y, float z)
@@ -111,30 +84,11 @@ namespace PrismaEngine
 		translate(Vector3f(x, y, z));
 	}
 
-	void Camera::addPitch(float angle)
-	{
-		m_pitch += angle;
-		if (m_pitch > 89.0f)
-			m_pitch = 89.0f;
-		else if (m_pitch < -89.0f)
-			m_pitch = -89.0f;
-	}
-
-	void Camera::addYaw(float angle)
-	{
-		m_yaw += angle;
-	}
-
 	void Camera::rotate(float pitchAngle, float yawAngle)
 	{
-		addPitch(pitchAngle);
-		addYaw(yawAngle);
+		m_pitch = clamp(m_pitch + pitchAngle, -89.0f, 89.0f);
+		m_yaw += yawAngle;
 
-		updateView();
-	}
-
-	void Camera::onScreenSizeChange(int w, int h)
-	{
-		m_projMatrix = perspective(45.0f, (float)w / (float)h, 0.1f, 100.0f);
+		m_transform.setRotation(m_pitch, m_yaw, 0.0f);
 	}
 }

@@ -20,6 +20,7 @@ namespace PrismaEngine
 		// Create tests
 		void translate(const Vector3f& translation);
 		void rotate(float angleX, float angleY, float angleZ);
+		void setRotation(float angleX, float angleY, float angleZ);
 		void setRotation(const Matrix3f& rotation);
 		void scale(float scaleX, float scaleY, float scaleZ);
 
@@ -30,11 +31,14 @@ namespace PrismaEngine
 		void scale(float factor);
 
 		const Matrix4f& getMatrix() const;
-		const Vector3f getRight() const;
-		const Vector3f getUp() const;
-		const Vector3f getForward() const;
+		Vector3f getRight() const;
+		Vector3f getUp() const;
+		Vector3f getForward() const;
+
+		Vector3f getPosition() const;
+		Matrix3f getRotation() const;
 
 	private:
-		Matrix4f m_transforms;
+		Matrix4f m_matrix;
 	};
 }

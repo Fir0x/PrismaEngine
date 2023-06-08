@@ -5,12 +5,12 @@
 namespace PrismaEngine
 {
 	Transform::Transform()
-		: m_transforms(Matrix4f::identity())
+		: m_matrix(Matrix4f::identity())
 	{
 	}
 
 	Transform::Transform(const Vector3f& position)
-		: m_transforms(Matrix4f::identity())
+		: m_matrix(Matrix4f::identity())
 	{
 		translate(position);
 	}
@@ -22,7 +22,7 @@ namespace PrismaEngine
 		translationMatrix.data[3][1] = translation.y;
 		translationMatrix.data[3][2] = translation.z;
 
-		m_transforms = translationMatrix * m_transforms;
+		m_matrix = translationMatrix * m_matrix;
 	}
 
 	/**
@@ -55,6 +55,21 @@ namespace PrismaEngine
 
 	void Transform::rotate(float angleX, float angleY, float angleZ)
 	{
+		Matrix3f rotation(m_matrix.getRow(0), m_matrix.getRow(1), m_matrix.getRow(2));
+		if (angleZ != 0)
+			rotation = rotateMatrixAroundAxis(rotation, getForward(), angleZ);
+
+		if (angleY != 0)
+			rotation = rotateMatrixAroundAxis(rotation, getUp(), angleY);
+
+		if (angleX != 0)
+			rotation = rotateMatrixAroundAxis(rotation, getRight(), angleX);
+
+		setRotation(rotation);
+	}
+
+	void Transform::setRotation(float angleX, float angleY, float angleZ)
+	{
 		Matrix3f rotation = Matrix3f::identity();
 		if (angleZ != 0)
 			rotation = rotateMatrixAroundAxis(rotation, getForward(), angleZ);
@@ -70,17 +85,17 @@ namespace PrismaEngine
 
 	void Transform::setRotation(const Matrix3f& rotation)
 	{
-		m_transforms.data[0][0] = rotation.data[0][0];
-		m_transforms.data[0][1] = rotation.data[0][1];
-		m_transforms.data[0][2] = rotation.data[0][2];
+		m_matrix.data[0][0] = rotation.data[0][0];
+		m_matrix.data[0][1] = rotation.data[0][1];
+		m_matrix.data[0][2] = rotation.data[0][2];
 
-		m_transforms.data[1][0] = rotation.data[1][0];
-		m_transforms.data[1][1] = rotation.data[1][1];
-		m_transforms.data[1][2] = rotation.data[1][2];
+		m_matrix.data[1][0] = rotation.data[1][0];
+		m_matrix.data[1][1] = rotation.data[1][1];
+		m_matrix.data[1][2] = rotation.data[1][2];
 
-		m_transforms.data[2][0] = rotation.data[2][0];
-		m_transforms.data[2][1] = rotation.data[2][1];
-		m_transforms.data[2][2] = rotation.data[2][2];
+		m_matrix.data[2][0] = rotation.data[2][0];
+		m_matrix.data[2][1] = rotation.data[2][1];
+		m_matrix.data[2][2] = rotation.data[2][2];
 	}
 
 	void Transform::scale(float scaleX, float scaleY, float scaleZ)
@@ -90,7 +105,7 @@ namespace PrismaEngine
 		scaleMatrix.data[1][1] = scaleY;
 		scaleMatrix.data[2][2] = scaleZ;
 
-		m_transforms = scaleMatrix * m_transforms;
+		m_matrix = scaleMatrix * m_matrix;
 	}
 
 	void Transform::scale(float factor)
@@ -100,21 +115,31 @@ namespace PrismaEngine
 
 	const Matrix4f& Transform::getMatrix() const
 	{
-		return m_transforms;
+		return m_matrix;
 	}
 
-	const Vector3f Transform::getRight() const
+	Vector3f Transform::getRight() const
 	{
-		return m_transforms.getColumn(0);
+		return m_matrix.getColumn(0);
 	}
 
-	const Vector3f Transform::getUp() const
+	Vector3f Transform::getUp() const
 	{
-		return m_transforms.getColumn(1);
+		return m_matrix.getColumn(1);
 	}
 
-	const Vector3f Transform::getForward() const
+	Vector3f Transform::getForward() const
 	{
-		return m_transforms.getColumn(2);
+		return m_matrix.getColumn(2);
+	}
+
+	Vector3f Transform::getPosition() const
+	{
+		return m_matrix.getRow(3);
+	}
+
+	Matrix3f Transform::getRotation() const
+	{
+		return Matrix3f(m_matrix.getRow(0), m_matrix.getRow(1), m_matrix.getRow(2));
 	}
 }
