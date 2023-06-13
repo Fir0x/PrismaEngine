@@ -17,10 +17,15 @@ namespace PrismaEngine
 
 	void Transform::translate(const Vector3f& translation)
 	{
+		translate(translation.x, translation.y, translation.z);
+	}
+
+	void Transform::translate(float x, float y, float z)
+	{
 		Matrix4f translationMatrix = Matrix4f::identity();
-		translationMatrix.data[3][0] = translation.x;
-		translationMatrix.data[3][1] = translation.y;
-		translationMatrix.data[3][2] = translation.z;
+		translationMatrix.data[3][0] = x;
+		translationMatrix.data[3][1] = y;
+		translationMatrix.data[3][2] = z;
 
 		m_matrix = translationMatrix * m_matrix;
 	}
@@ -98,6 +103,11 @@ namespace PrismaEngine
 		m_matrix.data[2][2] = rotation.data[2][2];
 	}
 
+	void Transform::scale(float factor)
+	{
+		scale(factor, factor, factor);
+	}
+
 	void Transform::scale(float scaleX, float scaleY, float scaleZ)
 	{
 		Matrix4f scaleMatrix = Matrix4f::identity();
@@ -106,11 +116,6 @@ namespace PrismaEngine
 		scaleMatrix.data[2][2] = scaleZ;
 
 		m_matrix = scaleMatrix * m_matrix;
-	}
-
-	void Transform::scale(float factor)
-	{
-		scale(factor, factor, factor);
 	}
 
 	const Matrix4f& Transform::getMatrix() const

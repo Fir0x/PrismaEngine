@@ -16,19 +16,18 @@ namespace PrismaEngine
 		Transform();
 		Transform(const Vector3f& position);
 
-		// TODO
-		// Create tests
 		void translate(const Vector3f& translation);
+		void translate(float x, float y, float z);
 		void rotate(float angleX, float angleY, float angleZ);
 		void setRotation(float angleX, float angleY, float angleZ);
 		void setRotation(const Matrix3f& rotation);
-		void scale(float scaleX, float scaleY, float scaleZ);
 
 		/**
 		 * @brief Uniform scaling on all axes
 		 * @param factor 
 		*/
 		void scale(float factor);
+		void scale(float scaleX, float scaleY, float scaleZ);
 
 		const Matrix4f& getMatrix() const;
 		Vector3f getRight() const;
