@@ -66,8 +66,8 @@ TEST(TransformTests, RotateWorldXSimple)
 
 		matrixRef = matrixRef * Matrix4f(
 			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, -1.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -101,8 +101,8 @@ TEST(TransformTests, RotateWorldXSimple)
 
 		matrixRef = matrixRef * Matrix4f(
 			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, -1.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, -1.0f, 0.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -144,8 +144,8 @@ TEST(TransformTests, RotateWorldX)
 
 		matrixRef = matrixRef * Matrix4f(
 			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, angleCos, -angleSin, 0.0f,
-			0.0f, angleSin, angleCos, 0.0f,
+			0.0f, angleCos, angleSin, 0.0f,
+			0.0f, -angleSin, angleCos, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -181,8 +181,8 @@ TEST(TransformTests, RotateWorldX)
 
 		matrixRef = matrixRef * Matrix4f(
 			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, angleCos, -angleSin, 0.0f,
-			0.0f, angleSin, angleCos, 0.0f,
+			0.0f, angleCos, angleSin, 0.0f,
+			0.0f, -angleSin, angleCos, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -221,10 +221,10 @@ TEST(TransformTests, RotateWorldYSimple)
 		transform.rotate(0.0f, angle, 0.0f);
 
 		matrixRef = matrixRef * Matrix4f(
-			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, -1.0f, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			-1.0f, 0.0f, 0.0f, 1.0f
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
 		const Matrix4f& matrix = transform.getMatrix();
@@ -256,10 +256,10 @@ TEST(TransformTests, RotateWorldYSimple)
 		transform.rotate(0.0f, angle, 0.0f);
 
 		matrixRef = matrixRef * Matrix4f(
-			0.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, -1.0f, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			-1.0f, 0.0f, 0.0f, 1.0f
+			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
 		const Matrix4f& matrix = transform.getMatrix();
@@ -299,10 +299,10 @@ TEST(TransformTests, RotateWorldY)
 		transform.rotate(0.0f, angle, 0.0f);
 
 		matrixRef = matrixRef * Matrix4f(
-			angleCos, 0.0f, angleSin, 0.0f,
+			angleCos, 0.0f, -angleSin, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			-angleSin, 0.0f, angleCos, 1.0f
+			angleSin, 0.0f, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
 		const Matrix4f& matrix = transform.getMatrix();
@@ -337,10 +337,10 @@ TEST(TransformTests, RotateWorldY)
 		transform.rotate(0.0f, angle, 0.0f);
 
 		matrixRef = matrixRef * Matrix4f(
-			angleCos, 0.0f, angleSin, 0.0f,
+			angleCos, 0.0f, -angleSin, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			-angleSin, 0.0f, angleCos, 1.0f
+			angleSin, 0.0f, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
 		const Matrix4f& matrix = transform.getMatrix();
@@ -379,8 +379,8 @@ TEST(TransformTests, RotateWorldZSimple)
 		transform.rotate(0.0f, angle, 0.0f);
 
 		matrixRef = matrixRef * Matrix4f(
-			0.0f, -1.0f, 0.0f, 0.0f,
-			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
@@ -414,8 +414,8 @@ TEST(TransformTests, RotateWorldZSimple)
 		transform.rotate(0.0f, angle, 0.0f);
 
 		matrixRef = matrixRef * Matrix4f(
-			0.0f, -1.0f, 0.0f, 0.0f,
-			1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+			-1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
@@ -457,8 +457,8 @@ TEST(TransformTests, RotateWorldZ)
 		transform.rotate(0.0f, 0.0f, angle);
 
 		matrixRef = matrixRef * Matrix4f(
-			angleCos, -angleSin, 0.0f, 0.0f,
-			angleSin, angleCos, 0.0f, 0.0f,
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
@@ -494,8 +494,8 @@ TEST(TransformTests, RotateWorldZ)
 		transform.rotate(0.0f, 0.0f, angle);
 
 		matrixRef = matrixRef * Matrix4f(
-			angleCos, -angleSin, 0.0f, 0.0f,
-			angleSin, angleCos, 0.0f, 0.0f,
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
@@ -540,8 +540,8 @@ TEST(TransformTests, RotateWorldCombine)
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
 
 		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, -angleSin, 0.0f, 0.0f,
-			angleSin, angleCos, 0.0f, 0.0f,
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
@@ -555,10 +555,10 @@ TEST(TransformTests, RotateWorldCombine)
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleY));
 
 		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, 0.0f, angleSin, 0.0f,
+			angleCos, 0.0f, -angleSin, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			-angleSin, 0.0f, angleCos, 1.0f
+			angleSin, 0.0f, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
 		matrixRef = rotationMatrix * matrixRef;
@@ -571,8 +571,8 @@ TEST(TransformTests, RotateWorldCombine)
 
 		const Matrix4f rotationMatrix = Matrix4f(
 			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, angleCos, -angleSin, 0.0f,
-			0.0f, angleSin, angleCos, 0.0f,
+			0.0f, angleCos, angleSin, 0.0f,
+			0.0f, -angleSin, angleCos, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -586,8 +586,8 @@ TEST(TransformTests, RotateWorldCombine)
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
 
 		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, -angleSin, 0.0f, 0.0f,
-			angleSin, angleCos, 0.0f, 0.0f,
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
@@ -601,10 +601,10 @@ TEST(TransformTests, RotateWorldCombine)
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleY));
 
 		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, 0.0f, angleSin, 0.0f,
+			angleCos, 0.0f, -angleSin, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			-angleSin, 0.0f, angleCos, 1.0f
+			angleSin, 0.0f, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
 		matrixRef = rotationMatrix * matrixRef;
@@ -617,8 +617,8 @@ TEST(TransformTests, RotateWorldCombine)
 
 		const Matrix4f rotationMatrix = Matrix4f(
 			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, angleCos, -angleSin, 0.0f,
-			0.0f, angleSin, angleCos, 0.0f,
+			0.0f, angleCos, angleSin, 0.0f,
+			0.0f, -angleSin, angleCos, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -664,8 +664,8 @@ TEST(TransformTests, SetRotationFloat)
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
 
 		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, -angleSin, 0.0f, 0.0f,
-			angleSin, angleCos, 0.0f, 0.0f,
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
 			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
@@ -679,10 +679,10 @@ TEST(TransformTests, SetRotationFloat)
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleY));
 
 		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, 0.0f, angleSin, 0.0f,
+			angleCos, 0.0f, -angleSin, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			-angleSin, 0.0f, angleCos, 1.0f
+			angleSin, 0.0f, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
 		matrixRef = rotationMatrix * matrixRef;
@@ -695,8 +695,8 @@ TEST(TransformTests, SetRotationFloat)
 
 		const Matrix4f rotationMatrix = Matrix4f(
 			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, angleCos, -angleSin, 0.0f,
-			0.0f, angleSin, angleCos, 0.0f,
+			0.0f, angleCos, angleSin, 0.0f,
+			0.0f, -angleSin, angleCos, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
