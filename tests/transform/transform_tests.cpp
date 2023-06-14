@@ -376,7 +376,7 @@ TEST(TransformTests, RotateWorldZSimple)
 
 	{
 		constexpr float angle = 90.0f;
-		transform.rotate(0.0f, angle, 0.0f);
+		transform.rotate(0.0f, 0.0f, angle);
 
 		matrixRef = matrixRef * Matrix4f(
 			0.0f, 1.0f, 0.0f, 0.0f,
@@ -411,7 +411,7 @@ TEST(TransformTests, RotateWorldZSimple)
 
 	{
 		constexpr float angle = 90.0f;
-		transform.rotate(0.0f, angle, 0.0f);
+		transform.rotate(0.0f, 0.0f, angle);
 
 		matrixRef = matrixRef * Matrix4f(
 			0.0f, 1.0f, 0.0f, 0.0f,
