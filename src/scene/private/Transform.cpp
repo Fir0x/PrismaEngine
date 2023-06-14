@@ -45,7 +45,7 @@ namespace PrismaEngine
 		Matrix3f rotationMatrix;
 		rotationMatrix.data[0][0] = axis.x * axis.x * (1 - angleCos) + angleCos;
 		rotationMatrix.data[0][1] = axis.x * axis.y * (1 - angleCos) + axis.z * angleSin;
-		rotationMatrix.data[0][2] = axis.x * axis.z * (1 - angleCos) + axis.y * angleSin;
+		rotationMatrix.data[0][2] = axis.x * axis.z * (1 - angleCos) - axis.y * angleSin;
 
 		rotationMatrix.data[1][0] = axis.x * axis.y * (1 - angleCos) - axis.z * angleSin;
 		rotationMatrix.data[1][1] = axis.y * axis.y * (1 - angleCos) + angleCos;
