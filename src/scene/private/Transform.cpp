@@ -125,17 +125,17 @@ namespace PrismaEngine
 
 	Vector3f Transform::getRight() const
 	{
-		return m_matrix.getColumn(0);
+		return m_matrix.getRow(0);
 	}
 
 	Vector3f Transform::getUp() const
 	{
-		return m_matrix.getColumn(1);
+		return m_matrix.getRow(1);
 	}
 
 	Vector3f Transform::getForward() const
 	{
-		return m_matrix.getColumn(2);
+		return m_matrix.getRow(2);
 	}
 
 	Vector3f Transform::getPosition() const
