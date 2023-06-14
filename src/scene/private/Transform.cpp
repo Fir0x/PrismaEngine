@@ -39,8 +39,8 @@ namespace PrismaEngine
 	*/
 	static Matrix3f rotateMatrixAroundAxis(const Matrix3f& m, const Vector3f& axis, const float angle)
 	{
-		const float angleCos = cos(angle);
-		const float angleSin = sin(angle);
+		const float angleCos = cos(degreesToRadians(angle));
+		const float angleSin = sin(degreesToRadians(angle));
 
 		Matrix3f rotationMatrix;
 		rotationMatrix.data[0][0] = axis.x * axis.x * (1 - angleCos) + angleCos;
