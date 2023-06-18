@@ -42,6 +42,7 @@ namespace PrismaEngine
 		m_pitch = pitch;
 		m_worldUp = Vector3f(0.0f, 1.0f, 0.0f);
 		m_projMatrix = frustum;
+		m_transform = Transform(pos);
 	}
 
 	Vector3f Camera::right() const
