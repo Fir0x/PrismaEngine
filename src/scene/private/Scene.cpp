@@ -33,7 +33,7 @@ namespace PrismaEngine
 	{
 		ShaderDefs::FrameContext context;
 		context.camera.viewMatrix = camera.viewMatrix();
-		context.camera.projectionMatrix = camera.projectionMatrix();
+		context.camera.projectionMatrix = camera.projectionMatrix().transpose();
 		context.viewport.width = windowSizes.x;
 		context.viewport.height = windowSizes.y;
 
@@ -49,7 +49,7 @@ namespace PrismaEngine
 		ShaderDefs::FrameContext context;
 		size_t test = sizeof(ShaderDefs::FrameContext);
 		context.camera.viewMatrix = camera.viewMatrix();
-		context.camera.projectionMatrix = camera.projectionMatrix();
+		context.camera.projectionMatrix = camera.projectionMatrix().transpose();
 		context.viewport.width = windowSizes.x;
 		context.viewport.height = windowSizes.y;
 

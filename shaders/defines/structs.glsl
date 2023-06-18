@@ -8,6 +8,8 @@ struct ViewportData
 {
 	int width;
 	int height;
+	int pad0;
+	int pad1;
 };
 
 struct FrameContext

@@ -32,8 +32,8 @@ namespace PrismaEngine
 		return Matrix4f(
 			f / aspectRatio, 0.0f, 0.0f, 0.0f,
 			0.0f, f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, -1.0f,
-			0.0f, 0.0f, zNear, 0.0f);
+			0.0f, 0.0f, 0.0f, zNear,
+			0.0f, 0.0f, -1.0f , 0.0f);
 	}
 
 	void Camera::initialize(const Matrix4f& frustum, const Vector3f& pos, float yaw, float pitch)
