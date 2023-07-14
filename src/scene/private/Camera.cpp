@@ -62,7 +62,7 @@ namespace PrismaEngine
 
 	Vector3f Camera::forward() const
 	{
-		return m_transform.getForward();
+		return -m_transform.getForward();
 	}
 
 	const Matrix4f& Camera::viewMatrix() const
@@ -82,7 +82,7 @@ namespace PrismaEngine
 
 	void Camera::translate(const Vector3f& translation)
 	{
-		m_transform.translate(translation);
+		m_transform.translate(-translation);
 	}
 
 	void Camera::translate(float x, float y, float z)
