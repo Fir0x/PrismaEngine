@@ -258,7 +258,7 @@ namespace PrismaEngine
 			return &(data[0][0]);
 		}
 
-		const T& getValue(int row, int column) const
+		T getValue(int row, int column) const
 		{
 			return data[row][column];
 		}

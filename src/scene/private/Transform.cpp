@@ -43,17 +43,18 @@ namespace PrismaEngine
 		const float angleSin = sin(degreesToRadians(angle));
 
 		Matrix3f rotationMatrix;
-		rotationMatrix.data[0][0] = axis.x * axis.x * (1 - angleCos) + angleCos;
-		rotationMatrix.data[0][1] = axis.x * axis.y * (1 - angleCos) + axis.z * angleSin;
-		rotationMatrix.data[0][2] = axis.x * axis.z * (1 - angleCos) - axis.y * angleSin;
+		Vector3f tmp = (1.0f - angleCos) * axis;
+		rotationMatrix.data[0][0] = axis.x * tmp.x + angleCos;
+		rotationMatrix.data[0][1] = axis.x * tmp.y + axis.z * angleSin;
+		rotationMatrix.data[0][2] = axis.x * tmp.z - axis.y * angleSin;
 
-		rotationMatrix.data[1][0] = axis.x * axis.y * (1 - angleCos) - axis.z * angleSin;
-		rotationMatrix.data[1][1] = axis.y * axis.y * (1 - angleCos) + angleCos;
-		rotationMatrix.data[1][2] = axis.y * axis.z * (1 - angleCos) + axis.x * angleSin;
+		rotationMatrix.data[1][0] = axis.y * tmp.x - axis.z * angleSin;
+		rotationMatrix.data[1][1] = axis.y * tmp.y + angleCos;
+		rotationMatrix.data[1][2] = axis.y * tmp.z + axis.x * angleSin;
 
-		rotationMatrix.data[2][0] = axis.x * axis.z * (1 - angleCos) + axis.y * angleSin;
-		rotationMatrix.data[2][1] = axis.y * axis.z * (1 - angleCos) - axis.x * angleSin;
-		rotationMatrix.data[2][2] = axis.z * axis.z * (1 - angleCos) + angleCos;
+		rotationMatrix.data[2][0] = axis.z * tmp.x + axis.y * angleSin;
+		rotationMatrix.data[2][1] = axis.z * tmp.y - axis.x * angleSin;
+		rotationMatrix.data[2][2] = axis.z * tmp.z + angleCos;
 
 		return rotationMatrix * m;
 	}
@@ -77,13 +78,13 @@ namespace PrismaEngine
 	{
 		Matrix3f rotation = Matrix3f::identity();
 		if (angleZ != 0)
-			rotation = rotateMatrixAroundAxis(rotation, getForward(), angleZ);
+			rotation = rotateMatrixAroundAxis(rotation, Vector3f(0.0f, 0.0f, 1.0f), angleZ);
 
 		if (angleY != 0)
-			rotation = rotateMatrixAroundAxis(rotation, getUp(), angleY);
+			rotation = rotateMatrixAroundAxis(rotation, Vector3f(0.0f, 1.0f, 0.0f), angleY);
 
 		if (angleX != 0)
-			rotation = rotateMatrixAroundAxis(rotation, getRight(), angleX);
+			rotation = rotateMatrixAroundAxis(rotation, Vector3f(1.0f, 0.0f, 0.0f), angleX);
 
 		setRotation(rotation);
 	}

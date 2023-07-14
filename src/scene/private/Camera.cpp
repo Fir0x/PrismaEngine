@@ -2,6 +2,11 @@
 
 #include "core/maths/public/utils.h"
 
+#include <spdlog/spdlog.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/matrix_access.hpp>
+
 namespace PrismaEngine
 {
 	Camera::Camera(const Vector3f& position, float yaw, float pitch, float aspectRatio)
@@ -13,11 +18,11 @@ namespace PrismaEngine
 	{
 	}
 
-	Camera::Camera(const Vector3f& position, float aspectRatio) : Camera(position, -90.0f, 0.0f, aspectRatio)
+	Camera::Camera(const Vector3f& position, float aspectRatio) : Camera(position, 0.0f, 0.0f, aspectRatio)
 	{
 	}
 
-	Camera::Camera(const Vector3f& position) : Camera(position, -90.0f, 0.0f)
+	Camera::Camera(const Vector3f& position) : Camera(position, 0.0f, 0.0f)
 	{
 	}
 
@@ -88,8 +93,17 @@ namespace PrismaEngine
 	void Camera::rotate(float pitchAngle, float yawAngle)
 	{
 		m_pitch = clamp(m_pitch + pitchAngle, -89.0f, 89.0f);
+		
 		m_yaw += yawAngle;
+		while (m_yaw <= -360.0f)
+			m_yaw += 360.0f;
+
+		while (m_yaw >= 360.0f)
+			m_yaw -= 360.0f;
 
 		m_transform.setRotation(m_pitch, m_yaw, 0.0f);
+		float checkValue = m_transform.getUp().y;
+		static glm::mat4 test(1.0f);
+		test = glm::rotate(test, m_yaw, glm::vec3(glm::column(test, 1)));
 	}
 }

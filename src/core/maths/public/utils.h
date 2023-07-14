@@ -2,31 +2,31 @@
 
 #define PRISMA_PI 3.14159265358979323846
 
-#include <math.h>
+#include <cmath>
 
 namespace PrismaEngine
 {
 	inline float degreesToRadians(float x)
 	{
-		constexpr float ratio = static_cast<float>(PRISMA_PI) / 180.0f;
+		constexpr float ratio = static_cast<float>(PRISMA_PI / 180.0);
 		return x * ratio;
 	}
 
 	inline double degreesToRadians(double x)
 	{
-		constexpr double ratio = static_cast<double>(PRISMA_PI) / 180.0;
+		constexpr double ratio = PRISMA_PI / 180.0;
 		return x * ratio;
 	}
 
 	inline float radiansToDegrees(float x)
 	{
-		constexpr float ratio = 180.0f / static_cast<float>(PRISMA_PI);
+		constexpr float ratio = static_cast<float>(180.0 / PRISMA_PI);
 		return x * ratio;
 	}
 
 	inline double radiansToDegrees(double x)
 	{
-		constexpr double ratio = 180.0f / static_cast<double>(PRISMA_PI);
+		constexpr double ratio = 180.0 / PRISMA_PI;
 		return x * ratio;
 	}
 

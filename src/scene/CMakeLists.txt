@@ -36,4 +36,6 @@ target_link_libraries(scene PUBLIC
 target_link_libraries(scene PRIVATE
 	rhi
 	geometry
+	spdlog
+	glm
 )

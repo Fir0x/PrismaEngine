@@ -40,6 +40,15 @@ namespace PrismaEngine
         if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
             mainCamera->translate(-worldUp * speed * deltaTime);
 
+        if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+            mainCamera->rotate(1.0f, 0.0f);
+        if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+            mainCamera->rotate(-1.0f, 0.0f);
+        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+            mainCamera->rotate(0.0f, 1.0f);
+        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+            mainCamera->rotate(0.0f, -1.0f);
+
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, true);
 
