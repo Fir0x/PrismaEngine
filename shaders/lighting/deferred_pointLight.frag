@@ -38,7 +38,7 @@ vec3 lightContribution(PointLight light, vec3 position, vec3 normal)
 	float specularStrength = 0.5;
 	vec3 specular = specularStrength * spec * light.color;
 
-	return diffuse + specular;
+	return diffuse;
 }
 
 vec3 remapNormal(vec3 normal) {

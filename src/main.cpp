@@ -64,7 +64,8 @@ int main(void)
     {
         const float aspectRatio = (float)settings.screen_width / settings.screen_height;
         Scene scene;
-        SceneView sceneView(scene, Vector3f(0.0f, 0.0f, -5.0f), aspectRatio);
+        Vector3f cameraPosition = Vector3f(0.0f, 0.0f, -5.0f);
+        SceneView sceneView(scene, cameraPosition, aspectRatio);
         linkCamera(&sceneView.camera());
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, screen_size_callback);

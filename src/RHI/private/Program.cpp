@@ -235,6 +235,8 @@ namespace PrismaEngine
 					shader << line << "\n";
 			}
 		}
+		else
+			spdlog::error("Failed to open {}", path);
 
 		return shader.str();
 	}

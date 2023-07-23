@@ -50,6 +50,26 @@ namespace PrismaEngine
 		return std::cos(x);
 	}
 
+	/**
+	 * @brief
+	 * @param x Angle in radians
+	 * @return
+	*/
+	inline float asin(float x)
+	{
+		return std::asin(x);
+	}
+
+	/**
+	 * @brief
+	 * @param x Angle in radians
+	 * @return
+	*/
+	inline float acos(float x)
+	{
+		return std::acos(x);
+	}
+
 	inline float clamp(float x, float min, float max)
 	{
 		if (x < min)

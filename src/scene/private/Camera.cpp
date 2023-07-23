@@ -43,11 +43,12 @@ namespace PrismaEngine
 
 	void Camera::initialize(const Matrix4f& frustum, const Vector3f& pos, float yaw, float pitch)
 	{
-		m_yaw = yaw;
-		m_pitch = pitch;
-		m_worldUp = Vector3f(0.0f, 1.0f, 0.0f);
+		m_yaw = 0.0f;
+		m_pitch = 0.0f;
 		m_projMatrix = frustum;
 		m_transform = Transform(pos);
+
+		rotate(yaw, pitch);
 	}
 
 	Vector3f Camera::right() const
@@ -90,20 +91,56 @@ namespace PrismaEngine
 		translate(Vector3f(x, y, z));
 	}
 
-	void Camera::rotate(float pitchAngle, float yawAngle)
+	void Camera::rotate(float deltaYaw, float deltaPitch)
 	{
-		m_pitch = clamp(m_pitch + pitchAngle, -89.0f, 89.0f);
-		
-		m_yaw += yawAngle;
-		while (m_yaw <= -360.0f)
+		m_pitch = clamp(m_pitch + deltaPitch, -89.0f, 89.0f);
+		m_yaw += deltaYaw;
+
+		while (m_yaw < -360.0f)
 			m_yaw += 360.0f;
 
-		while (m_yaw >= 360.0f)
+		while (m_yaw > 360.0f)
 			m_yaw -= 360.0f;
 
-		m_transform.setRotation(m_pitch, m_yaw, 0.0f);
-		float checkValue = m_transform.getUp().y;
-		static glm::mat4 test(1.0f);
-		test = glm::rotate(test, m_yaw, glm::vec3(glm::column(test, 1)));
+		// If yaw and pitch are 0, the camera look at +Z axis
+		Vector3f direction;
+		float yawCos = cos(degreesToRadians(m_yaw));
+		float yawSin = sin(degreesToRadians(m_yaw));
+		float pitchCos = cos(degreesToRadians(m_pitch));
+		float pitchSin = sin(degreesToRadians(m_pitch));
+
+		direction.x = yawSin * pitchCos;
+		direction.y = pitchSin;
+		direction.z = yawCos * pitchCos;
+
+		lookAt(position() + direction);
+
+		Vector3f pos = m_transform.getPosition();
+		spdlog::info("Transform pos: {} {} {}", pos.x, pos.y, pos.z);
+	}
+
+	void Camera::lookAt(const Vector3f& target)
+	{
+		const Vector3f cameraPosition = -position();
+		const Vector3f forward = -(target - cameraPosition).normalize();
+		const Vector3f right = forward.cross(Vector3f(0.0f, 1.0f, 0.0f)).normalize();
+		const Vector3f up = right.cross(forward);
+
+		Matrix4f transformMatrix(
+			right.x, up.x, forward.x, 0.0f,
+			right.y, up.y, forward.y, 0.0f,
+			right.z, up.z, forward.z, 0.0f,
+			-right.dot(cameraPosition), -up.dot(cameraPosition), -forward.dot(cameraPosition), 1.0f
+		);
+
+		m_transform.setMatrix(transformMatrix);
+	}
+
+	void Camera::getRotation(float& yaw, float& pitch)
+	{
+		Vector3f camerDirection = forward();
+
+		pitch = asin(camerDirection.y);
+		yaw = acos(camerDirection.x / cos(pitch));
 	}
 }

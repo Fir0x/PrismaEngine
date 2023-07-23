@@ -41,13 +41,13 @@ namespace PrismaEngine
             mainCamera->translate(-worldUp * speed * deltaTime);
 
         if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-            mainCamera->rotate(1.0f, 0.0f);
-        if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-            mainCamera->rotate(-1.0f, 0.0f);
-        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
             mainCamera->rotate(0.0f, 1.0f);
-        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
             mainCamera->rotate(0.0f, -1.0f);
+        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+            mainCamera->rotate(1.0f, 0.0f);
+        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+            mainCamera->rotate(-1.0f, 0.0f);
 
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
             glfwSetWindowShouldClose(window, true);
@@ -95,6 +95,9 @@ namespace PrismaEngine
         xoffset *= sensitivity;
         yoffset *= sensitivity;
 
-        mainCamera->rotate(yoffset, xoffset);
+        float currentFrameTime = (float)glfwGetTime();
+        float deltaTime = currentFrameTime - lastFrameTime;
+
+        mainCamera->rotate(xoffset, yoffset);
     }
 }

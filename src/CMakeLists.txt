@@ -21,5 +21,3 @@ target_link_libraries(PrismaEngine PRIVATE
 	rhi
 	rendering
 )
-
-set_target_properties(PrismaEngine PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})

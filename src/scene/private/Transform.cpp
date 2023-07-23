@@ -104,6 +104,11 @@ namespace PrismaEngine
 		m_matrix.data[2][2] = rotation.data[2][2];
 	}
 
+	void Transform::setMatrix(const Matrix4f& matrix)
+	{
+		m_matrix = matrix;
+	}
+
 	void Transform::scale(float factor)
 	{
 		scale(factor, factor, factor);

@@ -26,7 +26,9 @@ namespace PrismaEngine
 		void translate(const Vector3f& translation);
 		void translate(float x, float y, float z);
 
-		void rotate(float pitchAngle, float yawAngle);
+		void rotate(float deltaYaw, float deltaPitch);
+		void lookAt(const Vector3f& target);
+		void getRotation(float& yaw, float& pitch);
 
 	private:
 		Matrix4f buildProjection(float zNear, float fovYDegree, float aspectRatio);
@@ -34,9 +36,8 @@ namespace PrismaEngine
 			float pitch);
 
 	private:
-		Vector3f m_worldUp;
-		float m_pitch = 0;
-		float m_yaw = 0;
+		float m_yaw;
+		float m_pitch;
 		Transform m_transform;
 		Matrix4f m_projMatrix;
 	};
