@@ -33,7 +33,6 @@ add_library(rhi STATIC ${ALL_FILES})
 target_link_libraries(rhi PUBLIC
 	global_config
 	core
-	glm
 	glew
 	opengl32
 )

@@ -3,9 +3,6 @@
 #include "core/maths/public/utils.h"
 
 #include <spdlog/spdlog.h>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/matrix_access.hpp>
 
 namespace PrismaEngine
 {

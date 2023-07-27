@@ -19,7 +19,6 @@ add_library(rendering STATIC ${ALL_FILES})
 
 target_link_libraries(rendering PUBLIC
 	global_config
-	glm
 	geometry
 	rhi
 	core

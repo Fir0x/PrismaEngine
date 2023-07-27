@@ -19,7 +19,3 @@ target_link_libraries(input PUBLIC
 	scene
 	rendering
 )
-
-target_link_libraries(input PRIVATE
-	glm
-)

@@ -1,7 +1,5 @@
 #include "../public/inputManager.h"
 
-#include <glm/glm.hpp>
-
 #include "core/maths/public/Vector3.h"
 
 namespace PrismaEngine

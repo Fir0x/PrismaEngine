@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glm/glm.hpp>
-
 #include "Camera.h"
 #include "Transform.h"
 #include "core/maths/public/Matrix3.h"

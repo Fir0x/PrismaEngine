@@ -1,7 +1,6 @@
 #include "../public/Program.h"
 
 #include <GL/glew.h>
-#include <glm/ext.hpp>
 #include <fstream>
 #include <spdlog/spdlog.h>
 #include <sstream>

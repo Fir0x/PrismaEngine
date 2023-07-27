@@ -1,7 +1,5 @@
 #include "../public/PointLight.h"
 
-#include <glm/ext.hpp>
-
 #include "scene/public/Transform.h"
 #include "geometry/public/meshUtilities.h"
 

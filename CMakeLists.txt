@@ -45,12 +45,6 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-	glm
-	GIT_REPOSITORY https://github.com/g-truc/glm
-	GIT_TAG 0.9.9.8
-)
-
-FetchContent_Declare(
 	imgui
 	GIT_REPOSITORY https://github.com/ocornut/imgui
 	GIT_TAG v1.89.5
@@ -83,7 +77,6 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(
 	glfw
 	glew
-	glm
 	imgui
 	spdlog
 	stb

@@ -2,7 +2,6 @@
 
 #include <string>
 #include <memory>
-#include <glm/glm.hpp>
 
 #include "core/maths/public/Vector2.h"
 #include "core/utils/public/utils.h"

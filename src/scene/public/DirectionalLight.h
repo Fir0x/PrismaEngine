@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glm/vec3.hpp>
-
 #include "core/maths/public/Matrix4.h"
 #include "core/maths/public/Vector3.h"
 #include "rendering/public/Material.h"

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <glm/glm.hpp>
-
 #include "RHI/public/Program.h"
 #include "RHI/public/Texture.h"
 

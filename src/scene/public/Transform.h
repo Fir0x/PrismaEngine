@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glm/glm.hpp>
 #include "core/maths/public/Matrix4.h"
 #include "core/maths/public/Vector3.h"
 

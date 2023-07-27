@@ -5,8 +5,6 @@
 #include <string>
 #include <span>
 
-#include <glm/glm.hpp>
-
 #include "APIHandle.h"
 #include "core/maths/public/Matrix3.h"
 #include "core/maths/public/Matrix4.h"

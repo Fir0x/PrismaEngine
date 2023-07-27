@@ -29,7 +29,6 @@ target_link_libraries(scene PUBLIC
 	global_config
 	glew
 	glfw
-	glm
 	rendering
 )
 
@@ -37,5 +36,4 @@ target_link_libraries(scene PRIVATE
 	rhi
 	geometry
 	spdlog
-	glm
 )

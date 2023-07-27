@@ -1,7 +1,6 @@
 #include "../public/SceneObject.h"
 
 #include <GL/glew.h>
-#include <glm/ext.hpp>
 
 namespace PrismaEngine
 {
