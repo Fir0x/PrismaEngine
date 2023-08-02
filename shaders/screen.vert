@@ -2,7 +2,7 @@
 
 // vertex shader for a screen-space pass
 
-layout(location = 0) out vec2 fragUV;
+out vec2 fragUV;
 
 vec2 uvs[] = {
         vec2(0.0, 0.0),

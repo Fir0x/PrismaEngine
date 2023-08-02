@@ -5,29 +5,31 @@
 namespace PrismaEngine
 {
 	Transform::Transform()
-		: m_matrix(Matrix4f::identity())
+		: m_position(Vector3f::zero()),
+		m_right(Vector3f::right()),
+		m_up(Vector3f::up()),
+		m_forward(Vector3f::forward()),
+		m_scale(Vector3f::one())
 	{
 	}
 
 	Transform::Transform(const Vector3f& position)
-		: m_matrix(Matrix4f::identity())
+		: m_position(position),
+		m_right(Vector3f::right()),
+		m_up(Vector3f::up()),
+		m_forward(Vector3f::forward()),
+		m_scale(Vector3f::one())
 	{
-		translate(position);
 	}
 
 	void Transform::translate(const Vector3f& translation)
 	{
-		translate(translation.x, translation.y, translation.z);
+		m_position += translation;
 	}
 
 	void Transform::translate(float x, float y, float z)
 	{
-		Matrix4f translationMatrix = Matrix4f::identity();
-		translationMatrix.data[3][0] = x;
-		translationMatrix.data[3][1] = y;
-		translationMatrix.data[3][2] = z;
-
-		m_matrix = translationMatrix * m_matrix;
+		translate(Vector3f(x, y, z));
 	}
 
 	/**
@@ -61,7 +63,7 @@ namespace PrismaEngine
 
 	void Transform::rotate(float angleX, float angleY, float angleZ)
 	{
-		Matrix3f rotation(m_matrix.getRow(0), m_matrix.getRow(1), m_matrix.getRow(2));
+		Matrix3f rotation(m_right, m_up, m_forward);
 		if (angleZ != 0)
 			rotation = rotateMatrixAroundAxis(rotation, getForward(), angleZ);
 
@@ -89,24 +91,18 @@ namespace PrismaEngine
 		setRotation(rotation);
 	}
 
-	void Transform::setRotation(const Matrix3f& rotation)
+	void Transform::setRotation(const Vector3f& right, const Vector3f& up, const Vector3f& forward)
 	{
-		m_matrix.data[0][0] = rotation.data[0][0];
-		m_matrix.data[0][1] = rotation.data[0][1];
-		m_matrix.data[0][2] = rotation.data[0][2];
-
-		m_matrix.data[1][0] = rotation.data[1][0];
-		m_matrix.data[1][1] = rotation.data[1][1];
-		m_matrix.data[1][2] = rotation.data[1][2];
-
-		m_matrix.data[2][0] = rotation.data[2][0];
-		m_matrix.data[2][1] = rotation.data[2][1];
-		m_matrix.data[2][2] = rotation.data[2][2];
+		m_right = right;
+		m_up = up;
+		m_forward = forward;
 	}
 
-	void Transform::setMatrix(const Matrix4f& matrix)
+	void Transform::setRotation(const Matrix3f& rotationMatrix)
 	{
-		m_matrix = matrix;
+		m_right = rotationMatrix.getRow(0);
+		m_up = rotationMatrix.getRow(1);
+		m_forward = rotationMatrix.getRow(2);
 	}
 
 	void Transform::scale(float factor)
@@ -116,41 +112,57 @@ namespace PrismaEngine
 
 	void Transform::scale(float scaleX, float scaleY, float scaleZ)
 	{
-		Matrix4f scaleMatrix = Matrix4f::identity();
-		scaleMatrix.data[0][0] = scaleX;
-		scaleMatrix.data[1][1] = scaleY;
-		scaleMatrix.data[2][2] = scaleZ;
-
-		m_matrix = scaleMatrix * m_matrix;
+		m_scale *= Vector3f(scaleX, scaleY, scaleZ);
 	}
 
-	const Matrix4f& Transform::getMatrix() const
+	Matrix4f Transform::getMatrix() const
 	{
-		return m_matrix;
+		Vector3f scaledRight = m_scale * m_right;
+		Vector3f scaledUp = m_scale * m_up;
+		Vector3f scaledForward = m_scale * m_forward;
+
+		return Matrix4f(scaledRight, scaledUp, scaledForward, Vector4f(m_position, 1.0f));
 	}
 
-	Vector3f Transform::getRight() const
+	const Vector3f& Transform::getRight() const
 	{
-		return m_matrix.getRow(0);
+		return m_right;
 	}
 
-	Vector3f Transform::getUp() const
+	const Vector3f& Transform::getUp() const
 	{
-		return m_matrix.getRow(1);
+		return m_up;
 	}
 
-	Vector3f Transform::getForward() const
+	const Vector3f& Transform::getForward() const
 	{
-		return m_matrix.getRow(2);
+		return m_forward;
 	}
 
-	Vector3f Transform::getPosition() const
+	const Vector3f& Transform::getPosition() const
 	{
-		return m_matrix.getRow(3);
+		return m_position;
 	}
 
 	Matrix3f Transform::getRotation() const
 	{
-		return Matrix3f(m_matrix.getRow(0), m_matrix.getRow(1), m_matrix.getRow(2));
+		return Matrix3f(m_right, m_up, m_forward);
+	}
+
+	const Vector3f& Transform::getScale() const
+	{
+		return m_scale;
+	}
+
+	Transform Transform::getInverse() const
+	{
+		Vector3f inversePosition(-m_right.dot(m_position), -m_up.dot(m_position), -m_forward.dot(m_position));
+		Transform result(inversePosition);
+		result.m_right = Vector3f(m_right.x, m_up.x, -m_forward.x);
+		result.m_up = Vector3f(m_right.y, m_up.y, -m_forward.y);
+		result.m_forward = Vector3f(m_right.z, m_up.z, -m_forward.z);
+		result.m_scale = 1.0f / m_scale;
+
+		return result;
 	}
 }

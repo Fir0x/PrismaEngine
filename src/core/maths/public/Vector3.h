@@ -78,6 +78,13 @@ namespace PrismaEngine
 			z -= rhs.z;
 		}
 
+		void operator*=(const Vector3<T>& rhs)
+		{
+			x *= rhs.x;
+			y *= rhs.y;
+			z *= rhs.z;
+		}
+
 		bool operator==(const Vector3& rhs) const
 		{
 			return x == rhs.x && y == rhs.y && z == rhs.z;
@@ -112,6 +119,39 @@ namespace PrismaEngine
 			return Vector3<T>(newX, newY, newZ);
 		}
 
+		static Vector3<T> zero()
+		{
+			T zeroValue = static_cast<T>(0);
+			return Vector3<T>(zeroValue, zeroValue, zeroValue);
+		}
+
+		static Vector3<T> one()
+		{
+			T oneValue = static_cast<T>(1);
+			return Vector3<T>(oneValue, oneValue, oneValue);
+		}
+
+		static Vector3<T> right()
+		{
+			T zeroValue = static_cast<T>(0);
+			T oneValue = static_cast<T>(1);
+			return Vector3<T>(oneValue, zeroValue, zeroValue);
+		}
+
+		static Vector3<T> up()
+		{
+			T zeroValue = static_cast<T>(0);
+			T oneValue = static_cast<T>(1);
+			return Vector3<T>(zeroValue, oneValue, zeroValue);
+		}
+
+		static Vector3<T> forward()
+		{
+			T zeroValue = static_cast<T>(0);
+			T oneValue = static_cast<T>(1);
+			return Vector3<T>(zeroValue, zeroValue, oneValue);
+		}
+
 	public:
 		union
 		{
@@ -136,6 +176,12 @@ namespace PrismaEngine
 	Vector3<T> operator*(const T& lhs, const Vector3<T>& rhs)
 	{
 		return Vector3<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+	}
+
+	template<typename T>
+	Vector3<T> operator/(const T& lhs, const Vector3<T>& rhs)
+	{
+		return Vector3<T>(lhs / rhs.x, lhs / rhs.y, lhs / rhs.z);
 	}
 
 	template<typename T>

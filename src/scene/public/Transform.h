@@ -19,8 +19,9 @@ namespace PrismaEngine
 		void translate(float x, float y, float z);
 		void rotate(float angleX, float angleY, float angleZ);
 		void setRotation(float angleX, float angleY, float angleZ);
-		void setRotation(const Matrix3f& rotation);
-		void setMatrix(const Matrix4f& matrix);
+		void setRotation(const Vector3f& rotation);
+		void setRotation(const Vector3f& right, const Vector3f& up, const Vector3f& forward);
+		void setRotation(const Matrix3f& rotationMatrix);
 
 		/**
 		 * @brief Uniform scaling on all axes
@@ -29,16 +30,23 @@ namespace PrismaEngine
 		void scale(float factor);
 		void scale(float scaleX, float scaleY, float scaleZ);
 
-		const Matrix4f& getMatrix() const;
-		Vector3f getRight() const;
-		Vector3f getUp() const;
-		Vector3f getForward() const;
+		Matrix4f getMatrix() const;
+		const Vector3f& getRight() const;
+		const Vector3f& getUp() const;
+		const Vector3f& getForward() const;
 
-		Vector3f getPosition() const;
+		const Vector3f& getPosition() const;
 		Matrix3f getRotation() const;
 		void getRotation(float& pitch, float& yaw);
+		const Vector3f& getScale() const;
+
+		Transform getInverse() const;
 
 	private:
-		Matrix4f m_matrix;
+		Vector3f m_position;
+		Vector3f m_right;
+		Vector3f m_up;
+		Vector3f m_forward;
+		Vector3f m_scale;
 	};
 }

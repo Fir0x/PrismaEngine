@@ -20,7 +20,7 @@ namespace PrismaEngine
 		Vector3f forward() const;
 		Vector3f position() const;
 
-		const Matrix4f& viewMatrix() const;
+		Matrix4f viewMatrix() const;
 		const Matrix4f& projectionMatrix() const;
 
 		void translate(const Vector3f& translation);

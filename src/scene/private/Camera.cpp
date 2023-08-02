@@ -60,12 +60,15 @@ namespace PrismaEngine
 
 	Vector3f Camera::forward() const
 	{
-		return -m_transform.getForward();
+		return m_transform.getForward();
 	}
 
-	const Matrix4f& Camera::viewMatrix() const
+	Matrix4f Camera::viewMatrix() const
 	{
-		return m_transform.getMatrix();
+		Transform tmp = m_transform;
+		tmp.setRotation(tmp.getRight(), tmp.getUp(), -tmp.getForward());
+
+		return tmp.getInverse().getMatrix();
 	}
 
 	const Matrix4f& Camera::projectionMatrix() const
@@ -80,7 +83,7 @@ namespace PrismaEngine
 
 	void Camera::translate(const Vector3f& translation)
 	{
-		m_transform.translate(-translation);
+		m_transform.translate(translation);
 	}
 
 	void Camera::translate(float x, float y, float z)
@@ -111,26 +114,15 @@ namespace PrismaEngine
 		direction.z = yawCos * pitchCos;
 
 		lookAt(position() + direction);
-
-		Vector3f pos = m_transform.getPosition();
-		spdlog::info("Transform pos: {} {} {}", pos.x, pos.y, pos.z);
 	}
 
 	void Camera::lookAt(const Vector3f& target)
 	{
-		const Vector3f cameraPosition = -position();
-		const Vector3f forward = -(target - cameraPosition).normalize();
-		const Vector3f right = forward.cross(Vector3f(0.0f, 1.0f, 0.0f)).normalize();
-		const Vector3f up = right.cross(forward);
+		const Vector3f forward = (target - position()).normalize();
+		const Vector3f right = Vector3f(0.0f, 1.0f, 0.0f).cross(forward).normalize();
+		const Vector3f up = forward.cross(right);
 
-		Matrix4f transformMatrix(
-			right.x, up.x, forward.x, 0.0f,
-			right.y, up.y, forward.y, 0.0f,
-			right.z, up.z, forward.z, 0.0f,
-			-right.dot(cameraPosition), -up.dot(cameraPosition), -forward.dot(cameraPosition), 1.0f
-		);
-
-		m_transform.setMatrix(transformMatrix);
+		m_transform.setRotation(right, up, forward);
 	}
 
 	void Camera::getRotation(float& yaw, float& pitch)

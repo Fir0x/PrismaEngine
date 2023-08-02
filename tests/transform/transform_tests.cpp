@@ -12,7 +12,26 @@ TEST(TransformTests, DefaultInitialization)
 {
 	Transform transform;
 	const Matrix4f& matrix = transform.getMatrix();
-	EXPECT_EQ(matrix, Matrix4f::identity());
+
+	EXPECT_EQ(matrix.getValue(0,0), 1.0f);
+	EXPECT_EQ(matrix.getValue(0,1), 0.0f);
+	EXPECT_EQ(matrix.getValue(0,2), 0.0f);
+	EXPECT_EQ(matrix.getValue(0,3), 0.0f);
+
+	EXPECT_EQ(matrix.getValue(1,0), 0.0f);
+	EXPECT_EQ(matrix.getValue(1,1), 1.0f);
+	EXPECT_EQ(matrix.getValue(1,2), 0.0f);
+	EXPECT_EQ(matrix.getValue(1,3), 0.0f);
+
+	EXPECT_EQ(matrix.getValue(2,0), 0.0f);
+	EXPECT_EQ(matrix.getValue(2,1), 0.0f);
+	EXPECT_EQ(matrix.getValue(2,2), 1.0f);
+	EXPECT_EQ(matrix.getValue(2,3), 0.0f);
+
+	EXPECT_EQ(matrix.getValue(3,0), 0.0f);
+	EXPECT_EQ(matrix.getValue(3,1), 0.0f);
+	EXPECT_EQ(matrix.getValue(3,2), 0.0f);
+	EXPECT_EQ(matrix.getValue(3,3), 1.0f);
 }
 
 TEST(TransformTests, InitializationWithPosition)
@@ -31,7 +50,25 @@ TEST(TransformTests, InitializationWithPosition)
 
 	const Matrix4f& matrix = transform.getMatrix();
 
-	EXPECT_EQ(matrix, matrixRef);
+	EXPECT_EQ(matrix.getValue(0,0), matrixRef.getValue(0,0));
+	EXPECT_EQ(matrix.getValue(0,1), matrixRef.getValue(0,1));
+	EXPECT_EQ(matrix.getValue(0,2), matrixRef.getValue(0,2));
+	EXPECT_EQ(matrix.getValue(0,3), matrixRef.getValue(0,3));
+
+	EXPECT_EQ(matrix.getValue(1,0), matrixRef.getValue(1,0));
+	EXPECT_EQ(matrix.getValue(1,1), matrixRef.getValue(1,1));
+	EXPECT_EQ(matrix.getValue(1,2), matrixRef.getValue(1,2));
+	EXPECT_EQ(matrix.getValue(1,3), matrixRef.getValue(1,3));
+
+	EXPECT_EQ(matrix.getValue(2,0), matrixRef.getValue(2,0));
+	EXPECT_EQ(matrix.getValue(2,1), matrixRef.getValue(2,1));
+	EXPECT_EQ(matrix.getValue(2,2), matrixRef.getValue(2,2));
+	EXPECT_EQ(matrix.getValue(2,3), matrixRef.getValue(2,3));
+
+	EXPECT_EQ(matrix.getValue(3,0), matrixRef.getValue(3,0));
+	EXPECT_EQ(matrix.getValue(3,1), matrixRef.getValue(3,1));
+	EXPECT_EQ(matrix.getValue(3,2), matrixRef.getValue(3,2));
+	EXPECT_EQ(matrix.getValue(3,3), matrixRef.getValue(3,3));
 }
 
 TEST(TransformTests, Translation)
@@ -74,25 +111,25 @@ TEST(TransformTests, RotateWorldXSimple)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 
 	{
@@ -109,25 +146,25 @@ TEST(TransformTests, RotateWorldXSimple)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 }
 
@@ -152,25 +189,25 @@ TEST(TransformTests, RotateWorldX)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 
 	{
@@ -189,25 +226,25 @@ TEST(TransformTests, RotateWorldX)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 }
 
@@ -230,25 +267,25 @@ TEST(TransformTests, RotateWorldYSimple)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 
 	{
@@ -265,25 +302,25 @@ TEST(TransformTests, RotateWorldYSimple)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 }
 
@@ -309,25 +346,25 @@ TEST(TransformTests, RotateWorldY)
 
 		constexpr float epsilon = 1e-5f;
 
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 
 	{
@@ -347,25 +384,25 @@ TEST(TransformTests, RotateWorldY)
 
 		constexpr float epsilon = 1e-5f;
 
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 }
 
@@ -388,25 +425,25 @@ TEST(TransformTests, RotateWorldZSimple)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 
 	{
@@ -423,25 +460,25 @@ TEST(TransformTests, RotateWorldZSimple)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 }
 
@@ -466,25 +503,25 @@ TEST(TransformTests, RotateWorldZ)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 
 	{
@@ -503,25 +540,25 @@ TEST(TransformTests, RotateWorldZ)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 }
 
@@ -628,25 +665,25 @@ TEST(TransformTests, RotateWorldCombine)
 	const Matrix4f& matrix = transform.getMatrix();
 
 	constexpr float epsilon = 1e-5f;
-	EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-	EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-	EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-	EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-	EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-	EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-	EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-	EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-	EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-	EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-	EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-	EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-	EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 }
 
 TEST(TransformTests, SetRotationFloat)
@@ -707,25 +744,25 @@ TEST(TransformTests, SetRotationFloat)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 
 	transform.setRotation(angleX, angleY, angleZ);
@@ -734,25 +771,25 @@ TEST(TransformTests, SetRotationFloat)
 		const Matrix4f& matrix = transform.getMatrix();
 
 		constexpr float epsilon = 1e-5f;
-		EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-		EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-		EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-		EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-		EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-		EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-		EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-		EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-		EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-		EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-		EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-		EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-		EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-		EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+		EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+		EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 	}
 }
 
@@ -770,25 +807,25 @@ TEST(TransformTests, SetRotationMatrix)
 
 	const Matrix4f& matrix = transform.getMatrix();
 
-	EXPECT_EQ(matrix.data[0][0], axisX.x);
-	EXPECT_EQ(matrix.data[0][1], axisX.y);
-	EXPECT_EQ(matrix.data[0][2], axisX.z);
-	EXPECT_EQ(matrix.data[0][3], 0.0f);
+	EXPECT_EQ(matrix.getValue(0,0), axisX.x);
+	EXPECT_EQ(matrix.getValue(0,1), axisX.y);
+	EXPECT_EQ(matrix.getValue(0,2), axisX.z);
+	EXPECT_EQ(matrix.getValue(0,3), 0.0f);
 
-	EXPECT_EQ(matrix.data[1][0], axisY.x);
-	EXPECT_EQ(matrix.data[1][1], axisY.y);
-	EXPECT_EQ(matrix.data[1][2], axisY.z);
-	EXPECT_EQ(matrix.data[1][3], 0.0f);
+	EXPECT_EQ(matrix.getValue(1,0), axisY.x);
+	EXPECT_EQ(matrix.getValue(1,1), axisY.y);
+	EXPECT_EQ(matrix.getValue(1,2), axisY.z);
+	EXPECT_EQ(matrix.getValue(1,3), 0.0f);
 
-	EXPECT_EQ(matrix.data[2][0], axisZ.x);
-	EXPECT_EQ(matrix.data[2][1], axisZ.y);
-	EXPECT_EQ(matrix.data[2][2], axisZ.z);
-	EXPECT_EQ(matrix.data[2][3], 0.0f);
+	EXPECT_EQ(matrix.getValue(2,0), axisZ.x);
+	EXPECT_EQ(matrix.getValue(2,1), axisZ.y);
+	EXPECT_EQ(matrix.getValue(2,2), axisZ.z);
+	EXPECT_EQ(matrix.getValue(2,3), 0.0f);
 
-	EXPECT_EQ(matrix.data[3][0], position.x);
-	EXPECT_EQ(matrix.data[3][1], position.y);
-	EXPECT_EQ(matrix.data[3][2], position.z);
-	EXPECT_EQ(matrix.data[3][3], 1.0f);
+	EXPECT_EQ(matrix.getValue(3,0), position.x);
+	EXPECT_EQ(matrix.getValue(3,1), position.y);
+	EXPECT_EQ(matrix.getValue(3,2), position.z);
+	EXPECT_EQ(matrix.getValue(3,3), 1.0f);
 }
 
 TEST(TransformTests, ScaleUniform)
@@ -808,25 +845,25 @@ TEST(TransformTests, ScaleUniform)
 	const Matrix4f& matrix = transform.getMatrix();
 
 	constexpr float epsilon = 1e-5f;
-	EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-	EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-	EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-	EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-	EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-	EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-	EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-	EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-	EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-	EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-	EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-	EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-	EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 }
 
 TEST(TransformTests, ScaleNonUniform)
@@ -848,25 +885,25 @@ TEST(TransformTests, ScaleNonUniform)
 	const Matrix4f& matrix = transform.getMatrix();
 
 	constexpr float epsilon = 1e-5f;
-	EXPECT_NEAR(matrix.data[0][0], matrixRef.data[0][0], epsilon);
-	EXPECT_NEAR(matrix.data[0][1], matrixRef.data[0][1], epsilon);
-	EXPECT_NEAR(matrix.data[0][2], matrixRef.data[0][2], epsilon);
-	EXPECT_NEAR(matrix.data[0][3], matrixRef.data[0][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(0,0), matrixRef.getValue(0,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,1), matrixRef.getValue(0,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,2), matrixRef.getValue(0,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(0,3), matrixRef.getValue(0,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[1][0], matrixRef.data[1][0], epsilon);
-	EXPECT_NEAR(matrix.data[1][1], matrixRef.data[1][1], epsilon);
-	EXPECT_NEAR(matrix.data[1][2], matrixRef.data[1][2], epsilon);
-	EXPECT_NEAR(matrix.data[1][3], matrixRef.data[1][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(1,0), matrixRef.getValue(1,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,1), matrixRef.getValue(1,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,2), matrixRef.getValue(1,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(1,3), matrixRef.getValue(1,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[2][0], matrixRef.data[2][0], epsilon);
-	EXPECT_NEAR(matrix.data[2][1], matrixRef.data[2][1], epsilon);
-	EXPECT_NEAR(matrix.data[2][2], matrixRef.data[2][2], epsilon);
-	EXPECT_NEAR(matrix.data[2][3], matrixRef.data[2][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(2,0), matrixRef.getValue(2,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,1), matrixRef.getValue(2,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,2), matrixRef.getValue(2,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(2,3), matrixRef.getValue(2,3), epsilon);
 
-	EXPECT_NEAR(matrix.data[3][0], matrixRef.data[3][0], epsilon);
-	EXPECT_NEAR(matrix.data[3][1], matrixRef.data[3][1], epsilon);
-	EXPECT_NEAR(matrix.data[3][2], matrixRef.data[3][2], epsilon);
-	EXPECT_NEAR(matrix.data[3][3], matrixRef.data[3][3], epsilon);
+	EXPECT_NEAR(matrix.getValue(3,0), matrixRef.getValue(3,0), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,1), matrixRef.getValue(3,1), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,2), matrixRef.getValue(3,2), epsilon);
+	EXPECT_NEAR(matrix.getValue(3,3), matrixRef.getValue(3,3), epsilon);
 }
 
 TEST(TransformTests, GetBasisVectorsIdentity)
@@ -961,15 +998,15 @@ TEST(TransformTests, GetRotation)
 
 	const Matrix3f rotationMatrix = transform.getRotation();
 
-	EXPECT_EQ(rotationMatrix.data[0][0], rotationMatrixRef.data[0][0]);
-	EXPECT_EQ(rotationMatrix.data[0][1], rotationMatrixRef.data[0][1]);
-	EXPECT_EQ(rotationMatrix.data[0][2], rotationMatrixRef.data[0][2]);
+	EXPECT_EQ(rotationMatrix.getValue(0,0), rotationMatrixRef.getValue(0,0));
+	EXPECT_EQ(rotationMatrix.getValue(0,1), rotationMatrixRef.getValue(0,1));
+	EXPECT_EQ(rotationMatrix.getValue(0,2), rotationMatrixRef.getValue(0,2));
 
-	EXPECT_EQ(rotationMatrix.data[1][0], rotationMatrixRef.data[1][0]);
-	EXPECT_EQ(rotationMatrix.data[1][1], rotationMatrixRef.data[1][1]);
-	EXPECT_EQ(rotationMatrix.data[1][2], rotationMatrixRef.data[1][2]);
+	EXPECT_EQ(rotationMatrix.getValue(1,0), rotationMatrixRef.getValue(1,0));
+	EXPECT_EQ(rotationMatrix.getValue(1,1), rotationMatrixRef.getValue(1,1));
+	EXPECT_EQ(rotationMatrix.getValue(1,2), rotationMatrixRef.getValue(1,2));
 
-	EXPECT_EQ(rotationMatrix.data[2][0], rotationMatrixRef.data[2][0]);
-	EXPECT_EQ(rotationMatrix.data[2][1], rotationMatrixRef.data[2][1]);
-	EXPECT_EQ(rotationMatrix.data[2][2], rotationMatrixRef.data[2][2]);
+	EXPECT_EQ(rotationMatrix.getValue(2,0), rotationMatrixRef.getValue(2,0));
+	EXPECT_EQ(rotationMatrix.getValue(2,1), rotationMatrixRef.getValue(2,1));
+	EXPECT_EQ(rotationMatrix.getValue(2,2), rotationMatrixRef.getValue(2,2));
 }
