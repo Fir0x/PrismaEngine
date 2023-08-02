@@ -304,9 +304,9 @@ namespace PrismaEngine::MeshUtilities
 				vertices.push_back(vertex);
 
 				// Ring creation
-				unsigned int rightIndex = vertices.size() - 1;
-				unsigned int leftIndex = rightIndex - 1;
-				unsigned int poleIndex = leftIndex - segmentCount;
+				unsigned int rightIndex = (unsigned int)vertices.size() - 1;
+				unsigned int leftIndex = (unsigned int)rightIndex - 1;
+				unsigned int poleIndex = (unsigned int)(leftIndex - segmentCount);
 
 				indices.push_back(leftIndex);
 				indices.push_back(poleIndex);
@@ -341,10 +341,10 @@ namespace PrismaEngine::MeshUtilities
 					vertices.push_back(vertex);
 
 					// Ring creation
-					unsigned int topRightIndex = vertices.size() - 1;
-					unsigned int topLeftIndex = topRightIndex - 1;
-					unsigned int bottomLeftIndex = topLeftIndex - segmentCount - 1;
-					unsigned int bottomRightIndex = bottomLeftIndex + 1;
+					unsigned int topRightIndex = (unsigned int)vertices.size() - 1;
+					unsigned int topLeftIndex = (unsigned int)topRightIndex - 1;
+					unsigned int bottomLeftIndex = (unsigned int)(topLeftIndex - segmentCount - 1);
+					unsigned int bottomRightIndex = (unsigned int)bottomLeftIndex + 1;
 
 					indices.push_back(topLeftIndex);
 					indices.push_back(bottomLeftIndex);
@@ -369,9 +369,9 @@ namespace PrismaEngine::MeshUtilities
 				vertices.push_back(vertex);
 
 				// Ring creation
-				unsigned int poleIndex = vertices.size() - 1;
-				unsigned int rightIndex = poleIndex - segmentCount;
-				unsigned int leftIndex = rightIndex - 1;
+				unsigned int poleIndex = (unsigned int)vertices.size() - 1;
+				unsigned int rightIndex = (unsigned int)(poleIndex - segmentCount);
+				unsigned int leftIndex = (unsigned int)rightIndex - 1;
 
 				indices.push_back(rightIndex);
 				indices.push_back(poleIndex);

@@ -118,6 +118,11 @@ message(STATUS "Dependencies configuration done")
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(global_config INTERFACE)
+if (MSVC)
+	target_compile_options(global_config INTERFACE "/WX")
+else()
+	target_compile_options(global_config INTERFACE "-Wall -Wextra -Werror")
+endif()
 include_directories(global_config INTERFACE src)
 
 add_subdirectory(src)
