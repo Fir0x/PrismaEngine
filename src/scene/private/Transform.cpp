@@ -156,12 +156,12 @@ namespace PrismaEngine
 
 	Transform Transform::getInverse() const
 	{
-		Vector3f inversePosition(-m_right.dot(m_position), -m_up.dot(m_position), -m_forward.dot(m_position));
-		Transform result(inversePosition);
-		result.m_right = Vector3f(m_right.x, m_up.x, -m_forward.x);
-		result.m_up = Vector3f(m_right.y, m_up.y, -m_forward.y);
-		result.m_forward = Vector3f(m_right.z, m_up.z, -m_forward.z);
+		Transform result;
+		result.m_right = Vector3f(m_right.x, m_up.x, m_forward.x);
+		result.m_up = Vector3f(m_right.y, m_up.y, m_forward.y);
+		result.m_forward = Vector3f(m_right.z, m_up.z, m_forward.z);
 		result.m_scale = 1.0f / m_scale;
+		result.m_position = Vector3f(-m_right.dot(m_position), -m_up.dot(m_position), -m_forward.dot(m_position)) * result.m_scale;
 
 		return result;
 	}
