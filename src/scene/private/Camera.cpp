@@ -40,7 +40,7 @@ namespace PrismaEngine
 
 	void Camera::initialize(const Matrix4f& frustum, const Vector3f& pos, float yaw, float pitch)
 	{
-		m_yaw = 0.0f;
+		m_yaw = -90.0f;
 		m_pitch = 0.0f;
 		m_projMatrix = frustum;
 		m_transform = Transform(pos);
@@ -102,16 +102,16 @@ namespace PrismaEngine
 		while (m_yaw > 360.0f)
 			m_yaw -= 360.0f;
 
-		// If yaw and pitch are 0, the camera look at +Z axis
+		// If yaw and pitch are 0, the camera look at +X axis
 		Vector3f direction;
 		float yawCos = cos(degreesToRadians(m_yaw));
 		float yawSin = sin(degreesToRadians(m_yaw));
 		float pitchCos = cos(degreesToRadians(m_pitch));
 		float pitchSin = sin(degreesToRadians(m_pitch));
 
-		direction.x = yawSin * pitchCos;
+		direction.x = yawCos * pitchCos;
 		direction.y = pitchSin;
-		direction.z = yawCos * pitchCos;
+		direction.z = yawSin * pitchCos;
 
 		lookAt(position() + direction);
 	}
@@ -119,8 +119,8 @@ namespace PrismaEngine
 	void Camera::lookAt(const Vector3f& target)
 	{
 		const Vector3f forward = (target - position()).normalize();
-		const Vector3f right = Vector3f(0.0f, 1.0f, 0.0f).cross(forward).normalize();
-		const Vector3f up = forward.cross(right);
+		const Vector3f right = forward.cross(Vector3f(0.0f, 1.0f, 0.0f)).normalize();
+		const Vector3f up = right.cross(forward);
 
 		m_transform.setRotation(right, up, forward);
 	}
