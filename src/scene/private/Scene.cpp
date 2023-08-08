@@ -56,14 +56,16 @@ namespace PrismaEngine
 		TypedBuffer<ShaderDefs::FrameContext> contextBuffer(&context, 1);
 		contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
 
+		const Matrix4f transposedView = camera.viewMatrix().transpose();
+
 		for (const auto& light : m_directionaLights)
-			light.draw(camera.viewMatrix());
+			light.draw(transposedView);
 
 		std::vector<ShaderDefs::PointLight> mappedLights;
 		for (const auto& light : m_pointLights)
 		{
 			ShaderDefs::PointLight mappedLight;
-			mappedLight.position = camera.viewMatrix() * Vector4f(light.position(), 1.0f);
+			mappedLight.position = transposedView * Vector4f(light.position(), 1.0f);
 			mappedLight.radius = light.radius();
 			mappedLight.color = light.color();
 			light.coefficients(mappedLight.linear, mappedLight.quadratic);

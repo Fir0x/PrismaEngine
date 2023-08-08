@@ -30,7 +30,7 @@ vec3 lightContribution(PointLight light, vec3 position, vec3 normal)
 	float lightDistance = length(light.position - position);
 
 	vec3 diffuse = max(dot(lightDir, normal), 0.0) * light.color;
-	//diffuse *= attenuation(lightDistance, light.linear, light.quadratic);
+	diffuse *= attenuation(lightDistance, light.linear, light.quadratic);
 
 	vec3 viewDir = normalize(-position);
 	vec3 reflectedDir = reflect(-lightDir, normal);
@@ -38,7 +38,7 @@ vec3 lightContribution(PointLight light, vec3 position, vec3 normal)
 	float specularStrength = 0.5;
 	vec3 specular = specularStrength * spec * light.color;
 
-	return diffuse;
+	return diffuse + specular;
 }
 
 vec3 remapNormal(vec3 normal) {
