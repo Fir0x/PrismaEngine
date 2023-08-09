@@ -165,4 +165,23 @@ namespace PrismaEngine
 
 		return result;
 	}
+
+	Vector3f Transform::transformPoint(const Matrix4f& m, const Vector3f& p)
+	{
+		Vector3f x = m.getRow(0) * p.x;
+		Vector3f y = m.getRow(1) * p.y;
+		Vector3f z = m.getRow(2) * p.z;
+		Vector3f w = m.getRow(3);
+
+		return x + y + z + w;
+	}
+
+	Vector3f Transform::transformDirection(const Matrix4f& m, const Vector3f& direction)
+	{
+		Vector3f x = m.getRow(0) * direction.x;
+		Vector3f y = m.getRow(1) * direction.y;
+		Vector3f z = m.getRow(2) * direction.z;
+
+		return x + y + z;
+	}
 }

@@ -42,6 +42,9 @@ namespace PrismaEngine
 
 		Transform getInverse() const;
 
+		static Vector3f transformPoint(const Matrix4f& m, const Vector3f& p);
+		static Vector3f transformDirection(const Matrix4f& m, const Vector3f& direction);
+
 	private:
 		Vector3f m_position;
 		Vector3f m_right;

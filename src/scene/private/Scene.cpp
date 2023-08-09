@@ -59,13 +59,13 @@ namespace PrismaEngine
 		const Matrix4f transposedView = camera.viewMatrix().transpose();
 
 		for (const auto& light : m_directionaLights)
-			light.draw(transposedView);
+			light.draw(context.camera.viewMatrix);
 
 		std::vector<ShaderDefs::PointLight> mappedLights;
 		for (const auto& light : m_pointLights)
 		{
 			ShaderDefs::PointLight mappedLight;
-			mappedLight.position = transposedView * Vector4f(light.position(), 1.0f);
+			mappedLight.position = Transform::transformPoint(context.camera.viewMatrix, light.position());
 			mappedLight.radius = light.radius();
 			mappedLight.color = light.color();
 			light.coefficients(mappedLight.linear, mappedLight.quadratic);
