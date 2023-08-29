@@ -77,4 +77,17 @@ namespace PrismaEngine
 		for (unsigned int i = 0; i < m_pointLights.size(); i++)
 			m_pointLights[i].draw(i);
 	}
+
+	void Scene::drawWireframes(const Camera& camera, const Vector2i& windowSizes) const
+	{
+		ShaderDefs::FrameContext context;
+		size_t test = sizeof(ShaderDefs::FrameContext);
+		context.camera.viewMatrix = camera.viewMatrix();
+		context.camera.projectionMatrix = camera.projectionMatrix().transpose();
+		context.viewport.width = windowSizes.x;
+		context.viewport.height = windowSizes.y;
+
+		TypedBuffer<ShaderDefs::FrameContext> contextBuffer(&context, 1);
+		contextBuffer.bind<BufferUsageType::UniformBuffer>(0);
+	}
 }

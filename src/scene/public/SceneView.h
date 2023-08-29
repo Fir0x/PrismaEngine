@@ -19,6 +19,7 @@ namespace PrismaEngine
 
 		void renderGeometry(const Vector2i& windowSizes) const;
 		void renderLights(const Vector2i& windowSizes) const;
+		void renderWireframes(const Vector2i& windowSizes) const;
 
 	private:
 		const Scene& m_scene;

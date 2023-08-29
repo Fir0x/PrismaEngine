@@ -106,19 +106,16 @@ namespace PrismaEngine
 		switch (m_blendMode) {
 		case BlendMode::None:
 			glDisable(GL_BLEND);
-			glEnable(GL_CULL_FACE);
 			break;
 
-		case BlendMode::Alpha:
+		case BlendMode::AlphaTop:
 			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glDisable(GL_CULL_FACE);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA);
 			break;
 
 		case BlendMode::Add:
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_COLOR, GL_ONE);
-			glEnable(GL_CULL_FACE);
 			break;
 		}
 

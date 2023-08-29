@@ -13,7 +13,7 @@ namespace PrismaEngine
 		enum class BlendMode
 		{
 			None,
-			Alpha,
+			AlphaTop,
 			Add,
 		};
 

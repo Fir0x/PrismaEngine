@@ -77,8 +77,13 @@ int main(void)
         Material material(gBufferProgram);
         //material.setTexture(0, albedoTex);
         //material.setTexture(1, normalTex);
+
+        auto wireframeProgram = Program::fromFiles("shaders/basic.vert", "shaders/wireframe.geom", "shaders/wireframe.frag");
+        Material wireframeMat(wireframeProgram, Material::BlendMode::AlphaTop);
+        wireframeMat.setUniform("color", Vector3f(1.0f, 0.0f, 0.0f));
+
         auto mesh = MeshUtilities::staticCube();//MeshUtilities::staticSphere(32,16);
-        MeshRenderer renderer(mesh, material);
+        MeshRenderer renderer(mesh, wireframeMat);
         SceneObject planeObject(renderer);
 
         scene.addObject(planeObject);

@@ -31,4 +31,9 @@ namespace PrismaEngine
 	{
 		m_scene.drawLights(m_camera, windowSizes);
 	}
+
+	void SceneView::renderWireframes(const Vector2i& windowSizes) const
+	{
+		m_scene.drawWireframes(m_camera, windowSizes);
+	}
 }

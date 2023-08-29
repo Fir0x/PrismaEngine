@@ -21,6 +21,7 @@ namespace PrismaEngine
 
 		void drawGeometry(const Camera& camera, const Vector2i& windowSizes) const;
 		void drawLights(const Camera& camera, const Vector2i& windowSizes) const;
+		void drawWireframes(const Camera& camera, const Vector2i& windowSizes) const;
 
 	private:
 		std::vector<SceneObject> m_objects;
