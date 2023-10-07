@@ -57,12 +57,12 @@ namespace PrismaEngine
 
 		float magnitude() const
 		{
-			return std::sqrt(x * x + y * y);
+			return static_cast<float>(std::sqrt(x * x + y * y));
 		}
 
 		float dot(const Vector2& other) const
 		{
-			return x * other.x + y * other.y;
+			return static_cast<float>(x * other.x + y * other.y);
 		}
 
 	public:
