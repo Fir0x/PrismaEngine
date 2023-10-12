@@ -9,12 +9,11 @@ namespace PrismaEngine
 
 	Quaternion::Quaternion(const Vector3f& axis, const float angle)
 	{
-		identity();
 	}
 
 	Quaternion Quaternion::identity()
 	{
-		return Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+		return Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
 	}
 
 	Quaternion Quaternion::fromEuler(const float x, const float y, const float z)
@@ -24,6 +23,7 @@ namespace PrismaEngine
 
 	void Quaternion::normalize()
 	{
+
 	}
 
 	bool Quaternion::isNormalized() const
@@ -43,27 +43,47 @@ namespace PrismaEngine
 
 	Vector3f Quaternion::getRotatedRight() const
 	{
-		return Vector3f();
+		return Vector3f::zero();
 	}
 
 	Vector3f Quaternion::getRotatedUp() const
 	{
-		return Vector3f();
+		return Vector3f::zero();
 	}
 
 	Vector3f Quaternion::getRotatedForward() const
 	{
-		return Vector3f();
+		return Vector3f::zero();
 	}
 
 	Vector3f Quaternion::toEuler() const
 	{
-		return Vector3f();
+		return Vector3f::zero();
 	}
 
 	Matrix3f Quaternion::toMatrix() const
 	{
-		return Matrix3f();
+		return Matrix3f::identity();
+	}
+
+	float Quaternion::getX() const
+	{
+		return m_x;
+	}
+
+	float Quaternion::getY() const
+	{
+		return m_y;
+	}
+
+	float Quaternion::getZ() const
+	{
+		return m_z;
+	}
+
+	float Quaternion::getW() const
+	{
+		return m_w;
 	}
 
 	Quaternion Quaternion::operator+(const Quaternion& rhs) const
@@ -71,9 +91,9 @@ namespace PrismaEngine
 		return identity();
 	}
 
-	Quaternion Quaternion::operator+=(const Quaternion& rhs)
+	Quaternion& Quaternion::operator+=(const Quaternion& rhs)
 	{
-		return identity();
+		return *this;
 	}
 
 	Quaternion Quaternion::operator-(const Quaternion& rhs) const
@@ -81,9 +101,9 @@ namespace PrismaEngine
 		return identity();
 	}
 
-	Quaternion Quaternion::operator-=(const Quaternion& rhs)
+	Quaternion& Quaternion::operator-=(const Quaternion& rhs)
 	{
-		return identity();
+		return *this;
 	}
 
 	Quaternion Quaternion::operator*(const Quaternion& rhs) const
@@ -91,14 +111,24 @@ namespace PrismaEngine
 		return identity();
 	}
 
-	Quaternion Quaternion::operator*=(const Quaternion& rhs)
+	Quaternion& Quaternion::operator*=(const Quaternion& rhs)
 	{
-		return identity();
+		return *this;
 	}
 
 	Quaternion Quaternion::operator*(const float scale) const
 	{
 		return identity();
+	}
+	
+	Quaternion operator*(const float scale, const Quaternion& quat)
+	{
+		return Quaternion::identity();
+	}
+
+	Quaternion& Quaternion::operator*=(const float scale)
+	{
+		return *this;
 	}
 
 	Quaternion Quaternion::operator/(const float scale) const
@@ -106,18 +136,19 @@ namespace PrismaEngine
 		return identity();
 	}
 
-	Quaternion Quaternion::operator==(const Quaternion& rhs) const
+	Quaternion& Quaternion::operator/=(const float scale)
 	{
-		return identity();
+		return *this;
 	}
 
-	Quaternion Quaternion::operator!=(const Quaternion& rhs) const
+	bool Quaternion::operator==(const Quaternion& rhs) const
 	{
-		return identity();
+		return false;
 	}
 
-	Quaternion operator*(const float scale, const Quaternion& quat)
+	bool Quaternion::operator!=(const Quaternion& rhs) const
 	{
-		return Quaternion::identity();
+		return false;
 	}
+
 }

@@ -34,16 +34,23 @@ namespace PrismaEngine
 		Vector3f toEuler() const;
 		Matrix3f toMatrix() const;
 
+		float getX() const;
+		float getY() const;
+		float getZ() const;
+		float getW() const;
+
 		Quaternion operator+(const Quaternion& rhs) const;
-		Quaternion operator+=(const Quaternion& rhs);
+		Quaternion& operator+=(const Quaternion& rhs);
 		Quaternion operator-(const Quaternion& rhs) const;
-		Quaternion operator-=(const Quaternion& rhs);
+		Quaternion& operator-=(const Quaternion& rhs);
 		Quaternion operator*(const Quaternion& rhs) const;
-		Quaternion operator*=(const Quaternion& rhs);
+		Quaternion& operator*=(const Quaternion& rhs);
 		Quaternion operator*(const float scale) const;
+		Quaternion& operator*=(const float scale);
 		Quaternion operator/(const float scale) const;
-		Quaternion operator==(const Quaternion& rhs) const;
-		Quaternion operator!=(const Quaternion& rhs) const;
+		Quaternion& operator/=(const float scale);
+		bool operator==(const Quaternion& rhs) const;
+		bool operator!=(const Quaternion& rhs) const;
 
 	private:
 		float m_w;
