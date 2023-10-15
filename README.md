@@ -1,4 +1,4 @@
-# Beryl Engine
+# Prisma Engine
 
 ## Dependencies
 - GLEW
