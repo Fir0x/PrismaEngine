@@ -6,18 +6,14 @@ namespace PrismaEngine
 {
 	Transform::Transform()
 		: m_position(Vector3f::zero()),
-		m_right(Vector3f::right()),
-		m_up(Vector3f::up()),
-		m_forward(Vector3f::forward()),
+		m_quaternion(Quaternion::identity()),
 		m_scale(Vector3f::one())
 	{
 	}
 
 	Transform::Transform(const Vector3f& position)
 		: m_position(position),
-		m_right(Vector3f::right()),
-		m_up(Vector3f::up()),
-		m_forward(Vector3f::forward()),
+		m_quaternion(Quaternion::identity()),
 		m_scale(Vector3f::one())
 	{
 	}
@@ -63,46 +59,23 @@ namespace PrismaEngine
 
 	void Transform::rotate(float angleX, float angleY, float angleZ)
 	{
-		Matrix3f rotation(m_right, m_up, m_forward);
-		if (angleZ != 0)
-			rotation = rotateMatrixAroundAxis(rotation, getForward(), angleZ);
-
-		if (angleY != 0)
-			rotation = rotateMatrixAroundAxis(rotation, getUp(), angleY);
-
-		if (angleX != 0)
-			rotation = rotateMatrixAroundAxis(rotation, getRight(), angleX);
-
-		setRotation(rotation);
+		m_quaternion = Quaternion::fromEuler(angleX, angleY, angleZ) * m_quaternion;
 	}
 
 	void Transform::setRotation(float angleX, float angleY, float angleZ)
 	{
-		Matrix3f rotation = Matrix3f::identity();
-		if (angleZ != 0)
-			rotation = rotateMatrixAroundAxis(rotation, Vector3f(0.0f, 0.0f, 1.0f), angleZ);
-
-		if (angleY != 0)
-			rotation = rotateMatrixAroundAxis(rotation, Vector3f(0.0f, 1.0f, 0.0f), angleY);
-
-		if (angleX != 0)
-			rotation = rotateMatrixAroundAxis(rotation, Vector3f(1.0f, 0.0f, 0.0f), angleX);
-
-		setRotation(rotation);
+		m_quaternion = Quaternion::fromEuler(angleX, angleY, angleZ);
 	}
 
 	void Transform::setRotation(const Vector3f& right, const Vector3f& up, const Vector3f& forward)
 	{
-		m_right = right;
-		m_up = up;
-		m_forward = forward;
+		Matrix3f rotationMatrix(right, up, forward);
+		m_quaternion = Quaternion(rotationMatrix);
 	}
 
 	void Transform::setRotation(const Matrix3f& rotationMatrix)
 	{
-		m_right = rotationMatrix.getRow(0);
-		m_up = rotationMatrix.getRow(1);
-		m_forward = rotationMatrix.getRow(2);
+		m_quaternion = Quaternion(rotationMatrix);
 	}
 
 	void Transform::scale(float factor)
@@ -117,26 +90,26 @@ namespace PrismaEngine
 
 	Matrix4f Transform::getMatrix() const
 	{
-		Vector3f scaledRight = m_scale * m_right;
-		Vector3f scaledUp = m_scale * m_up;
-		Vector3f scaledForward = m_scale * m_forward;
+		Vector3f scaledRight = m_scale * m_quaternion.getRotatedRight();
+		Vector3f scaledUp = m_scale * m_quaternion.getRotatedUp();
+		Vector3f scaledForward = m_scale * m_quaternion.getRotatedForward();
 
 		return Matrix4f(scaledRight, scaledUp, scaledForward, Vector4f(m_position, 1.0f));
 	}
 
-	const Vector3f& Transform::getRight() const
+	Vector3f Transform::getRight() const
 	{
-		return m_right;
+		return m_quaternion.getRotatedRight();
 	}
 
-	const Vector3f& Transform::getUp() const
+	Vector3f Transform::getUp() const
 	{
-		return m_up;
+		return m_quaternion.getRotatedUp();
 	}
 
-	const Vector3f& Transform::getForward() const
+	Vector3f Transform::getForward() const
 	{
-		return m_forward;
+		return m_quaternion.getRotatedForward();
 	}
 
 	const Vector3f& Transform::getPosition() const
@@ -146,7 +119,7 @@ namespace PrismaEngine
 
 	Matrix3f Transform::getRotation() const
 	{
-		return Matrix3f(m_right, m_up, m_forward);
+		return m_quaternion.toMatrix();
 	}
 
 	const Vector3f& Transform::getScale() const
@@ -157,11 +130,11 @@ namespace PrismaEngine
 	Transform Transform::getInverse() const
 	{
 		Transform result;
-		result.m_right = Vector3f(m_right.x, m_up.x, m_forward.x);
-		result.m_up = Vector3f(m_right.y, m_up.y, m_forward.y);
-		result.m_forward = Vector3f(m_right.z, m_up.z, m_forward.z);
+		result.m_quaternion = m_quaternion.inverse();
 		result.m_scale = 1.0f / m_scale;
-		result.m_position = Vector3f(-m_right.dot(m_position), -m_up.dot(m_position), -m_forward.dot(m_position)) * result.m_scale;
+		result.m_position = Vector3f(-m_quaternion.getRotatedRight().dot(m_position),
+			-m_quaternion.getRotatedUp().dot(m_position),
+			-m_quaternion.getRotatedForward().dot(m_position)) * result.m_scale;
 
 		return result;
 	}

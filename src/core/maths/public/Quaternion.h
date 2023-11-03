@@ -14,7 +14,8 @@ namespace PrismaEngine
 		/// </summary>
 		/// <param name="axis"></param>
 		/// <param name="angle"></param>
-		Quaternion(const Vector3f& axis, const float angle);
+		Quaternion(const Vector3f& axis, const float angleDegree);
+		Quaternion(const Matrix3f& matrix);
 		/// <summary>
 		/// Return identity quaternion.
 		/// </summary>
@@ -24,6 +25,7 @@ namespace PrismaEngine
 
 		void normalize();
 		bool isNormalized() const;
+		float lengthSquared() const;
 		float length() const;
 
 		Quaternion inverse() const;

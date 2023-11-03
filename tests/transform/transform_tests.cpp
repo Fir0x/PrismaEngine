@@ -807,25 +807,26 @@ TEST(TransformTests, SetRotationMatrix)
 
 	const Matrix4f& matrix = transform.getMatrix();
 
-	EXPECT_EQ(matrix.getValue(0,0), axisX.x);
-	EXPECT_EQ(matrix.getValue(0,1), axisX.y);
-	EXPECT_EQ(matrix.getValue(0,2), axisX.z);
-	EXPECT_EQ(matrix.getValue(0,3), 0.0f);
+	constexpr float epsilon = 1e-5f;
+	EXPECT_NEAR(matrix.getValue(0,0), axisX.x, epsilon);
+	EXPECT_NEAR(matrix.getValue(0,1), axisX.y, epsilon);
+	EXPECT_NEAR(matrix.getValue(0,2), axisX.z, epsilon);
+	EXPECT_NEAR(matrix.getValue(0,3), 0.0f, epsilon);
 
-	EXPECT_EQ(matrix.getValue(1,0), axisY.x);
-	EXPECT_EQ(matrix.getValue(1,1), axisY.y);
-	EXPECT_EQ(matrix.getValue(1,2), axisY.z);
-	EXPECT_EQ(matrix.getValue(1,3), 0.0f);
+	EXPECT_NEAR(matrix.getValue(1,0), axisY.x, epsilon);
+	EXPECT_NEAR(matrix.getValue(1,1), axisY.y, epsilon);
+	EXPECT_NEAR(matrix.getValue(1,2), axisY.z, epsilon);
+	EXPECT_NEAR(matrix.getValue(1,3), 0.0f, epsilon);
 
-	EXPECT_EQ(matrix.getValue(2,0), axisZ.x);
-	EXPECT_EQ(matrix.getValue(2,1), axisZ.y);
-	EXPECT_EQ(matrix.getValue(2,2), axisZ.z);
-	EXPECT_EQ(matrix.getValue(2,3), 0.0f);
+	EXPECT_NEAR(matrix.getValue(2,0), axisZ.x, epsilon);
+	EXPECT_NEAR(matrix.getValue(2,1), axisZ.y, epsilon);
+	EXPECT_NEAR(matrix.getValue(2,2), axisZ.z, epsilon);
+	EXPECT_NEAR(matrix.getValue(2,3), 0.0f, epsilon);
 
-	EXPECT_EQ(matrix.getValue(3,0), position.x);
-	EXPECT_EQ(matrix.getValue(3,1), position.y);
-	EXPECT_EQ(matrix.getValue(3,2), position.z);
-	EXPECT_EQ(matrix.getValue(3,3), 1.0f);
+	EXPECT_NEAR(matrix.getValue(3,0), position.x, epsilon);
+	EXPECT_NEAR(matrix.getValue(3,1), position.y, epsilon);
+	EXPECT_NEAR(matrix.getValue(3,2), position.z, epsilon);
+	EXPECT_NEAR(matrix.getValue(3,3), 1.0f, epsilon);
 }
 
 TEST(TransformTests, ScaleUniform)
@@ -947,28 +948,29 @@ TEST(TransformTests, GetBasisVectorsModified)
 
 	transform.setRotation(rotationMatrix);
 
+	constexpr float epsilon = 1e-5f;
 	{
 		const Vector3f axis = transform.getRight();
 
-		EXPECT_EQ(axis.x, axisX.x);
-		EXPECT_EQ(axis.y, axisX.y);
-		EXPECT_EQ(axis.z, axisX.z);
+		EXPECT_NEAR(axis.x, axisX.x, epsilon);
+		EXPECT_NEAR(axis.y, axisX.y, epsilon);
+		EXPECT_NEAR(axis.z, axisX.z, epsilon);
 	}
 
 	{
 		const Vector3f axis = transform.getUp();
 
-		EXPECT_EQ(axis.x, axisY.x);
-		EXPECT_EQ(axis.y, axisY.y);
-		EXPECT_EQ(axis.z, axisY.z);
+		EXPECT_NEAR(axis.x, axisY.x, epsilon);
+		EXPECT_NEAR(axis.y, axisY.y, epsilon);
+		EXPECT_NEAR(axis.z, axisY.z, epsilon);
 	}
 
 	{
 		const Vector3f axis = transform.getForward();
 
-		EXPECT_EQ(axis.x, axisZ.x);
-		EXPECT_EQ(axis.y, axisZ.y);
-		EXPECT_EQ(axis.z, axisZ.z);
+		EXPECT_NEAR(axis.x, axisZ.x, epsilon);
+		EXPECT_NEAR(axis.y, axisZ.y, epsilon);
+		EXPECT_NEAR(axis.z, axisZ.z, epsilon);
 	}
 }
 
@@ -998,15 +1000,16 @@ TEST(TransformTests, GetRotation)
 
 	const Matrix3f rotationMatrix = transform.getRotation();
 
-	EXPECT_EQ(rotationMatrix.getValue(0,0), rotationMatrixRef.getValue(0,0));
-	EXPECT_EQ(rotationMatrix.getValue(0,1), rotationMatrixRef.getValue(0,1));
-	EXPECT_EQ(rotationMatrix.getValue(0,2), rotationMatrixRef.getValue(0,2));
+	constexpr float epsilon = 1e-5f;
+	EXPECT_NEAR(rotationMatrix.getValue(0,0), rotationMatrixRef.getValue(0,0), epsilon);
+	EXPECT_NEAR(rotationMatrix.getValue(0,1), rotationMatrixRef.getValue(0,1), epsilon);
+	EXPECT_NEAR(rotationMatrix.getValue(0,2), rotationMatrixRef.getValue(0,2), epsilon);
 
-	EXPECT_EQ(rotationMatrix.getValue(1,0), rotationMatrixRef.getValue(1,0));
-	EXPECT_EQ(rotationMatrix.getValue(1,1), rotationMatrixRef.getValue(1,1));
-	EXPECT_EQ(rotationMatrix.getValue(1,2), rotationMatrixRef.getValue(1,2));
+	EXPECT_NEAR(rotationMatrix.getValue(1,0), rotationMatrixRef.getValue(1,0), epsilon);
+	EXPECT_NEAR(rotationMatrix.getValue(1,1), rotationMatrixRef.getValue(1,1), epsilon);
+	EXPECT_NEAR(rotationMatrix.getValue(1,2), rotationMatrixRef.getValue(1,2), epsilon);
 
-	EXPECT_EQ(rotationMatrix.getValue(2,0), rotationMatrixRef.getValue(2,0));
-	EXPECT_EQ(rotationMatrix.getValue(2,1), rotationMatrixRef.getValue(2,1));
-	EXPECT_EQ(rotationMatrix.getValue(2,2), rotationMatrixRef.getValue(2,2));
+	EXPECT_NEAR(rotationMatrix.getValue(2,0), rotationMatrixRef.getValue(2,0), epsilon);
+	EXPECT_NEAR(rotationMatrix.getValue(2,1), rotationMatrixRef.getValue(2,1), epsilon);
+	EXPECT_NEAR(rotationMatrix.getValue(2,2), rotationMatrixRef.getValue(2,2), epsilon);
 }
