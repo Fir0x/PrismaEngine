@@ -590,13 +590,13 @@ namespace PrismaEngineTest
 		const float resultY = q.getY();
 		const float resultZ = q.getZ();
 
-		const float resultAngleX = rad2deg(std::asin(2.0f * (resultY * resultZ + resultW * resultX)));
+		const float resultAngleX = rad2deg(std::asin(2.0f * (resultW * resultX - resultY * resultZ)));
 		EXPECT_NEAR(resultAngleX, angleX, 5e-5);
 
-		const float resultAngleY = rad2deg(std::atan2(-2.0f * (resultX * resultZ - resultW * resultY), 1.0f - 2.0f * (resultX * resultX + resultY * resultY)));
+		const float resultAngleY = rad2deg(std::atan2(2.0f * (resultX * resultZ + resultW * resultY), 1.0f - 2.0f * (resultX * resultX + resultY * resultY)));
 		EXPECT_NEAR(resultAngleY, angleY, 5e-5);
 
-		const float resultAngleZ = rad2deg(std::atan2(-2.0f * (resultX * resultY - resultW * resultZ), 1.0f - 2.0f * (resultX * resultX + resultZ * resultZ)));
+		const float resultAngleZ = rad2deg(std::atan2(2.0f * (resultX * resultY + resultW * resultZ), 1.0f - 2.0f * (resultX * resultX + resultZ * resultZ)));
 		EXPECT_NEAR(resultAngleZ, angleZ, 5e-5);
 	}
 
@@ -612,10 +612,10 @@ namespace PrismaEngineTest
 		const float sy = std::sin(deg2rad(angleY * 0.5f));
 		const float cz = std::cos(deg2rad(angleZ * 0.5f));
 		const float sz = std::sin(deg2rad(angleZ * 0.5f));
-		const float w = cz * cx * cy - sz * sx * sy;
-		const float x = sx * cz * cy - sz * sy * cx;
-		const float y = sz * sx * cy + sy * cz * cx;
-		const float z = sz * cx * cy + sx * sy * cz;
+		const float w = sy * sx * sz + cy * cx * cz;
+		const float x = sy * sz * cx + sx * cy * cz;
+		const float y = sy * cx * cz - sx * sz * cy;
+		const float z = sz * cy * cx - sy * sx * cz;
 
 		const Quaternion q(w, x, y, z);
 

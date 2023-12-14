@@ -19,6 +19,12 @@ namespace PrismaEngine
 		void translate(const Vector3f& translation);
 		void translate(float x, float y, float z);
 		void rotate(float angleX, float angleY, float angleZ);
+		/**
+		 * @brief Rotation is set in YXZ order.
+		 * @param angleX 
+		 * @param angleY 
+		 * @param angleZ 
+		*/
 		void setRotation(float angleX, float angleY, float angleZ);
 		void setRotation(const Vector3f& rotation);
 		void setRotation(const Vector3f& right, const Vector3f& up, const Vector3f& forward);

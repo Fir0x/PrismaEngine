@@ -84,10 +84,10 @@ namespace PrismaEngine
 		const float cz = cos(halfRadZ);
 		const float sz = sin(halfRadZ);
 
-		const float qw = cz * cx * cy - sz * sx * sy;
-		const float qx = sx * cz * cy - sz * sy * cx;
-		const float qy = sz * sx * cy + sy * cz * cx;
-		const float qz = sz * cx * cy + sx * sy * cz;
+		const float qw = sy * sx * sz + cy * cx * cz;
+		const float qx = sy * sz * cx + sx * cy * cz;
+		const float qy = sy * cx * cz - sx * sz * cy;
+		const float qz = sz * cy * cx - sy * sx * cz;
 
 		return Quaternion(qw, qx, qy, qz);
 	}
@@ -147,9 +147,9 @@ namespace PrismaEngine
 
 	Vector3f Quaternion::toEuler() const
 	{
-		const float angleX = radiansToDegrees(asin(2.0f * (m_y * m_z + m_w * m_x)));
-		const float angleY = radiansToDegrees(atan2(-2.0f * (m_x * m_z - m_w * m_y), 1.0f - 2.0f * (m_x * m_x + m_y * m_y)));
-		const float angleZ = radiansToDegrees(atan2(-2.0f * (m_x * m_y - m_w * m_z), 1.0f - 2.0f * (m_x * m_x + m_z * m_z)));
+		const float angleX = radiansToDegrees(asin(2.0f * (m_w * m_x - m_y * m_z)));
+		const float angleY = radiansToDegrees(atan2(2.0f * (m_x * m_z + m_w * m_y), 1.0f - 2.0f * (m_x * m_x + m_y * m_y)));
+		const float angleZ = radiansToDegrees(atan2(2.0f * (m_x * m_y + m_w * m_z), 1.0f - 2.0f * (m_x * m_x + m_z * m_z)));
 		
 		return Vector3f(angleX, angleY, angleZ);
 	}

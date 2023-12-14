@@ -572,20 +572,6 @@ TEST(TransformTests, RotateWorldCombine)
 	transform.rotate(angleX, angleY, angleZ);
 
 	Matrix4f matrixRef = Matrix4f::identity();
-	{
-		const float angleCos = PrismaEngine::cos(degreesToRadians(angleZ));
-		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
-
-		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, angleSin, 0.0f, 0.0f,
-			-angleSin, angleCos, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		);
-
-		matrixRef = rotationMatrix * matrixRef;
-	}
-
 
 	{
 		const float angleCos = PrismaEngine::cos(degreesToRadians(angleY));
@@ -601,7 +587,6 @@ TEST(TransformTests, RotateWorldCombine)
 		matrixRef = rotationMatrix * matrixRef;
 	}
 
-
 	{
 		const float angleCos = PrismaEngine::cos(degreesToRadians(angleX));
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleX));
@@ -610,6 +595,20 @@ TEST(TransformTests, RotateWorldCombine)
 			1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, angleCos, angleSin, 0.0f,
 			0.0f, -angleSin, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+
+		matrixRef = rotationMatrix * matrixRef;
+	}
+
+	{
+		const float angleCos = PrismaEngine::cos(degreesToRadians(angleZ));
+		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
+
+		const Matrix4f rotationMatrix = Matrix4f(
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -619,21 +618,6 @@ TEST(TransformTests, RotateWorldCombine)
 	transform.rotate(angleX, angleY, angleZ);
 
 	{
-		const float angleCos = PrismaEngine::cos(degreesToRadians(angleZ));
-		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
-
-		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, angleSin, 0.0f, 0.0f,
-			-angleSin, angleCos, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		);
-
-		matrixRef = rotationMatrix * matrixRef;
-	}
-
-
-	{
 		const float angleCos = PrismaEngine::cos(degreesToRadians(angleY));
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleY));
 
@@ -647,7 +631,6 @@ TEST(TransformTests, RotateWorldCombine)
 		matrixRef = rotationMatrix * matrixRef;
 	}
 
-
 	{
 		const float angleCos = PrismaEngine::cos(degreesToRadians(angleX));
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleX));
@@ -656,6 +639,20 @@ TEST(TransformTests, RotateWorldCombine)
 			1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, angleCos, angleSin, 0.0f,
 			0.0f, -angleSin, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+
+		matrixRef = rotationMatrix * matrixRef;
+	}
+
+	{
+		const float angleCos = PrismaEngine::cos(degreesToRadians(angleZ));
+		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
+
+		const Matrix4f rotationMatrix = Matrix4f(
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
@@ -697,21 +694,6 @@ TEST(TransformTests, SetRotationFloat)
 	transform.setRotation(angleX, angleY, angleZ);
 
 	{
-		const float angleCos = PrismaEngine::cos(degreesToRadians(angleZ));
-		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
-
-		const Matrix4f rotationMatrix = Matrix4f(
-			angleCos, angleSin, 0.0f, 0.0f,
-			-angleSin, angleCos, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		);
-
-		matrixRef = rotationMatrix * matrixRef;
-	}
-
-
-	{
 		const float angleCos = PrismaEngine::cos(degreesToRadians(angleY));
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleY));
 
@@ -725,7 +707,6 @@ TEST(TransformTests, SetRotationFloat)
 		matrixRef = rotationMatrix * matrixRef;
 	}
 
-
 	{
 		const float angleCos = PrismaEngine::cos(degreesToRadians(angleX));
 		const float angleSin = PrismaEngine::sin(degreesToRadians(angleX));
@@ -734,6 +715,20 @@ TEST(TransformTests, SetRotationFloat)
 			1.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, angleCos, angleSin, 0.0f,
 			0.0f, -angleSin, angleCos, 0.0f,
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+
+		matrixRef = rotationMatrix * matrixRef;
+	}
+
+	{
+		const float angleCos = PrismaEngine::cos(degreesToRadians(angleZ));
+		const float angleSin = PrismaEngine::sin(degreesToRadians(angleZ));
+
+		const Matrix4f rotationMatrix = Matrix4f(
+			angleCos, angleSin, 0.0f, 0.0f,
+			-angleSin, angleCos, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
