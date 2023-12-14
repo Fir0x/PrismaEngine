@@ -132,9 +132,7 @@ namespace PrismaEngine
 		Transform result;
 		result.m_quaternion = m_quaternion.inverse();
 		result.m_scale = 1.0f / m_scale;
-		result.m_position = Vector3f(-m_quaternion.getRotatedRight().dot(m_position),
-			-m_quaternion.getRotatedUp().dot(m_position),
-			-m_quaternion.getRotatedForward().dot(m_position)) * result.m_scale;
+		result.m_position = -result.m_quaternion.rotateVector(m_position * result.m_scale);
 
 		return result;
 	}
