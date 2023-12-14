@@ -33,6 +33,7 @@ namespace PrismaEngine
 		Vector3f getRotatedRight() const;
 		Vector3f getRotatedUp() const;
 		Vector3f getRotatedForward() const;
+		Vector3f rotateVector(const Vector3f& v) const;
 		Vector3f toEuler() const;
 		Matrix3f toMatrix() const;
 

@@ -145,7 +145,15 @@ namespace PrismaEngine
 		return Vector3f(2.0f * (m_x * m_z + m_w * m_y), 2.0f * (m_y * m_z - m_w * m_x), 1.0f - 2.0f * (m_x * m_x + m_y * m_y));
 	}
 
-	Vector3f Quaternion::toEuler() const
+	Vector3f Quaternion::rotateVector(const Vector3f& v) const
+	{
+		Quaternion vecAsQuat(0.0f, v.x, v.y, v.z);
+		Quaternion tmp = (*this * vecAsQuat) * this->inverse();
+
+		return Vector3f(tmp.m_x, tmp.m_y, tmp.m_z);
+	}
+
+	Vector3f Quaternion::Quaternion::toEuler() const
 	{
 		const float angleX = radiansToDegrees(asin(2.0f * (m_w * m_x - m_y * m_z)));
 		const float angleY = radiansToDegrees(atan2(2.0f * (m_x * m_z + m_w * m_y), 1.0f - 2.0f * (m_x * m_x + m_y * m_y)));
