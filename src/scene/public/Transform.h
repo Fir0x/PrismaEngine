@@ -2,6 +2,7 @@
 
 #include "core/maths/public/Matrix4.h"
 #include "core/maths/public/Vector3.h"
+#include "core/maths/public/Quaternion.h"
 
 namespace PrismaEngine
 {
@@ -18,6 +19,12 @@ namespace PrismaEngine
 		void translate(const Vector3f& translation);
 		void translate(float x, float y, float z);
 		void rotate(float angleX, float angleY, float angleZ);
+		/**
+		 * @brief Rotation is set in YXZ order.
+		 * @param angleX 
+		 * @param angleY 
+		 * @param angleZ 
+		*/
 		void setRotation(float angleX, float angleY, float angleZ);
 		void setRotation(const Vector3f& rotation);
 		void setRotation(const Vector3f& right, const Vector3f& up, const Vector3f& forward);
@@ -31,9 +38,9 @@ namespace PrismaEngine
 		void scale(float scaleX, float scaleY, float scaleZ);
 
 		Matrix4f getMatrix() const;
-		const Vector3f& getRight() const;
-		const Vector3f& getUp() const;
-		const Vector3f& getForward() const;
+		Vector3f getRight() const;
+		Vector3f getUp() const;
+		Vector3f getForward() const;
 
 		const Vector3f& getPosition() const;
 		Matrix3f getRotation() const;
@@ -47,9 +54,7 @@ namespace PrismaEngine
 
 	private:
 		Vector3f m_position;
-		Vector3f m_right;
-		Vector3f m_up;
-		Vector3f m_forward;
+		Quaternion m_quaternion;
 		Vector3f m_scale;
 	};
 }

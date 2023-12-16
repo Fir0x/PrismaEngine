@@ -73,6 +73,11 @@ namespace PrismaEngine
 			 return data[0][0] * factor3 - data[0][1] * factor2 + data[0][2] * factor1;
 		}
 
+		T trace() const
+		{
+			return data[0][0] + data[1][1] + data[2][2];
+		}
+
 		Matrix3<T> transpose() const
 		{
 			Vector3<T> x(data[0][0], data[0][1], data[0][2]);

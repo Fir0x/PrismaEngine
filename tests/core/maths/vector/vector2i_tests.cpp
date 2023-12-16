@@ -145,16 +145,16 @@ TEST(Vector2iTest, HadamarProduct)
 TEST(Vector2iTest, Magnitude)
 {
 	{
-		int result = Vector2i(0).magnitude();
+		float result = Vector2i(0).magnitude();
 		EXPECT_EQ(result, 0);
 	}
 
 	{
 		constexpr int x = 1;
 		constexpr int y = -5;
-		const int expected = std::sqrt(x * x + y * y);
+		const float expected = static_cast<float>(std::sqrt(x * x + y * y));
 
-		int result = Vector2i(x, y).magnitude();
+		float result = Vector2i(x, y).magnitude();
 		EXPECT_EQ(result, expected);
 	}
 }
@@ -165,7 +165,7 @@ TEST(Vector2iTest, Dot)
 		constexpr int x = 1;
 		constexpr int y = -5;
 
-		int result = Vector2i(x, y).dot(Vector2i(0));
+		float result = Vector2i(x, y).dot(Vector2i(0));
 		EXPECT_EQ(result, 0);
 	}
 
@@ -174,7 +174,7 @@ TEST(Vector2iTest, Dot)
 		constexpr int y = -5;
 		Vector2i v(x, y);
 
-		const int expected = x * x + y * y;
+		const float expected = x * x + y * y;
 
 		EXPECT_EQ(v.dot(v), expected);
 	}

@@ -70,6 +70,11 @@ namespace PrismaEngine
 		return std::acos(x);
 	}
 
+	inline float atan2(float y, float x)
+	{
+		return std::atan2f(y, x);
+	}
+
 	inline float clamp(float x, float min, float max)
 	{
 		if (x < min)
@@ -79,5 +84,10 @@ namespace PrismaEngine
 			return max;
 
 		return x;
+	}
+
+	inline float abs(float x)
+	{
+		return x < 0.0f ? -x : x;
 	}
 }
