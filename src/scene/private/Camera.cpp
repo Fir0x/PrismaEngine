@@ -60,15 +60,14 @@ namespace PrismaEngine
 
 	Vector3f Camera::forward() const
 	{
-		return m_transform.getForward();
+		return -m_transform.getForward();
 	}
 
 	Matrix4f Camera::viewMatrix() const
 	{
-		Transform tmp = m_transform;
-		tmp.setRotation(tmp.getRight(), tmp.getUp(), -tmp.getForward());
+		Transform invTransform = m_transform.getInverse();
 
-		return tmp.getInverse().getMatrix();
+		return invTransform.getMatrix();
 	}
 
 	const Matrix4f& Camera::projectionMatrix() const
@@ -122,7 +121,7 @@ namespace PrismaEngine
 		const Vector3f right = forward.cross(Vector3f(0.0f, 1.0f, 0.0f)).normalize();
 		const Vector3f up = right.cross(forward);
 
-		m_transform.setRotation(right, up, forward);
+		m_transform.setRotation(right, up, -forward);
 	}
 
 	void Camera::getRotation(float& yaw, float& pitch)
